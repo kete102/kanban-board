@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Container from '@/components/Container'
 import { MainContent } from '@/components/MainContent'
-import { SignedIn, useAuth, UserButton } from '@clerk/clerk-react'
+import { useAuth } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
@@ -9,17 +8,18 @@ const RootLayout = () => {
   const navigate = useNavigate()
   const { isSignedIn } = useAuth()
 
+  console.log(isSignedIn)
   useEffect(() => {
     if (!isSignedIn) {
-      navigate('/auth/sign-in')
+      navigate('/auth')
+    } else {
+      navigate('/')
     }
-  }, [])
+  }, [isSignedIn, navigate])
 
   return (
     <Container>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+      <h1 className="text-7xl font-bold text-white">Kanban Board</h1>
       <MainContent>
         <Outlet />
       </MainContent>

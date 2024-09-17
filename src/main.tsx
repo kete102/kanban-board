@@ -7,7 +7,7 @@ import { ClerkProvider } from '@clerk/clerk-react'
 import Board from './components/Board.tsx'
 import ErrorPage from './error-page.tsx'
 import { HomePage } from './HomePage.tsx'
-import { SignInPage, SignUp } from './routes/auth'
+import { SignInPage } from './routes/auth/auth.tsx'
 import RootLayout from './routes/RootLayout.tsx'
 
 const router = createBrowserRouter([
@@ -15,8 +15,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/auth/sign-in', element: <SignInPage /> },
-      { path: '/auth/sign-up', element: <SignUp /> },
+      { path: '/auth/', element: <SignInPage /> },
       { path: '/board', element: <Board /> }
     ],
     errorElement: <ErrorPage />
