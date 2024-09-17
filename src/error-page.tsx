@@ -1,11 +1,11 @@
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom'
-import { MainContent } from './components/MainContent'
+import Container from './components/Container'
 
 const ErrorPage = () => {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
-      <MainContent>
+      <Container>
         <h1 className="text-5xl font-bold text-white">
           Oops! Something went wrong...
         </h1>
@@ -25,7 +25,7 @@ const ErrorPage = () => {
         >
           Go back to home
         </Link>
-      </MainContent>
+      </Container>
     )
   } else {
     return <div>Oops! Something went wrong...</div>
