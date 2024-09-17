@@ -1,5 +1,7 @@
 import Container from '@/components/Container'
 
+//TODO: Esta pagina es para cuando ya estas logedIn
+
 export const HomePage = () => {
   return (
     <Container>

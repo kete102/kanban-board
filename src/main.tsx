@@ -2,16 +2,23 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
+import { PUBLISHABLE_KEY } from '@/config'
 import { ClerkProvider } from '@clerk/clerk-react'
+import Board from './components/Board.tsx'
 import ErrorPage from './error-page.tsx'
-import { HomePage } from './routes/HomePage.tsx'
-
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+import { HomePage } from './HomePage.tsx'
+import { SignInPage, SignUp } from './routes/auth'
+import RootLayout from './routes/RootLayout.tsx'
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <HomePage />,
+    element: <RootLayout />,
+    children: [
+      { path: '/', element: <HomePage /> },
+      { path: '/auth/sign-in', element: <SignInPage /> },
+      { path: '/auth/sign-up', element: <SignUp /> },
+      { path: '/board', element: <Board /> }
+    ],
     errorElement: <ErrorPage />
   }
 ])
