@@ -21,11 +21,11 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-empty-type': 'off',
-      '@typescript-eslint/no-unused/vars': [
+      '@typescript-eslint/no-unused-vars': [
         'warn',
         {
           argsIgnorePattern: '^_',
-          varsIgnorPattern: '^_'
+          varsIgnorePattern: '^_'
         }
       ],
       'react-refresh/only-export-components': [
