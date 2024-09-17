@@ -1,11 +1,10 @@
-import { MainContent } from './components/MainContent'
+import { MainContent } from '@/components/MainContent'
 
-function App() {
+export const HomePage = () => {
   return (
     <MainContent>
       <h1 className="text-5xl font-bold text-white">Kanban Board</h1>
+      <section></section>
     </MainContent>
   )
 }
-
-export default App
