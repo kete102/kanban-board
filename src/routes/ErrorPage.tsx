@@ -1,7 +1,7 @@
-import Container from '@/components/Container'
+import { Container } from '@/components'
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom'
 
-const ErrorPage = () => {
+export const ErrorPage = () => {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
@@ -33,5 +33,3 @@ const ErrorPage = () => {
     return <div>Oops! Something went wrong...</div>
   }
 }
-
-export default ErrorPage

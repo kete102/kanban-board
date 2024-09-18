@@ -1,10 +1,9 @@
-import Container from '@/components/Container'
-import { MainContent } from '@/components/MainContent'
+import { Container } from '@/components'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-const RootLayout = () => {
+export const RootLayout = () => {
   const navigate = useNavigate()
   const { isSignedIn } = useAuth()
 
@@ -25,5 +24,3 @@ const RootLayout = () => {
     </Container>
   )
 }
-
-export default RootLayout

@@ -1,6 +1,4 @@
-import { MainContent } from '@/components/MainContent'
-import Modal from '@/components/Modal'
-import { UserInfo } from '@/components/UserInfo'
+import { MainContent, Modal, UserInfo } from '@/components'
 import { useState } from 'react'
 
 export const HomePage = () => {
