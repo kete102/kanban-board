@@ -28,5 +28,9 @@ export function useBoards({ userId }: { userId: string | null | undefined }) {
     getBoards()
   }, [userId])
 
-  return { boards, loading, error }
+  const removeBoard = ({ boardId }) => {
+    console.log(boardId + 'Board deleted')
+  }
+
+  return { boards, loading, error, removeBoard }
 }

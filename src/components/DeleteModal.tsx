@@ -3,10 +3,9 @@ import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 interface Props {
   isOpen: boolean
   toggleModal: () => void
-  removeBoard: () => void
 }
 
-export const DeleteModal = ({ isOpen, toggleModal, removeBoard }: Props) => {
+export const DeleteModal = ({ isOpen, toggleModal }: Props) => {
   return (
     <Dialog
       open={isOpen}
@@ -33,7 +32,7 @@ export const DeleteModal = ({ isOpen, toggleModal, removeBoard }: Props) => {
 
               <button
                 className="text-md inline-flex cursor-pointer items-center gap-2 rounded-xl bg-red-600 px-5 py-2 font-semibold text-white shadow-sm"
-                onClick={removeBoard}
+                onClick={toggleModal}
               >
                 Eliminar
               </button>
