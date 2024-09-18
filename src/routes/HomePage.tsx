@@ -1,5 +1,5 @@
 import { BoardsContainer, MainContent, Modal, UserInfo } from '@/components'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -14,10 +14,6 @@ export const HomePage = () => {
     toggleOpenModal()
     console.log('Form submit', data)
   }
-
-  useEffect(() => {
-    //TODO: get the users boards
-  }, [])
 
   return (
     <MainContent style={isModalOpen ? 'blur-sm bg-white/95' : ''}>

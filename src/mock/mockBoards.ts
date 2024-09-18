@@ -1,23 +1,4 @@
-interface Task {
-  taskId: string
-  taskDescription: string
-  columnId: string
-  priority: number
-}
-
-interface Column {
-  columnId: string
-  columnTitle: 'To do' | 'In Progress' | 'Done'
-  tasks: Task[]
-}
-
-interface Board {
-  userId: string
-  boardId: string
-  boardTitle: string
-  boardDescription: string
-  columns: Column[]
-}
+import { Board } from '@/types'
 
 export const mockBoard: Board = {
   userId: 'user_2mCwsSNkNCNcfhVtI15O9pfh57e',
