@@ -1,5 +1,5 @@
 export * from './Container'
 export * from './MainContent'
-export * from './Modal'
+export * from './NewBoardModal'
 export * from './UserInfo'
 export * from './BoardsContainer'

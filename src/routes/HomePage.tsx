@@ -1,4 +1,9 @@
-import { BoardsContainer, MainContent, Modal, UserInfo } from '@/components'
+import {
+  BoardsContainer,
+  MainContent,
+  NewBoardModal,
+  UserInfo
+} from '@/components'
 import { useState } from 'react'
 
 export const HomePage = () => {
@@ -18,7 +23,7 @@ export const HomePage = () => {
   return (
     <MainContent style={isModalOpen ? 'blur-sm bg-white/95' : ''}>
       <div className="flex h-full flex-col">
-        <section className="mx-4 flex items-center justify-between p-4 text-right">
+        <section className="m-4 flex items-center justify-between rounded-md bg-zinc-950 p-6 text-right">
           <button
             className="group relative inline-block"
             onClick={toggleOpenModal}
@@ -35,7 +40,7 @@ export const HomePage = () => {
           </button>
           <UserInfo />
         </section>
-        <Modal
+        <NewBoardModal
           toggleOpenModal={toggleOpenModal}
           handleSubmit={handleSubmit}
           isModalOpen={isModalOpen}

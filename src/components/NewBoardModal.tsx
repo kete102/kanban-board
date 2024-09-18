@@ -17,7 +17,7 @@ interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const Modal = ({
+export const NewBoardModal = ({
   isModalOpen,
   toggleOpenModal,
   handleSubmit
