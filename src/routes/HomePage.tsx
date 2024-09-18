@@ -10,10 +10,8 @@ import {
   Input,
   Label,
   Legend,
-  Select,
   Textarea
 } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -21,9 +19,18 @@ export const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleOnClick = () => {
-    //TODO: hacerlo con un modal
     console.log('new board')
     setIsModalOpen(true)
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = Object.fromEntries(new FormData(event.currentTarget))
+    console.log('Form submit', data)
+  }
+
+  const handleAddNewBoard = () => {
+    setIsModalOpen(false)
   }
 
   return (
@@ -61,78 +68,56 @@ export const HomePage = () => {
                 transition
                 className="data-[closed]:transform-[scale(95%)] w-full max-w-lg rounded-xl bg-black/95 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0"
               >
-                <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
-                  <Legend className="text-2xl font-semibold text-white">
-                    Create new board
-                  </Legend>
-                  <Field>
-                    <Label className="text-lg font-medium text-white">
-                      Cool board Name
-                    </Label>
-                    <Input
-                      className={clsx(
-                        'mt-3 block w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
-                        'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
-                      )}
-                    />
-                  </Field>
-                  <Field>
-                    <Label className="text-2xl font-medium text-white">
-                      Priority
-                    </Label>
-                    <Description className="text-md/6 mt-2 text-white/50">
-                      High, medium or low
-                    </Description>
-                    <div className="relative">
-                      <Select
+                <form onSubmit={e => handleSubmit(e)}>
+                  <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
+                    <Legend className="text-2xl font-semibold text-white">
+                      Create new board
+                    </Legend>
+                    <Field>
+                      <Label className="text-lg font-medium text-white">
+                        Cool board Name
+                      </Label>
+                      <Input
+                        name="board-name"
                         className={clsx(
-                          'mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
-                          'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
-                          // Make the text of each option black on Windows
-                          '*:text-black'
+                          'mt-3 block w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
+                          'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
                         )}
-                      >
-                        <option>Choose one</option>
-                        <option>High</option>
-                        <option>Medium</option>
-                        <option>Low</option>
-                      </Select>
-                      <ChevronDownIcon
-                        className="group pointer-events-none absolute right-2.5 top-2.5 size-4 fill-white/60"
-                        aria-hidden="true"
                       />
-                    </div>
-                  </Field>
-                  <Field>
-                    <Label className="text-2xl font-medium text-white">
-                      Description
-                    </Label>
-                    <Description className="text-md/6 mt-2 text-white/50">
-                      What's it about?
-                    </Description>
-                    <Textarea
-                      className={clsx(
-                        'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
-                        'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
-                      )}
-                      rows={3}
-                    />
-                  </Field>
-                </Fieldset>
-                <div className="mt-4 inline-flex gap-4">
-                  <Button
-                    className="rounded-md bg-gray-700 px-4 py-1.5 text-lg/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                    onClick={() => setIsModalOpen(false)}
-                  >
-                    Add
-                  </Button>
-                  <Button
-                    className="rounded-md bg-gray-700 px-4 py-1.5 text-lg/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                    onClick={() => setIsModalOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
+                    </Field>
+                    <Field>
+                      <Label className="text-2xl font-medium text-white">
+                        Description
+                      </Label>
+                      <Description className="text-md/6 mt-2 text-white/50">
+                        What's it about?
+                      </Description>
+                      <Textarea
+                        name="board-description"
+                        className={clsx(
+                          'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
+                          'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
+                        )}
+                        rows={3}
+                      />
+                    </Field>
+                  </Fieldset>
+                  <div className="mt-4 inline-flex gap-4">
+                    <Button
+                      className="rounded-md bg-gray-700 px-4 py-1.5 text-lg/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                      type="submit"
+                      onClick={handleAddNewBoard}
+                    >
+                      Add
+                    </Button>
+                    <Button
+                      className="rounded-md bg-gray-700 px-4 py-1.5 text-lg/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
               </DialogPanel>
             </div>
           </div>

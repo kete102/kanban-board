@@ -8,7 +8,6 @@ const RootLayout = () => {
   const navigate = useNavigate()
   const { isSignedIn } = useAuth()
 
-  console.log(isSignedIn)
   useEffect(() => {
     if (!isSignedIn) {
       navigate('/auth')
