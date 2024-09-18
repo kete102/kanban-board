@@ -20,9 +20,9 @@ const RootLayout = () => {
   return (
     <Container>
       <h1 className="mb-20 text-7xl font-bold text-white">Kanban Board</h1>
-      <MainContent>
-        <Outlet />
-      </MainContent>
+      {/* <MainContent> */}
+      <Outlet />
+      {/* </MainContent> */}
     </Container>
   )
 }
