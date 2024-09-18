@@ -6,8 +6,8 @@ import { PUBLISHABLE_KEY } from '@/config'
 import { HomePage } from '@/routes/HomePage.tsx'
 import { ClerkProvider } from '@clerk/clerk-react'
 import Board from './components/Board.tsx'
-import ErrorPage from './error-page.tsx'
 import { SignInPage } from './routes/auth/auth.tsx'
+import ErrorPage from './routes/ErrorPage.tsx'
 import RootLayout from './routes/RootLayout.tsx'
 
 const router = createBrowserRouter([

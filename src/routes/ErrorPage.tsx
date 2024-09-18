@@ -1,5 +1,5 @@
+import Container from '@/components/Container'
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom'
-import Container from './components/Container'
 
 const ErrorPage = () => {
   const error = useRouteError()
@@ -21,9 +21,11 @@ const ErrorPage = () => {
         ></iframe>
         <Link
           to="/"
-          className="mt-14 flex items-center justify-center gap-2 rounded-md p-3 text-4xl font-semibold text-white transition hover:bg-gray-600 hover:text-gray-50"
+          className="group relative m-6 w-max font-semibold text-indigo-50"
         >
-          Go back to home
+          <span className="text-2xl">Go back home</span>
+          <span className="absolute -bottom-1 left-1/2 h-0.5 w-0 bg-indigo-600 transition-all group-hover:w-3/6"></span>
+          <span className="absolute -bottom-1 right-1/2 h-0.5 w-0 bg-indigo-600 transition-all group-hover:w-3/6"></span>
         </Link>
       </Container>
     )
