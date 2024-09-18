@@ -1,6 +1,6 @@
 import { MainContent } from '@/components/MainContent'
 import Modal from '@/components/Modal'
-import { SignedIn, UserButton } from '@clerk/clerk-react'
+import { UserInfo } from '@/components/UserInfo'
 import { useState } from 'react'
 
 export const HomePage = () => {
@@ -35,26 +35,15 @@ export const HomePage = () => {
               data-rounded="rounded-lg"
             ></span>
           </button>
-          <SignedIn>
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: 'w-12 h-12'
-                },
-                variables: {
-                  fontSize: 'text-lg',
-                  colorText: 'white'
-                }
-              }}
-              showName={true}
-            />
-          </SignedIn>
+          <UserInfo />
         </section>
         <Modal
           toggleOpenModal={toggleOpenModal}
           handleSubmit={handleSubmit}
           isModalOpen={isModalOpen}
         />
+        {/* Boards Container */}
+        <section>Aqui van las boards</section>
       </div>
     </MainContent>
   )

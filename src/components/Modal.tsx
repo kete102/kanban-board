@@ -17,7 +17,11 @@ interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-const Modal = ({ isModalOpen, toggleOpenModal, handleSubmit }: Props) => {
+export const Modal = ({
+  isModalOpen,
+  toggleOpenModal,
+  handleSubmit
+}: Props) => {
   return (
     <Dialog
       open={isModalOpen}
@@ -88,5 +92,3 @@ const Modal = ({ isModalOpen, toggleOpenModal, handleSubmit }: Props) => {
     </Dialog>
   )
 }
-
-export default Modal
