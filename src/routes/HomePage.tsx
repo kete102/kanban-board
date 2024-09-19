@@ -5,12 +5,10 @@ import {
   UserInfo
 } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
-import { useUser } from '@clerk/clerk-react'
 import { useState } from 'react'
 
 export const HomePage = () => {
-  const { user } = useUser()
-  const { addNewBoard } = useBoards({ userId: user?.id })
+  const { addNewBoard } = useBoards()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleOpenModal = () => {
     setIsModalOpen(prevState => !prevState)

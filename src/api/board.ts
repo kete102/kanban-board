@@ -9,7 +9,8 @@ const boards: Board[] = [mockBoard]
 
 export async function FetchBoards({ userId }: Props) {
   try {
-    //TODO: Aqui va la logia de firebase
+    //TODO: Aqui va la llamda a mongo
+    console.log('LLamada a MonogDB', userId)
     return boards
   } catch (error) {
     console.error(error)

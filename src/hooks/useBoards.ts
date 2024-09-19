@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FetchBoards } from '@/api/board'
-import { createBoard } from '@/services/board'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { RootState } from '@/app/store'
+import { setUserBoards } from '@/features/user/userSlice'
 import { Board, Column } from '@/types'
 import { useEffect, useState } from 'react'
 
@@ -38,18 +41,18 @@ function craftBoard(
   return board
 }
 
-export function useBoards({ userId }: { userId: string | null | undefined }) {
-  const [boards, setBoards] = useState<Board[]>([])
+export function useBoards() {
+  const dispatch = useAppDispatch()
+  const { boards, userId } = useAppSelector((state: RootState) => state.user)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!userId) return
     const getBoards = async () => {
       try {
         setLoading(true)
         const userBoards = await FetchBoards({ userId })
-        setBoards(userBoards)
+        dispatch(setUserBoards(userBoards))
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message)
@@ -68,22 +71,28 @@ export function useBoards({ userId }: { userId: string | null | undefined }) {
     boardTitle: string
     boardDescription: string
   }) => {
-    if (userId) {
-      try {
-        const newBoard = craftBoard(
-          userId,
-          boardData.boardTitle,
-          boardData.boardDescription
-        )
-        await createBoard(newBoard)
-      } catch (error) {
-        console.log(error)
-      }
+    try {
+      const newBoard = craftBoard(
+        userId,
+        boardData.boardTitle,
+        boardData.boardDescription
+      )
+      console.log(newBoard)
+      //TODO: aqui funcion que hace la llamada a la DB
+    } catch (error) {
+      console.log(error)
     }
   }
 
   const removeBoard = ({ boardId }) => {
     console.log(boardId + 'Board deleted')
   }
-  return { boards, loading, error, addNewBoard, removeBoard }
+
+  return {
+    boards,
+    loading,
+    error,
+    addNewBoard,
+    removeBoard
+  }
 }
