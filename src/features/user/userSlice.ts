@@ -1,22 +1,23 @@
-import type { RootState } from '@/app/store'
+import { User } from '@/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface UserState {
-  userId: string
-  userName: string
-}
-
-const initialState: UserState = {
+const initialState: User = {
   userId: '',
-  userName: ''
+  userName: '',
+  boards: []
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: () => {},
-    cleanUser: () => {}
+    setUser: (state, action: PayloadAction<User>) => {
+      state.userId = action.payload.userId
+      state.userName = action.payload.userName
+    },
+    cleanUser: () => {
+      return { ...initialState }
+    }
   }
 })
 
