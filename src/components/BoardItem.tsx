@@ -2,10 +2,10 @@ import { Board } from '@/types'
 
 interface Props {
   board: Board
-  handleRemoveBoard: ({ boardId }: { boardId: string }) => void
+  onDelete: ({ boardId }: { boardId: string }) => void
 }
 
-export const BoardItem = ({ board, handleRemoveBoard }: Props) => {
+export const BoardItem = ({ board, onDelete }: Props) => {
   return (
     <div className="group relative col-span-12 max-w-xs rounded-lg border border-solid border-gray-200 p-4 shadow-none transition-all duration-300 hover:shadow-lg hover:shadow-gray-400 md:col-span-6 lg:col-span-3 xl:p-7">
       <h4 className="mb-2 text-xl font-semibold capitalize text-gray-100 transition-all duration-500 group-hover:text-gray-50">
@@ -36,12 +36,12 @@ export const BoardItem = ({ board, handleRemoveBoard }: Props) => {
               className="my-path"
             ></path>
           </svg>
-          Ver
+          Open
         </button>
 
         <button
           className="text-md inline-flex cursor-pointer items-center gap-2 rounded-xl bg-red-600 px-5 py-2 font-semibold text-white shadow-sm"
-          onClick={() => handleRemoveBoard({ boardId: board.boardId })}
+          onClick={() => onDelete({ boardId: board.boardId })}
         >
           <svg
             width="22"
@@ -79,7 +79,7 @@ export const BoardItem = ({ board, handleRemoveBoard }: Props) => {
               className="my-path"
             ></path>
           </svg>
-          Eliminar
+          Delete
         </button>
       </div>
     </div>

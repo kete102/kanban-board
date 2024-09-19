@@ -10,7 +10,6 @@ const boards: Board[] = [mockBoard]
 export async function FetchBoards({ userId }: Props) {
   try {
     //TODO: Aqui va la logia de firebase
-    console.log(userId)
     return boards
   } catch (error) {
     console.error(error)

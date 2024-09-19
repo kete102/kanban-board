@@ -10,16 +10,25 @@ export const BoardsContainer = () => {
   const { userId } = useAuth()
   const { boards, removeBoard } = useBoards({ userId })
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
 
   const toggleModal = () => {
     setIsOpen(prevState => !prevState)
   }
-  console.log(boards)
 
-  const handleRemoveBoard = ({ boardId }) => {
+  const handleDeleteClick = ({ boardId }) => {
     toggleModal()
-    console.log('Board removed')
-    removeBoard({ boardId })
+    setSelectedBoard(boardId)
+    console.log('Remove Board?')
+  }
+
+  const confirmDeleteBoard = () => {
+    console.log('confirmDelete:' + selectedBoard)
+    if (selectedBoard) {
+      removeBoard({ boardId: selectedBoard })
+      toggleModal()
+      setSelectedBoard(null)
+    }
   }
 
   return (
@@ -29,11 +38,15 @@ export const BoardsContainer = () => {
           <BoardItem
             key={board.boardId}
             board={board}
-            handleRemoveBoard={handleRemoveBoard}
+            onDelete={() => handleDeleteClick({ boardId: board.boardId })}
           />
         ))}
       </div>
-      <DeleteModal isOpen={isOpen} toggleModal={toggleModal} />
+      <DeleteModal
+        isOpen={isOpen}
+        onConfirm={confirmDeleteBoard}
+        onCancel={toggleModal}
+      />
     </MainContent>
   )
 }
