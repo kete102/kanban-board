@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@/components'
-import { useAuth } from '@clerk/clerk-react'
+import { createUser } from '@/services/user'
+import { useAuth, useUser } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
@@ -7,6 +9,7 @@ export const RootLayout = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const { isSignedIn } = useAuth()
+  const { user } = useUser()
 
   useEffect(() => {
     if (!isSignedIn && location.pathname !== '/auth') {
@@ -14,6 +17,15 @@ export const RootLayout = () => {
       navigate('/auth')
     }
   }, [isSignedIn, navigate, location.pathname])
+
+  useEffect(() => {
+    //NOTE: Solo se hace el guardado si esta auth y si  hay un userId
+    if (isSignedIn && user?.id && user.username) {
+      createUser(user.id, user.username).catch(error => {
+        console.error(error)
+      })
+    }
+  }, [isSignedIn])
 
   return (
     <Container>
