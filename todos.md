@@ -1,3 +1,2 @@
-- [] Terminal el background del dialog
-- [] Mostrar los boards con un mock
+- [x] Mostrar los boards con un mock
 - []

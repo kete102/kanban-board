@@ -9,7 +9,7 @@ export const UserInfo = () => {
             avatarBox: 'w-12 h-12'
           },
           variables: {
-            fontSize: 'text-lg',
+            fontSize: '1.3rem',
             colorText: 'white'
           }
         }}
