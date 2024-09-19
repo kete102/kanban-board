@@ -45,7 +45,7 @@ export const NewBoardModal = ({
                     Cool board Name
                   </Label>
                   <Input
-                    name="board-name"
+                    name="boardName"
                     className={clsx(
                       'mt-3 block w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
                       'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
@@ -60,7 +60,7 @@ export const NewBoardModal = ({
                     What's it about?
                   </Description>
                   <Textarea
-                    name="board-description"
+                    name="boardDescription"
                     className={clsx(
                       'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
                       'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'

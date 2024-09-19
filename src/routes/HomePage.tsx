@@ -4,20 +4,29 @@ import {
   NewBoardModal,
   UserInfo
 } from '@/components'
+import { useBoards } from '@/hooks/useBoards'
+import { useUser } from '@clerk/clerk-react'
 import { useState } from 'react'
 
 export const HomePage = () => {
+  const { user } = useUser()
+  const { addNewBoard } = useBoards({ userId: user?.id })
   const [isModalOpen, setIsModalOpen] = useState(false)
-
   const toggleOpenModal = () => {
     setIsModalOpen(prevState => !prevState)
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = Object.fromEntries(new FormData(event.currentTarget))
+    const formData = new FormData(event.currentTarget)
+    const boardData = {
+      boardTitle: formData.get('boardTitle') as string,
+      boardDescription: formData.get('boardDescription') as string
+    }
+
+    console.log('Form submit', boardData)
+    addNewBoard(boardData)
     toggleOpenModal()
-    console.log('Form submit', data)
   }
 
   return (

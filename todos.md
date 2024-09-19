@@ -1,2 +1,5 @@
 - [x] Mostrar los boards con un mock
-- []
+- [x] Configurar firebase
+- [] Funciones para crud de las boards
+- [] Implementar estado(zustand o redux) para las boards
+- [] Lo mismo pero para las tareas

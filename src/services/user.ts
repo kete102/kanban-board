@@ -3,7 +3,6 @@ import { FirebaseError } from 'firebase/app'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 export async function createUser(userId: string, username: string) {
-  console.log(db)
   try {
     //NOTE: Comprobar si el usuario existe
     const usersDocRef = doc(db, 'users', userId)
