@@ -18,3 +18,9 @@ export interface Board {
   boardDescription: string
   columns: Column[]
 }
+
+interface User {
+  userId: string
+  userName: string
+  boards: Board[]
+}
