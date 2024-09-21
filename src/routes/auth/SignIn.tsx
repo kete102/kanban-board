@@ -1,15 +1,14 @@
 import { MainContent } from '@/components'
-import { SignedOut, SignIn, useAuth } from '@clerk/clerk-react'
+import { useSaveUser } from '@/hooks/useAuth'
+import { SignedOut, SignIn } from '@clerk/clerk-react'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 export const SignInPage = () => {
-  const navigate = useNavigate()
-  const { isSignedIn } = useAuth()
+  const { saveUserData } = useSaveUser()
 
   useEffect(() => {
-    if (isSignedIn) navigate('/')
-  }, [isSignedIn, navigate])
+    saveUserData()
+  }, [saveUserData])
 
   return (
     <MainContent>
