@@ -7,7 +7,7 @@ import {
 import { useBoards } from '@/hooks/useBoards'
 import { useState } from 'react'
 
-export const HomePage = () => {
+export const UserPage = () => {
   const { addNewBoard } = useBoards()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleOpenModal = () => {
@@ -21,8 +21,6 @@ export const HomePage = () => {
       boardTitle: formData.get('boardTitle') as string,
       boardDescription: formData.get('boardDescription') as string
     }
-
-    console.log('Form submit', boardData)
     addNewBoard(boardData)
     toggleOpenModal()
   }
@@ -31,6 +29,7 @@ export const HomePage = () => {
     <MainContent style={isModalOpen ? 'blur-sm bg-white/95' : ''}>
       <div className="flex h-full flex-col">
         <section className="m-4 flex items-center justify-between rounded-md bg-zinc-950 p-6 text-right">
+          <h1 className="text-xl font-bold text-white">Kanban Board</h1>
           <button
             className="group relative inline-block"
             onClick={toggleOpenModal}

@@ -1,51 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FetchBoards } from '@/api/board'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
 import { setUserBoards } from '@/features/user/userSlice'
-import { Board, Column } from '@/types'
+import { CreateNewBoard, FetchBoards } from '@/services/board'
+import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
-
-const defaultColumns: Column[] = [
-  {
-    tasks: [],
-    columnId: crypto.randomUUID(),
-    columnTitle: 'To do'
-  },
-
-  {
-    tasks: [],
-    columnId: crypto.randomUUID(),
-    columnTitle: 'In Progress'
-  },
-
-  {
-    tasks: [],
-    columnId: crypto.randomUUID(),
-    columnTitle: 'Done'
-  }
-]
-
-function craftBoard(
-  userId: string,
-  boardTitle: string,
-  boardDescription: string
-): Board {
-  const board: Board = {
-    boardDescription,
-    boardTitle,
-    userId,
-    boardId: crypto.randomUUID(),
-    columns: defaultColumns
-  }
-  return board
-}
 
 export function useBoards() {
   const dispatch = useAppDispatch()
   const { boards, userId } = useAppSelector((state: RootState) => state.user)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const { getToken } = useAuth()
 
   useEffect(() => {
     const getBoards = async () => {
@@ -72,13 +38,18 @@ export function useBoards() {
     boardDescription: string
   }) => {
     try {
-      const newBoard = craftBoard(
-        userId,
-        boardData.boardTitle,
-        boardData.boardDescription
-      )
-      console.log(newBoard)
-      //TODO: aqui funcion que hace la llamada a la DB
+      const token = await getToken()
+      if (token) {
+        //TODO: aqui funcion que hace la llamada a la DB
+        CreateNewBoard({
+          boardTitle: boardData.boardTitle,
+          boardDescription: boardData.boardDescription,
+          token
+        }).then(res => console.log(res))
+      } else {
+        console.log('No session token provided')
+        return
+      }
     } catch (error) {
       console.log(error)
     }

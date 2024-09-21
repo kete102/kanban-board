@@ -12,11 +12,8 @@ export interface Column {
 }
 
 export interface Board {
-  userId: string
-  boardId: string
   boardTitle: string
   boardDescription: string
-  columns: Column[]
 }
 
 interface User {
