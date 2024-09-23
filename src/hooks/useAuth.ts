@@ -1,4 +1,5 @@
 import { useAppDispatch } from '@/app/hooks'
+import { BASE_API_ENDPOINT } from '@/config'
 import { setUser } from '@/features/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,6 +12,7 @@ interface UserDataResponse {
   }
 }
 export function useSaveUser() {
+  console.log(BASE_API_ENDPOINT)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
@@ -19,7 +21,7 @@ export function useSaveUser() {
     if (isSignedIn && user?.id && user.username) {
       const token = await getToken()
 
-      const res = await fetch('http://localhost:3000/', {
+      const res = await fetch(`${BASE_API_ENDPOINT}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`

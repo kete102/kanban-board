@@ -8,3 +8,4 @@ export const VITE_FIREBASE_STORAGE_BUCKET = import.meta.env
 export const VITE_FIREBASE_MESSAGING_SENDER_ID = import.meta.env
   .VITE_FIREBASE_MESSAGING_SENDER_ID
 export const VITE_FIREBASE_APP_ID = import.meta.env.VITE_FIREBASE_APP_ID
+export const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT

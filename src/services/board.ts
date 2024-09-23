@@ -1,5 +1,6 @@
 // import { mockBoard } from '@/mock/mockBoards'
 // import { Board } from '@/types'
+import { BASE_API_ENDPOINT } from '@/config'
 
 // interface Props {
 //   userId: string
@@ -10,7 +11,7 @@
 export async function FetchBoards({ token }) {
   try {
     //TODO: Aqui va la llamda a mongo
-    const response = await fetch(`http://localhost:3000/api/boards`, {
+    const response = await fetch(`${BASE_API_ENDPOINT}/api/boards`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
@@ -47,7 +48,7 @@ export async function CreateNewBoard({
   token: string
 }) {
   try {
-    const response = await fetch('http://localhost:3000/api/boards', {
+    const response = await fetch(`${BASE_API_ENDPOINT}/api/boards`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
