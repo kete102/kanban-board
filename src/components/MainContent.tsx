@@ -7,10 +7,11 @@ interface Props {
 
 export const MainContent = ({ children, style }: Props) => {
   return (
-    <section
-      className={`h-[80dvh] w-full max-w-screen-2xl rounded-md bg-zinc-900 ${style}`}
+    <div
+      id="main-content"
+      className={`mx-auto grid h-fit w-full max-w-6xl place-content-center rounded-md bg-zinc-900 p-2 ${style}`}
     >
       {children}
-    </section>
+    </div>
   )
 }

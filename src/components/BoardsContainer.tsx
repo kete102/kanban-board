@@ -1,14 +1,15 @@
+import { useAppSelector } from '@/app/hooks'
+import { RootState } from '@/app/store'
 import { useBoards } from '@/hooks/useBoards'
 import { Board } from '@/types'
-import { useAuth } from '@clerk/clerk-react'
 import { useState } from 'react'
 import { BoardItem } from './BoardItem'
 import { DeleteModal } from './DeleteModal'
 import { MainContent } from './MainContent'
 
 export const BoardsContainer = () => {
-  const { userId } = useAuth()
-  const { boards, removeBoard } = useBoards({ userId })
+  const boards = useAppSelector((state: RootState) => state.user.boards) || []
+  const { removeBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
 
@@ -19,11 +20,9 @@ export const BoardsContainer = () => {
   const handleDeleteClick = ({ boardId }) => {
     toggleModal()
     setSelectedBoard(boardId)
-    console.log('Remove Board?')
   }
 
   const confirmDeleteBoard = () => {
-    console.log('confirmDelete:' + selectedBoard)
     if (selectedBoard) {
       removeBoard({ boardId: selectedBoard })
       toggleModal()
@@ -31,22 +30,28 @@ export const BoardsContainer = () => {
     }
   }
 
+  if (boards.length === 0) {
+    return (
+      <MainContent>
+        <p className="text-white">Add boards</p>
+      </MainContent>
+    )
+  }
+
   return (
-    <MainContent style={`p-4 ${isOpen ? 'blur-sm bg-white/95' : ''}`}>
-      <div className="h-full w-full rounded-md bg-zinc-950 p-10">
-        {boards.map((board: Board) => (
-          <BoardItem
-            key={board.boardId}
-            board={board}
-            onDelete={() => handleDeleteClick({ boardId: board.boardId })}
-          />
-        ))}
-      </div>
+    <div id="boards-container" className="rounded-md bg-rose-200 p-4">
+      {boards.map((board: Board, index) => (
+        <BoardItem
+          key={index}
+          board={board}
+          onDelete={() => handleDeleteClick({ boardId: board.boardId })}
+        />
+      ))}
       <DeleteModal
         isOpen={isOpen}
         onConfirm={confirmDeleteBoard}
         onCancel={toggleModal}
       />
-    </MainContent>
+    </div>
   )
 }

@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
 import { setUserBoards } from '@/features/user/userSlice'
 import { CreateNewBoard, FetchBoards } from '@/services/board'
+import { Board } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
@@ -15,9 +15,10 @@ export function useBoards() {
 
   useEffect(() => {
     const getBoards = async () => {
+      const token = await getToken()
       try {
         setLoading(true)
-        const userBoards = await FetchBoards({ userId })
+        const userBoards: Board[] = await FetchBoards({ token })
         dispatch(setUserBoards(userBoards))
       } catch (error) {
         if (error instanceof Error) {
@@ -31,7 +32,7 @@ export function useBoards() {
     }
 
     getBoards()
-  }, [userId])
+  }, [dispatch, getToken, userId])
 
   const addNewBoard = async (boardData: {
     boardTitle: string

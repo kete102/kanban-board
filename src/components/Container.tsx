@@ -4,7 +4,10 @@ interface Props {
 
 export const Container = ({ children }: Props) => {
   return (
-    <div className="mx-auto flex h-screen w-screen flex-col items-center justify-center bg-black">
+    <div
+      className="mx-auto flex h-screen w-screen flex-col items-center justify-center bg-black"
+      id="container"
+    >
       {children}
     </div>
   )

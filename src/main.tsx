@@ -1,6 +1,5 @@
 import { PUBLISHABLE_KEY } from '@/config'
 import { ClerkProvider } from '@clerk/clerk-react'
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import './index.css'
@@ -9,11 +8,9 @@ import { store } from './app/store'
 import { router } from './router'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    </ClerkProvider>
-  </StrictMode>
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </ClerkProvider>
 )

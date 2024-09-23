@@ -1,33 +1,41 @@
-import { mockBoard } from '@/mock/mockBoards'
-import { Board } from '@/types'
+// import { mockBoard } from '@/mock/mockBoards'
+// import { Board } from '@/types'
 
-interface Props {
-  userId: string
-}
+// interface Props {
+//   userId: string
+// }
+//
+// const boards: Board[] = [mockBoard]
 
-const boards: Board[] = [mockBoard]
-
-export async function FetchBoards({ userId }: Props) {
+export async function FetchBoards({ token }) {
   try {
     //TODO: Aqui va la llamda a mongo
-    console.log(userId)
-    return boards
+    const response = await fetch(`http://localhost:3000/api/boards`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    if (response.ok) {
+      const data = await response.json()
+      return data.boards
+    }
   } catch (error) {
     console.error(error)
     throw new Error('Error fetching the user boards')
   }
 }
 
-export async function FetchBoardById({ userId, boardId }) {
-  console.log(userId, boardId)
-  try {
-    //TODO: Aqui va la logia de firebase
-  } catch (error) {
-    console.error(error)
-    console.error(error)
-    throw new Error(`Error fetching board`)
-  }
-}
+// export async function FetchBoardById({ userId, boardId }) {
+//   console.log(userId, boardId)
+//   try {
+//     //TODO: Aqui va la logia de firebase
+//   } catch (error) {
+//     console.error(error)
+//     console.error(error)
+//     throw new Error(`Error fetching board`)
+//   }
+// }
 
 export async function CreateNewBoard({
   boardTitle,
@@ -38,7 +46,6 @@ export async function CreateNewBoard({
   boardDescription: string
   token: string
 }) {
-  console.log('Crear tablero nuevo:', boardDescription, boardTitle)
   try {
     const response = await fetch('http://localhost:3000/api/boards', {
       method: 'POST',
@@ -52,7 +59,6 @@ export async function CreateNewBoard({
     if (response.ok) {
       const data = await response.json()
 
-      console.log(`Board created with ID: ${data.boardId}`)
       return {
         boardId: data.boardId
       }

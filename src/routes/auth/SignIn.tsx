@@ -1,14 +1,17 @@
 import { MainContent } from '@/components'
 import { useSaveUser } from '@/hooks/useAuth'
-import { SignedOut, SignIn } from '@clerk/clerk-react'
+import { SignedOut, SignIn, useAuth, useUser } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 
 export const SignInPage = () => {
   const { saveUserData } = useSaveUser()
 
+  const { user, isSignedIn } = useUser()
+  const { getToken } = useAuth()
+
   useEffect(() => {
-    saveUserData()
-  }, [saveUserData])
+    saveUserData({ user, isSignedIn, getToken })
+  }, [getToken, isSignedIn, saveUserData, user])
 
   return (
     <MainContent>

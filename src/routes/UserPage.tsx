@@ -26,9 +26,11 @@ export const UserPage = () => {
   }
 
   return (
-    <MainContent style={isModalOpen ? 'blur-sm bg-white/95' : ''}>
-      <div className="flex h-full flex-col">
-        <section className="m-4 flex items-center justify-between rounded-md bg-zinc-950 p-6 text-right">
+    <MainContent
+      style={isModalOpen ? 'blur-sm bg-white/95 pointer-events-none' : ''}
+    >
+      <div className="bg-lime-300 p-2" id="user-page">
+        <section className="flex w-full items-center justify-between rounded-md bg-zinc-950 p-6 text-right">
           <h1 className="text-xl font-bold text-white">Kanban Board</h1>
           <button
             className="group relative inline-block"

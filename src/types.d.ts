@@ -12,8 +12,9 @@ export interface Column {
 }
 
 export interface Board {
+  boardId: string
   boardTitle: string
-  boardDescription: string
+  boardDesc: string
 }
 
 interface User {
