@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
-import { setUserBoards } from '@/features/user/userSlice'
 import { CreateNewBoard, FetchBoards } from '@/services/board'
-import { Board } from '@/types'
+// import { setUserBoards } from '@/features/user/userSlice'
+// import { Board } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
@@ -18,8 +18,9 @@ export function useBoards() {
       const token = await getToken()
       try {
         setLoading(true)
-        const userBoards: Board[] = await FetchBoards({ token })
-        dispatch(setUserBoards(userBoards))
+        const userBoards = await FetchBoards({ token })
+        // dispatch(setUserBoards(userBoards))
+        console.log(userBoards)
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message)

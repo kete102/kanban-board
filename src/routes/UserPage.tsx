@@ -5,7 +5,7 @@ import {
   UserInfo
 } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const UserPage = () => {
   const { addNewBoard } = useBoards()
@@ -24,6 +24,10 @@ export const UserPage = () => {
     addNewBoard(boardData)
     toggleOpenModal()
   }
+
+  useEffect(() => {
+    //TODO: Fetch user boards
+  })
 
   return (
     <MainContent
