@@ -22,7 +22,7 @@ export const userSlice = createSlice({
       return { ...initialState }
     },
     setUserBoards: (state, action: PayloadAction<Board[]>) => {
-      state.boards = action.payload
+      state.boards = [...action.payload]
     }
   }
 })

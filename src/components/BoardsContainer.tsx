@@ -13,6 +13,7 @@ export const BoardsContainer = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
 
+  console.log('BoardsContainer', boards)
   const toggleModal = () => {
     setIsOpen(prevState => !prevState)
   }

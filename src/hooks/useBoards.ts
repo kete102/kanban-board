@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useAppSelector } from '@/app/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
+import { setUserBoards } from '@/features/user/userSlice'
 import { BoardActions } from '@/services/board'
-// import { setUserBoards } from '@/features/user/userSlice'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
 export function useBoards() {
   const { createNewBoard, fetchBoards } = BoardActions()
-  // const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
   const { boards } = useAppSelector((state: RootState) => state.user)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
@@ -16,12 +16,11 @@ export function useBoards() {
 
   useEffect(() => {
     const getBoards = async () => {
-      console.log('getBoards')
       const token = await getToken()
       try {
         setLoading(true)
         const userBoards = await fetchBoards({ token })
-        //TODO: dispatch(setUserBoards(userBoards))
+        dispatch(setUserBoards(userBoards))
         console.log(userBoards)
       } catch (error) {
         if (error instanceof Error) {
@@ -35,7 +34,7 @@ export function useBoards() {
     }
 
     getBoards()
-  }, [])
+  }, [dispatch])
 
   const addNewBoard = async (boardData: {
     boardTitle: string
@@ -45,11 +44,13 @@ export function useBoards() {
       const token = await getToken()
       if (token) {
         //TODO: aqui funcion que hace la llamada a la DB
-        createNewBoard({
+        const { boards } = await createNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
           token
-        }).then(res => console.log(res))
+        })
+        console.log(boards)
+        // dispatch(setUserBoards(newBoards))
       } else {
         console.log('No session token provided')
         return

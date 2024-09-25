@@ -1,5 +1,5 @@
 // import { Board } from '@/types'
-import { BASE_API_ENDPOINT } from '@/config'
+// import { BASE_API_ENDPOINT } from '@/config'
 
 export function BoardActions() {
   const fetchBoards = async ({ token }) => {
@@ -31,7 +31,7 @@ export function BoardActions() {
     token: string
   }) => {
     try {
-      const response = await fetch(`${BASE_API_ENDPOINT}/api/boards`, {
+      const response = await fetch(`http://localhost:3000/api/boards`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,16 +40,9 @@ export function BoardActions() {
         body: JSON.stringify({ boardTitle, boardDescription })
       })
 
-      if (response.ok) {
-        const data = await response.json()
+      const boards = await response.json()
 
-        return {
-          boardId: data.boardId
-        }
-      } else {
-        const errorData = await response.json()
-        console.error('Error creating new Board', errorData)
-      }
+      return boards
     } catch (error) {
       console.error(error)
     }
