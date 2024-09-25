@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MainContent } from '@/components'
-import { useSaveUser } from '@/hooks/useAuth'
+import { UserActions } from '@/services/user'
 import { SignedOut, SignIn, useAuth } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 
 export const SignInPage = () => {
   const { isSignedIn } = useAuth()
-  const { saveUserData } = useSaveUser()
+  const { saveUserData } = UserActions()
 
   useEffect(() => {
     if (!isSignedIn) saveUserData()
