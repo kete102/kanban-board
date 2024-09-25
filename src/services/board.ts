@@ -10,7 +10,6 @@ import { BASE_API_ENDPOINT } from '@/config'
 
 export async function FetchBoards({ token }) {
   try {
-    //TODO: Aqui va la llamda a mongo
     const response = await fetch(`http://localhost:3000/api/boards`, {
       method: 'GET',
       headers: {

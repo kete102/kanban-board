@@ -19,7 +19,7 @@ export function useBoards() {
       try {
         setLoading(true)
         const userBoards = await FetchBoards({ token })
-        // dispatch(setUserBoards(userBoards))
+        //TODO: dispatch(setUserBoards(userBoards))
         console.log(userBoards)
       } catch (error) {
         if (error instanceof Error) {

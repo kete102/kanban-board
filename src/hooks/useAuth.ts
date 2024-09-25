@@ -8,14 +8,14 @@ export function useSaveUser() {
     const token = await getToken()
 
     const res = await fetch('http://localhost:3000/api/auth', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     console.log(res)
     if (!res.ok) {
-      console.log('Error en la llamada')
+      console.error('Error en la llamada')
     }
     const userId = await res.json()
     console.log(userId)

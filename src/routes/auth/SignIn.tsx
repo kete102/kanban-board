@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MainContent } from '@/components'
 import { useSaveUser } from '@/hooks/useAuth'
-import { SignedOut, SignIn } from '@clerk/clerk-react'
+import { SignedOut, SignIn, useAuth } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 
 export const SignInPage = () => {
+  const { isSignedIn } = useAuth()
   const { saveUserData } = useSaveUser()
 
   useEffect(() => {
-    saveUserData()
+    if (!isSignedIn) saveUserData()
   }, [])
 
   return (
@@ -22,7 +23,7 @@ export const SignInPage = () => {
           </h2>
         </section>
         <SignedOut>
-          <SignIn />
+          <SignIn path="/auth/sign-in" />
         </SignedOut>
       </div>
     </MainContent>
