@@ -7,7 +7,11 @@ import { BoardItem } from './BoardItem'
 import { DeleteModal } from './DeleteModal'
 import { MainContent } from './MainContent'
 
-export const BoardsContainer = () => {
+interface Props {
+  toggleOpenModal: () => void
+}
+
+export const BoardsContainer = ({ toggleOpenModal }: Props) => {
   const boards = useAppSelector((state: RootState) => state.user.boards) || []
   const { removeBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -18,7 +22,7 @@ export const BoardsContainer = () => {
     setIsOpen(prevState => !prevState)
   }
 
-  const handleDeleteClick = ({ boardId }) => {
+  const handleDelete = ({ boardId }) => {
     toggleModal()
     setSelectedBoard(boardId)
   }
@@ -47,7 +51,7 @@ export const BoardsContainer = () => {
       <div className="mb-6">
         <button
           className="group relative inline-block max-w-fit"
-          // onClick={toggleOpenModal}
+          onClick={toggleOpenModal}
         >
           <span className="items-centrer relative z-10 flex justify-center overflow-hidden rounded-lg border-2 border-indigo-600 px-3.5 py-2 font-medium leading-tight text-indigo-600 transition-colors duration-300 ease-out group-hover:text-white">
             <span className="absolute inset-0 h-full w-full rounded-lg bg-gray-50 px-5 py-3"></span>
@@ -60,12 +64,12 @@ export const BoardsContainer = () => {
           ></span>
         </button>
       </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-2">
+      <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
         {boards.map((board: Board, index) => (
           <BoardItem
             key={index}
             board={board}
-            onDelete={() => handleDeleteClick({ boardId: board.boardId })}
+            onDelete={() => handleDelete({ boardId: board.boardId })}
           />
         ))}
       </div>

@@ -33,7 +33,7 @@ export const UserPage = () => {
         handleSubmit={handleSubmit}
         isModalOpen={isModalOpen}
       />
-      <BoardsContainer />
+      <BoardsContainer toggleOpenModal={toggleOpenModal} />
     </MainContent>
   )
 }
