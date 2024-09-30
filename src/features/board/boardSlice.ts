@@ -15,8 +15,12 @@ export const boardSlice = createSlice({
     setUserBoards: (state, action: PayloadAction<Board[]>) => {
       state.boards = [...action.payload]
     },
-    addBoard: () => {},
-    deleteBoard: () => {}
+    addBoard: (state, action: PayloadAction<Board>) => {
+      state.boards.push(action.payload)
+    },
+    deleteBoard: (state, action: PayloadAction<{ boardId: string }>) => {
+      state.boards.filter(board => board.boardId !== action.payload.boardId)
+    }
   }
 })
 

@@ -40,9 +40,9 @@ export function BoardActions() {
         body: JSON.stringify({ boardTitle, boardDescription })
       })
 
-      const boards = await response.json()
+      const newBoard = await response.json()
 
-      return boards
+      return newBoard
     } catch (error) {
       console.error(error)
     }

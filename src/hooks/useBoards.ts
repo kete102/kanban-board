@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
-import { setUserBoards } from '@/features/board/boardSlice'
+import { addBoard, setUserBoards } from '@/features/board/boardSlice'
 import { BoardActions } from '@/services/board'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
@@ -42,14 +42,12 @@ export function useBoards() {
     try {
       const token = await getToken()
       if (token) {
-        //TODO: aqui funcion que hace la llamada a la DB
-        const { boards } = await createNewBoard({
+        const { newBoard } = await createNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
           token
         })
-        console.log(boards)
-        // dispatch(setUserBoards(newBoards))
+        dispatch(addBoard(newBoard))
       } else {
         console.log('No session token provided')
         return
