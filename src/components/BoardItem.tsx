@@ -7,19 +7,19 @@ interface Props {
 
 export const BoardItem = ({ board, onDelete }: Props) => {
   return (
-    <div className="max-h-fit max-w-fit">
-      <div className="group relative col-span-12 max-w-fit rounded-lg border border-solid border-gray-200 bg-zinc-950 p-4 shadow-none transition-all duration-300 hover:shadow-lg hover:shadow-gray-400 md:col-span-6 lg:col-span-3">
-        <h4 className="mb-2 text-xl font-semibold capitalize text-gray-100 transition-all duration-500 group-hover:text-gray-50">
+    <div className="pt-4">
+      <div className="group relative col-span-12 h-fit max-w-96 rounded-lg border border-solid border-gray-200 bg-zinc-950 p-6 shadow-none transition-all duration-300 hover:shadow-lg hover:shadow-gray-400 md:col-span-6 lg:col-span-3">
+        <h4 className="mb-2 text-3xl font-semibold capitalize text-gray-100 transition-all duration-500 group-hover:text-gray-50">
           {board.boardTitle}
         </h4>
-        <p className="text-md mb-6 font-normal leading-5 text-gray-400 transition-all duration-500">
-          {board.boardDesc}
+        <p className="mb-6 text-xl font-normal leading-5 text-gray-400 transition-all duration-500">
+          {board.boardDescription}
         </p>
         <div className="inline-flex w-full items-center justify-start gap-4">
-          <button className="text-md inline-flex cursor-pointer items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 font-semibold text-white shadow-sm">
+          <button className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-lg font-semibold text-white shadow-sm">
             <svg
-              width="20px"
-              height="20px"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ export const BoardItem = ({ board, onDelete }: Props) => {
           </button>
 
           <button
-            className="text-md inline-flex cursor-pointer items-center gap-2 rounded-xl bg-red-600 px-5 py-2 font-semibold text-white shadow-sm"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-red-600 px-5 py-2 text-lg font-semibold text-white shadow-sm"
             onClick={() => onDelete({ boardId: board.boardId })}
           >
             <svg

@@ -14,7 +14,7 @@ export interface Column {
 export interface Board {
   boardId: string
   boardTitle: string
-  boardDesc: string
+  boardDescription: string
 }
 
 interface User {

@@ -40,7 +40,10 @@ export const BoardsContainer = () => {
   }
 
   return (
-    <div id="boards-container" className="h-full w-full flex-1 rounded-md p-4">
+    <div
+      id="boards-container"
+      className="h-full w-full flex-1 rounded-md bg-zinc-950 p-8"
+    >
       <div className="mb-6">
         <button
           className="group relative inline-block max-w-fit"
@@ -57,7 +60,7 @@ export const BoardsContainer = () => {
           ></span>
         </button>
       </div>
-      <div className="grid gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-2">
         {boards.map((board: Board, index) => (
           <BoardItem
             key={index}
