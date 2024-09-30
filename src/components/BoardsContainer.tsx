@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const BoardsContainer = ({ toggleOpenModal }: Props) => {
-  const boards = useAppSelector((state: RootState) => state.user.boards) || []
+  const { boards } = useAppSelector((state: RootState) => state.boards) || []
   const { removeBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)

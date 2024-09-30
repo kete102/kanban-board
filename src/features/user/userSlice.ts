@@ -1,5 +1,5 @@
-import { Board, User } from '@/types'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { User } from '@/types'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState: User = {
   userId: '',
@@ -20,12 +20,9 @@ export const userSlice = createSlice({
     },
     cleanUser: () => {
       return { ...initialState }
-    },
-    setUserBoards: (state, action: PayloadAction<Board[]>) => {
-      state.boards = [...action.payload]
     }
   }
 })
 
-export const { cleanUser, setUser, setUserBoards } = userSlice.actions
+export const { cleanUser, setUser } = userSlice.actions
 export default userSlice.reducer
