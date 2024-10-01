@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
-import { setUserBoards } from '@/features/user/userSlice'
+import { addBoard, setUserBoards } from '@/features/board/boardSlice'
 import { BoardActions } from '@/services/board'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
 export function useBoards() {
-  const { createNewBoard, fetchBoards } = BoardActions()
+  const { createNewBoard, fetchBoards, deleteBoard } = BoardActions()
   const dispatch = useAppDispatch()
-  const { boards } = useAppSelector((state: RootState) => state.user)
+  const { boards } = useAppSelector((state: RootState) => state.boards)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const { getToken } = useAuth()
@@ -21,7 +21,6 @@ export function useBoards() {
         setLoading(true)
         const userBoards = await fetchBoards({ token })
         dispatch(setUserBoards(userBoards))
-        console.log(userBoards)
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message)
@@ -43,14 +42,12 @@ export function useBoards() {
     try {
       const token = await getToken()
       if (token) {
-        //TODO: aqui funcion que hace la llamada a la DB
-        const { boards } = await createNewBoard({
+        const { newBoard } = await createNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
           token
         })
-        console.log(boards)
-        // dispatch(setUserBoards(newBoards))
+        dispatch(addBoard(newBoard))
       } else {
         console.log('No session token provided')
         return
@@ -60,8 +57,18 @@ export function useBoards() {
     }
   }
 
-  const removeBoard = ({ boardId }) => {
-    console.log(boardId + 'Board deleted')
+  const removeBoard = async ({ boardId }) => {
+    try {
+      const token = await getToken()
+      if (token) {
+        await deleteBoard({
+          boardId,
+          token
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return {

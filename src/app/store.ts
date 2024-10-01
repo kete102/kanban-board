@@ -1,9 +1,11 @@
+import boardsReducer from '@/features/board/boardSlice'
 import usersReducer from '@/features/user/userSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {
-    user: usersReducer
+    user: usersReducer,
+    boards: boardsReducer
   }
 })
 

@@ -12,12 +12,11 @@ interface Props {
 }
 
 export const BoardsContainer = ({ toggleOpenModal }: Props) => {
-  const boards = useAppSelector((state: RootState) => state.user.boards) || []
+  const { boards } = useAppSelector((state: RootState) => state.boards) || []
   const { removeBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
 
-  console.log('BoardsContainer', boards)
   const toggleModal = () => {
     setIsOpen(prevState => !prevState)
   }
@@ -28,6 +27,7 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
   }
 
   const confirmDeleteBoard = () => {
+    console.log(selectedBoard)
     if (selectedBoard) {
       removeBoard({ boardId: selectedBoard })
       toggleModal()
