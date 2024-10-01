@@ -47,5 +47,24 @@ export function BoardActions() {
       console.error(error)
     }
   }
-  return { fetchBoards, createNewBoard }
+
+  const deleteBoard = async ({ token, boardId }) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/boards/${boardId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      console.log(await response.json())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  return { fetchBoards, createNewBoard, deleteBoard }
 }

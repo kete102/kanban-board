@@ -7,7 +7,7 @@ import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
 export function useBoards() {
-  const { createNewBoard, fetchBoards } = BoardActions()
+  const { createNewBoard, fetchBoards, deleteBoard } = BoardActions()
   const dispatch = useAppDispatch()
   const { boards } = useAppSelector((state: RootState) => state.boards)
   const [error, setError] = useState<string>('')
@@ -57,8 +57,18 @@ export function useBoards() {
     }
   }
 
-  const removeBoard = ({ boardId }) => {
-    console.log(boardId + 'Board deleted')
+  const removeBoard = async ({ boardId }) => {
+    try {
+      const token = await getToken()
+      if (token) {
+        await deleteBoard({
+          boardId,
+          token
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return {
