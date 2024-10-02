@@ -40,14 +40,18 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
   return (
     <div
       id="boards-container"
-      className="h-full w-full flex-1 rounded-md bg-zinc-950 px-8 py-3"
+      className="h-screen max-w-full flex-1 overflow-y-auto rounded-md bg-zinc-950 px-8 py-3"
     >
       <div className="mb-6 w-full text-center">
         <button
-          className="text-md inline-flex items-center gap-x-2 rounded-md px-4 py-3 font-medium text-white hover:bg-zinc-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:bg-indigo-700 hover:shadow-xl active:scale-95"
           onClick={toggleOpenModal}
         >
-          Add board <IoMdAddCircleOutline size={17} />
+          Add board{' '}
+          <IoMdAddCircleOutline
+            className="transition-transform duration-300 ease-in-out hover:rotate-90"
+            size={19}
+          />
         </button>
       </div>
       {boards.length === 0 && (
