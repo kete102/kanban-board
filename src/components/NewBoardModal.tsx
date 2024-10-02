@@ -23,17 +23,12 @@ export const NewBoardModal = ({
   handleSubmit
 }: Props) => {
   return (
-    <Dialog
-      open={isModalOpen}
-      as="div"
-      className="relative z-10 focus:outline-none"
-      onClose={toggleOpenModal}
-    >
+    <Dialog open={isModalOpen} as="div" onClose={toggleOpenModal}>
       <div className="fixed inset-0 top-52 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-center justify-center p-4">
+        <div className="flex h-full flex-col items-center justify-start">
           <DialogPanel
             transition
-            className="data-[closed]:transform-[scale(95%)] w-full max-w-lg rounded-xl bg-black/95 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0"
+            className="data-[closed]:transform-[scale(95%)] w-full max-w-lg rounded-xl bg-black/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0"
           >
             <form onSubmit={e => handleSubmit(e)}>
               <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
@@ -68,23 +63,23 @@ export const NewBoardModal = ({
                     rows={3}
                   />
                 </Field>
-              </Fieldset>
-              <div className="mt-4 inline-flex gap-4">
-                <button
-                  type="submit"
-                  className="shadow-xs cursor-pointer rounded-lg bg-indigo-500 px-6 py-2.5 text-center text-lg font-semibold text-white transition-all duration-500 hover:bg-indigo-700"
-                >
-                  Create
-                </button>
+                <div className="mt-4 inline-flex gap-4">
+                  <button
+                    type="submit"
+                    className="shadow-xs cursor-pointer rounded-lg bg-indigo-500 px-6 py-2.5 text-center text-lg font-semibold text-white transition-all duration-500 hover:bg-indigo-700"
+                  >
+                    Create
+                  </button>
 
-                <button
-                  type="button"
-                  className="shadow-xs cursor-pointer rounded-lg bg-indigo-50 px-6 py-2.5 text-center text-lg font-semibold text-indigo-500 transition-all duration-500 hover:bg-indigo-100"
-                  onClick={toggleOpenModal}
-                >
-                  Cancel
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    className="shadow-xs cursor-pointer rounded-lg bg-indigo-50 px-6 py-2.5 text-center text-lg font-semibold text-indigo-500 transition-all duration-500 hover:bg-indigo-100"
+                    onClick={toggleOpenModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Fieldset>
             </form>
           </DialogPanel>
         </div>
