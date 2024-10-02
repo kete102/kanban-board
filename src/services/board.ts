@@ -1,8 +1,14 @@
 // import { Board } from '@/types'
 // import { BASE_API_ENDPOINT } from '@/config'
 
+interface BoardFromApi {
+  _id: string
+  boardTitle: string
+  boardDescription: string
+}
+
 export function BoardActions() {
-  const fetchBoards = async ({ token }) => {
+  const startFetchBoards = async ({ token }) => {
     try {
       const response = await fetch(`http://localhost:3000/api/boards`, {
         method: 'GET',
@@ -11,9 +17,18 @@ export function BoardActions() {
         }
       })
       if (response.ok) {
-        const data = await response.json()
+        const { boards } = await response.json()
         //TODO: Devolver los boards como Board[]
-        return data.boards
+        if (!boards) {
+          throw new Error('Error fetching user boards')
+        }
+        return boards.map((board: BoardFromApi) => {
+          return {
+            boardId: board._id,
+            boardDescription: board.boardDescription,
+            boardTitle: board.boardTitle
+          }
+        })
       }
     } catch (error) {
       console.error(error)
@@ -21,7 +36,7 @@ export function BoardActions() {
     }
   }
 
-  const createNewBoard = async ({
+  const startCreateNewBoard = async ({
     boardTitle,
     boardDescription,
     token
@@ -48,23 +63,27 @@ export function BoardActions() {
     }
   }
 
-  const deleteBoard = async ({ token, boardId }) => {
+  const startDeleteBoard = async ({ token, boardId }) => {
     try {
       const response = await fetch(
         `http://localhost:3000/api/boards/${boardId}`,
         {
           method: 'DELETE',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
           }
         }
       )
+      console.log(response)
 
-      console.log(await response.json())
+      if (!response.ok) {
+        return false
+      }
+
+      return await response.json()
     } catch (error) {
       console.log(error)
     }
   }
-  return { fetchBoards, createNewBoard, deleteBoard }
+  return { startFetchBoards, startCreateNewBoard, startDeleteBoard }
 }

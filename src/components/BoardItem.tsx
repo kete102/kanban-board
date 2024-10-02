@@ -3,7 +3,7 @@ import { MdDeleteForever } from 'react-icons/md'
 
 interface Props {
   board: Board
-  onDelete: ({ boardId }: { boardId: string }) => void
+  onDelete: ({ id }: { id: string }) => void
 }
 
 export const BoardItem = ({ board, onDelete }: Props) => {
@@ -17,7 +17,7 @@ export const BoardItem = ({ board, onDelete }: Props) => {
       </p>
       <button
         className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-red-600 px-5 py-2 text-xl font-semibold text-white shadow-sm"
-        onClick={() => onDelete({ boardId: board.boardId })}
+        onClick={() => onDelete({ id: board.boardId })}
       >
         <MdDeleteForever size={30} />
         Delete

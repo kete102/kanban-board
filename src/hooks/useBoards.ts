@@ -1,13 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { RootState } from '@/app/store'
-import { addBoard, setUserBoards } from '@/features/board/boardSlice'
+import {
+  addBoard,
+  removeBoard,
+  setUserBoards
+} from '@/features/board/boardSlice'
 import { BoardActions } from '@/services/board'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 
 export function useBoards() {
-  const { createNewBoard, fetchBoards, deleteBoard } = BoardActions()
+  const { startDeleteBoard, startFetchBoards, startCreateNewBoard } =
+    BoardActions()
   const dispatch = useAppDispatch()
   const { boards } = useAppSelector((state: RootState) => state.boards)
   const [error, setError] = useState<string>('')
@@ -19,7 +24,7 @@ export function useBoards() {
       const token = await getToken()
       try {
         setLoading(true)
-        const userBoards = await fetchBoards({ token })
+        const userBoards = await startFetchBoards({ token })
         dispatch(setUserBoards(userBoards))
       } catch (error) {
         if (error instanceof Error) {
@@ -42,7 +47,7 @@ export function useBoards() {
     try {
       const token = await getToken()
       if (token) {
-        const { newBoard } = await createNewBoard({
+        const { newBoard } = await startCreateNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
           token
@@ -57,14 +62,16 @@ export function useBoards() {
     }
   }
 
-  const removeBoard = async ({ boardId }) => {
+  const deleteBoard = async ({ boardId }) => {
+    console.log('removeBoard:', boardId)
     try {
       const token = await getToken()
       if (token) {
-        await deleteBoard({
+        const { deletedBoard } = await startDeleteBoard({
           boardId,
           token
         })
+        dispatch(removeBoard({ boardId: deletedBoard._id }))
       }
     } catch (error) {
       console.log(error)
@@ -76,6 +83,6 @@ export function useBoards() {
     loading,
     error,
     addNewBoard,
-    removeBoard
+    deleteBoard
   }
 }

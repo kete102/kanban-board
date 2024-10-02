@@ -13,7 +13,7 @@ interface Props {
 
 export const BoardsContainer = ({ toggleOpenModal }: Props) => {
   const { boards } = useAppSelector((state: RootState) => state.boards) || []
-  const { removeBoard } = useBoards()
+  const { deleteBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
 
@@ -21,15 +21,17 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
     setIsOpen(prevState => !prevState)
   }
 
-  const handleDelete = ({ boardId }) => {
+  const handleDelete = ({ id }) => {
     toggleModal()
-    setSelectedBoard(boardId)
+    setSelectedBoard(id)
+    console.log('Handle delete', id)
   }
 
   const confirmDeleteBoard = () => {
     console.log(selectedBoard)
+
     if (selectedBoard) {
-      removeBoard({ boardId: selectedBoard })
+      deleteBoard({ boardId: selectedBoard })
       toggleModal()
       setSelectedBoard(null)
     }
@@ -64,12 +66,12 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
           ></span>
         </button>
       </div>
-      <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:justify-center lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
         {boards.map((board: Board, index) => (
           <BoardItem
             key={index}
             board={board}
-            onDelete={() => handleDelete({ boardId: board.boardId })}
+            onDelete={() => handleDelete({ id: board.boardId })}
           />
         ))}
       </div>
