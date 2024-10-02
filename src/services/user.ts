@@ -13,9 +13,10 @@ export function UserActions() {
    * @returns UserId: The signed in user id
    * */
   const saveUserData = async () => {
-    const token = await getToken()
-
+    console.log('Save user Data')
     try {
+      const token = await getToken()
+      if (!token) return
       const res = await fetch('http://localhost:3000/api/auth', {
         method: 'GET',
         headers: {

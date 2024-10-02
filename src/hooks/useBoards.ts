@@ -1,44 +1,39 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { RootState } from '@/app/store'
+import { useAppDispatch } from '@/app/hooks'
 import {
   addBoard,
   removeBoard,
   setUserBoards
 } from '@/features/board/boardSlice'
-import { BoardActions } from '@/services/board'
+import { boardActions } from '@/services/board'
 import { useAuth } from '@clerk/clerk-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export function useBoards() {
   const { startDeleteBoard, startFetchBoards, startCreateNewBoard } =
-    BoardActions()
+    boardActions()
   const dispatch = useAppDispatch()
-  const { boards } = useAppSelector((state: RootState) => state.boards)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const { getToken } = useAuth()
 
-  useEffect(() => {
-    const getBoards = async () => {
+  const getBoards = useCallback(async () => {
+    console.log('Get user Boards')
+    try {
       const token = await getToken()
-      try {
-        setLoading(true)
-        const userBoards = await startFetchBoards({ token })
-        dispatch(setUserBoards(userBoards))
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message)
-        } else {
-          setError('An expected error ocurred')
-        }
-      } finally {
-        setLoading(false)
+      if (!token) return
+      setLoading(true)
+      const userBoards = await startFetchBoards({ token })
+      dispatch(setUserBoards(userBoards))
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError('An expected error ocurred')
       }
+    } finally {
+      setLoading(false)
     }
-
-    getBoards()
-  }, [dispatch])
+  }, [dispatch, getToken, startFetchBoards])
 
   const addNewBoard = async (boardData: {
     boardTitle: string
@@ -79,9 +74,9 @@ export function useBoards() {
   }
 
   return {
-    boards,
     loading,
     error,
+    getBoards,
     addNewBoard,
     deleteBoard
   }

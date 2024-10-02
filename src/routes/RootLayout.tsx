@@ -20,9 +20,7 @@ export const RootLayout = () => {
 
   return (
     <Container>
-      {/* <MainContent> */}
       <Outlet />
-      {/* </MainContent> */}
     </Container>
   )
 }

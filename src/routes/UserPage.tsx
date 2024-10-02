@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { BoardsContainer, MainContent, NewBoardModal } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
 import { useEffect, useState } from 'react'
 
 export const UserPage = () => {
-  const { addNewBoard } = useBoards()
+  const { addNewBoard, getBoards } = useBoards()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleOpenModal = () => {
     setIsModalOpen(prevState => !prevState)
@@ -21,8 +22,8 @@ export const UserPage = () => {
   }
 
   useEffect(() => {
-    //TODO: Fetch user boards
-  })
+    getBoards()
+  }, [])
 
   return (
     <MainContent

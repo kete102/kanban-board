@@ -7,8 +7,9 @@ interface BoardFromApi {
   boardDescription: string
 }
 
-export function BoardActions() {
+export function boardActions() {
   const startFetchBoards = async ({ token }) => {
+    console.log('startFetchBoards')
     try {
       const response = await fetch(`http://localhost:3000/api/boards`, {
         method: 'GET',
