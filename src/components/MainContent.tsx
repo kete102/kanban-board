@@ -9,7 +9,7 @@ export const MainContent = ({ children, style }: Props) => {
   return (
     <div
       id="main-content"
-      className={`mb-6 grid max-h-full w-10/12 max-w-full flex-1 rounded-md bg-zinc-900 p-10 ${style}`}
+      className={`mx-auto mb-6 flex max-h-full w-full max-w-full flex-col items-center justify-center rounded-md ${style}`}
     >
       {children}
     </div>

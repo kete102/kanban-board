@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const BoardsContainer = ({ toggleOpenModal }: Props) => {
-  const { boards } = useAppSelector((state: RootState) => state.boards) || []
+  const { boards } = useAppSelector((state: RootState) => state.boards)
   const { deleteBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
@@ -40,27 +40,29 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
   return (
     <div
       id="boards-container"
-      className="h-screen max-w-full flex-1 overflow-y-auto rounded-md bg-zinc-950 px-8 py-3"
+      className="flex h-auto min-h-fit w-fit items-center justify-center overflow-y-scroll rounded-md px-4 py-3 lg:max-w-full"
     >
-      <div className="mb-6 w-full text-center">
-        <button
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:bg-indigo-700 hover:shadow-xl active:scale-95"
-          onClick={toggleOpenModal}
-        >
-          Add board{' '}
-          <IoMdAddCircleOutline
-            className="transition-transform duration-300 ease-in-out hover:rotate-90"
-            size={19}
-          />
-        </button>
-      </div>
       {boards.length === 0 && (
-        <div className="mt-10 grid w-full place-content-center">
-          <p className="text-lg text-zinc-600">Add your first board!</p>
+        <div className="grid h-fit w-fit place-content-center rounded-md bg-zinc-900 p-10 text-center">
+          <section className="mb-6 w-full">
+            <p className="text-4xl text-zinc-300">Add your first board!</p>
+          </section>
+          <section className="w-full">
+            <button
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-2xl text-white shadow-lg shadow-indigo-800/50 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-indigo-700 hover:shadow-xl active:scale-95"
+              onClick={toggleOpenModal}
+            >
+              Add board
+              <IoMdAddCircleOutline
+                className="transition-transform duration-300 ease-in-out hover:rotate-90"
+                size={19}
+              />
+            </button>
+          </section>
         </div>
       )}
-      {boards.length > 0 && (
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:justify-center lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
+      {boards.length !== 0 && (
+        <div className="mx-auto grid w-fit gap-3">
           {boards.map((board: Board, index) => (
             <BoardItem
               key={index}

@@ -19,7 +19,6 @@ export function boardActions() {
       })
       if (response.ok) {
         const { boards } = await response.json()
-        //TODO: Devolver los boards como Board[]
         if (!boards) {
           throw new Error('Error fetching user boards')
         }

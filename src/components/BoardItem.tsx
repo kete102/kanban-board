@@ -13,8 +13,8 @@ export const BoardItem = ({ board, onDelete }: Props) => {
   }
 
   return (
-    <div className="flex min-h-fit max-w-64 flex-col items-start justify-between rounded-md bg-zinc-900 p-6 hover:shadow-md hover:shadow-white/25">
-      <section>
+    <div className="flex max-w-sm flex-col items-start justify-between rounded-md bg-zinc-950 px-10 py-5 shadow-lg shadow-zinc-950/40">
+      <section className="w-fit">
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
           {board.boardTitle}
         </h5>

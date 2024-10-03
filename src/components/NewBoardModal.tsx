@@ -24,14 +24,14 @@ export const NewBoardModal = ({
 }: Props) => {
   return (
     <Dialog open={isModalOpen} as="div" onClose={toggleOpenModal}>
-      <div className="fixed inset-0 top-52 z-10 w-screen overflow-y-auto">
+      <div className="fixed inset-0 top-40 z-10 w-screen overflow-y-auto">
         <div className="flex h-full flex-col items-center justify-start">
           <DialogPanel
             transition
-            className="data-[closed]:transform-[scale(95%)] w-full max-w-lg rounded-xl bg-black/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0"
+            className="data-[closed]:transform-[scale(95%)] w-5/6 rounded-xl bg-zinc-950/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0"
           >
             <form onSubmit={e => handleSubmit(e)}>
-              <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
+              <Fieldset className="space-y-6 rounded-xl p-6 sm:p-10">
                 <Legend className="text-2xl font-semibold text-white">
                   Create new board
                 </Legend>
