@@ -1,1 +1,1 @@
-- Cambiar el boton de addBoard al BoardsContainer para evitar re-renderizados
+- [] Fixear eliminar un board cuando se crea sin tener que recargar para poder hacerlo
