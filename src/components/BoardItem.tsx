@@ -1,6 +1,7 @@
 import { Board } from '@/types'
 import { BiSearch } from 'react-icons/bi'
 import { MdDeleteForever } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   board: Board
@@ -8,7 +9,9 @@ interface Props {
 }
 
 export const BoardItem = ({ board, onDelete }: Props) => {
+  const navigate = useNavigate()
   const handleBoardNavigation = () => {
+    navigate(`/boards/${board.boardId}`)
     console.log('Nav to board:', board.boardId)
   }
 
