@@ -1,13 +1,17 @@
+type ColumnType = 'todo' | 'inprogess' | 'done'
+
 export interface Task {
   taskId: string
+  userId: string
+  tasksTitle: string
   taskDescription: string
-  columnId: string
-  priority: number
+  status: ColumnType
+  priority: 'high' | 'low' | 'medium'
+  createdAt: string
 }
 
 export interface Column {
-  columnId: string
-  columnTitle: 'To do' | 'In Progress' | 'Done'
+  columnId: ColumnType
   tasks: Task[]
 }
 
@@ -15,6 +19,7 @@ export interface Board {
   boardId: string
   boardTitle: string
   boardDescription: string
+  columns: Map<ColumnType, Column>
 }
 
 interface User {

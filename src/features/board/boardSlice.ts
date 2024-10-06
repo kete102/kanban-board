@@ -19,7 +19,6 @@ export const boardSlice = createSlice({
       state.boards.push(action.payload)
     },
     removeBoard: (state, action: PayloadAction<{ boardId: string }>) => {
-      console.log('removeBoard Slice:', action.payload.boardId)
       state.boards = state.boards.filter(
         board => board.boardId !== action.payload.boardId
       )
