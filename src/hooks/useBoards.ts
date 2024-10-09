@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/app/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   addBoard,
   removeBoard,
@@ -9,6 +9,7 @@ import { useAuth } from '@clerk/clerk-react'
 import { useCallback, useState } from 'react'
 
 export function useBoards() {
+  const boards = useAppSelector(state => state.boards.boards)
   const { startDeleteBoard, startFetchBoards, startCreateNewBoard } =
     boardActions()
   const dispatch = useAppDispatch()
@@ -47,6 +48,7 @@ export function useBoards() {
           token
         })
         dispatch(addBoard(newBoard))
+        console.log('Boards state:', boards)
       } else {
         console.log('No session token provided')
         return

@@ -1,2 +1,2 @@
 export const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
-export const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT
+export const API_URL = import.meta.env.VITE_API_URl || 'http://localhost:3000'
