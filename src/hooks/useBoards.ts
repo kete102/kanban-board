@@ -17,7 +17,6 @@ export function useBoards() {
   const { getToken } = useAuth()
 
   const getBoards = useCallback(async () => {
-    console.log('Get user Boards')
     try {
       const token = await getToken()
       if (!token) return

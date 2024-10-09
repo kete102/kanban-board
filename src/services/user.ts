@@ -17,12 +17,15 @@ export function UserActions() {
     try {
       const token = await getToken()
       if (!token) return
-      const res = await fetch('http://localhost:3000/api/auth', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
+      const res = await fetch(
+        'https://kanban-baord-app-backend-production-f913.up.railway.app/api/auth',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       if (!res.ok) {
         console.error(res.statusText)
       }

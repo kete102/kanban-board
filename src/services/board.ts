@@ -9,14 +9,17 @@ interface BoardFromApi {
 
 export function boardActions() {
   const startFetchBoards = async ({ token }) => {
-    console.log('startFetchBoards')
+    console.log({ token })
     try {
-      const response = await fetch(`http://localhost:3000/api/boards`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
+      const response = await fetch(
+        `https://kanban-baord-app-backend-production-f913.up.railway.app/api/boards`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       if (response.ok) {
         const { boards } = await response.json()
         if (!boards) {
@@ -46,14 +49,17 @@ export function boardActions() {
     token: string
   }) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/boards`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ boardTitle, boardDescription })
-      })
+      const response = await fetch(
+        `https://kanban-baord-app-backend-production-f913.up.railway.app/api/boards`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ boardTitle, boardDescription })
+        }
+      )
 
       const newBoard = await response.json()
 
@@ -66,7 +72,7 @@ export function boardActions() {
   const startDeleteBoard = async ({ token, boardId }) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/boards/${boardId}`,
+        `https://kanban-baord-app-backend-production-f913.up.railway.app/api/boards/${boardId}`,
         {
           method: 'DELETE',
           headers: {
