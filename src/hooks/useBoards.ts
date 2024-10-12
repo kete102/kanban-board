@@ -1,10 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import {
-  addBoard,
-  removeBoard,
-  setUserBoards
-} from '@/features/board/boardSlice'
+import { addBoard, loadBoards, removeBoard } from '@/features/board/boardSlice'
 import { boardActions } from '@/services/board'
+import { Board } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 import { useCallback, useState } from 'react'
 
@@ -23,7 +20,7 @@ export function useBoards() {
       if (!token) return
       setLoading(true)
       const userBoards = await startFetchBoards({ token })
-      dispatch(setUserBoards(userBoards))
+      dispatch(loadBoards(userBoards))
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)
@@ -39,16 +36,18 @@ export function useBoards() {
     boardTitle: string
     boardDescription: string
   }) => {
+    console.log('Before adding', boards)
     try {
       const token = await getToken()
       if (token) {
-        const { newBoard } = await startCreateNewBoard({
+        const newBoard = await startCreateNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
           token
         })
-        dispatch(addBoard(newBoard))
-        console.log('Boards state:', boards)
+        if (newBoard) {
+          dispatch(addBoard(newBoard))
+        }
       } else {
         console.log('No session token provided')
         return

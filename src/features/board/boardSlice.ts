@@ -12,19 +12,28 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    setUserBoards: (state, action: PayloadAction<Board[]>) => {
-      state.boards = [...action.payload]
+    loadBoards: (state, action: PayloadAction<Board[]>) => {
+      return {
+        ...state,
+        boards: action.payload
+      }
     },
     addBoard: (state, action: PayloadAction<Board>) => {
-      return { ...state, boards: [...state.boards, action.payload] }
+      return {
+        ...state,
+        boards: [...state.boards, action.payload]
+      }
     },
     removeBoard: (state, action: PayloadAction<{ boardId: string }>) => {
-      state.boards = state.boards.filter(
-        board => board.boardId !== action.payload.boardId
-      )
+      return {
+        ...state,
+        boards: state.boards.filter(
+          board => board.boardId !== action.payload.boardId
+        )
+      }
     }
   }
 })
 
-export const { setUserBoards, addBoard, removeBoard } = boardSlice.actions
+export const { loadBoards, addBoard, removeBoard } = boardSlice.actions
 export default boardSlice.reducer

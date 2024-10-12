@@ -1,4 +1,5 @@
 import { API_URL } from '@/config'
+import { Board, Column, ColumnType } from '@/types'
 
 interface BoardFromApi {
   _id: string
@@ -54,8 +55,16 @@ export function boardActions() {
       })
 
       const newBoard = await response.json()
+      if (newBoard) {
+        const mappedBoard: Board = {
+          columns: Object.fromEntries(new Map<ColumnType, Column>()),
+          boardId: newBoard._id,
+          boardDescription: newBoard.boardDescription,
+          boardTitle: newBoard.boardTitle
+        }
 
-      return newBoard
+        return mappedBoard
+      }
     } catch (error) {
       console.error(error)
     }

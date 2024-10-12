@@ -27,6 +27,7 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
   }
 
   const confirmDeleteBoard = () => {
+    console.log(selectedBoard)
     if (selectedBoard) {
       deleteBoard({ boardId: selectedBoard })
       toggleModal()
