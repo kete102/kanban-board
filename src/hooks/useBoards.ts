@@ -5,7 +5,7 @@ import { useAuth } from '@clerk/clerk-react'
 import { useCallback, useState } from 'react'
 
 export function useBoards() {
-  const { loadBoards, addBoard, removeBoard } = useBoardStore()
+  const { boards, loadBoards, addBoard, removeBoard } = useBoardStore()
   const { startDeleteBoard, startFetchBoards, startCreateNewBoard } =
     boardActions()
   const [error, setError] = useState<string>('')
@@ -28,7 +28,7 @@ export function useBoards() {
     } finally {
       setLoading(false)
     }
-  }, [getToken])
+  }, [])
 
   const addNewBoard = async (boardData: {
     boardTitle: string
@@ -70,6 +70,7 @@ export function useBoards() {
   }
 
   return {
+    boards,
     loading,
     error,
     getBoards,
