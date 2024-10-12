@@ -1,3 +1,4 @@
+import useModalStore from '@/store/ModalStore'
 import {
   Description,
   Dialog,
@@ -12,18 +13,17 @@ import {
 import clsx from 'clsx'
 
 interface Props {
-  isModalOpen: boolean
-  toggleOpenModal: () => void
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const NewBoardModal = ({
-  isModalOpen,
-  toggleOpenModal,
-  handleSubmit
-}: Props) => {
+export const NewBoardModal = ({ handleSubmit }: Props) => {
+  const { modals, toggleModal } = useModalStore()
   return (
-    <Dialog open={isModalOpen} as="div" onClose={toggleOpenModal}>
+    <Dialog
+      open={modals.createBoard}
+      as="div"
+      onClose={() => toggleModal('createBoard')}
+    >
       <div className="fixed inset-0 top-40 z-10 w-screen overflow-y-auto">
         <div className="flex h-full flex-col items-center justify-start">
           <DialogPanel
@@ -40,6 +40,7 @@ export const NewBoardModal = ({
                     Cool board Name
                   </Label>
                   <Input
+                    required
                     name="boardTitle"
                     className={clsx(
                       'mt-3 block w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
@@ -55,6 +56,7 @@ export const NewBoardModal = ({
                     What's it about?
                   </Description>
                   <Textarea
+                    required
                     name="boardDescription"
                     className={clsx(
                       'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
@@ -74,7 +76,7 @@ export const NewBoardModal = ({
                   <button
                     type="button"
                     className="shadow-xs cursor-pointer rounded-lg bg-indigo-50 px-6 py-2.5 text-center text-lg font-semibold text-indigo-500 transition-all duration-500 hover:bg-indigo-100"
-                    onClick={toggleOpenModal}
+                    onClick={() => toggleModal('createBoard')}
                   >
                     Cancel
                   </button>

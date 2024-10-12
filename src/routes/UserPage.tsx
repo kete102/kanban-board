@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BoardsContainer, MainContent, NewBoardModal } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
-import { useEffect, useState } from 'react'
+import useModalStore from '@/store/ModalStore'
+import { useEffect } from 'react'
 import { IoIosAdd } from 'react-icons/io'
 
 export const UserPage = () => {
+  const { modals, toggleModal } = useModalStore()
   const { addNewBoard, getBoards, boards } = useBoards()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const toggleOpenModal = () => {
-    setIsModalOpen(prevState => !prevState)
-  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -19,7 +17,7 @@ export const UserPage = () => {
       boardDescription: formData.get('boardDescription') as string
     }
     addNewBoard(boardData)
-    toggleOpenModal()
+    toggleModal('createBoard')
   }
 
   useEffect(() => {
@@ -28,12 +26,14 @@ export const UserPage = () => {
 
   return (
     <MainContent
-      style={isModalOpen ? 'blur-sm bg-white/95 pointer-events-none' : ''}
+      style={
+        modals.createBoard ? 'blur-sm bg-white/95 pointer-events-none' : ''
+      }
     >
       {boards.length !== 0 && (
         <button
           className="fixed bottom-12 right-12 z-10 inline-flex items-center rounded-full bg-indigo-600 p-1 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:bg-indigo-700 hover:shadow-xl active:scale-95 md:px-5 md:py-2.5"
-          onClick={toggleOpenModal}
+          onClick={() => toggleModal('createBoard')}
         >
           <IoIosAdd
             size={`${45}`}
@@ -42,12 +42,8 @@ export const UserPage = () => {
           <span className="hidden md:inline">Add board</span>
         </button>
       )}
-      <NewBoardModal
-        toggleOpenModal={toggleOpenModal}
-        handleSubmit={handleSubmit}
-        isModalOpen={isModalOpen}
-      />
-      <BoardsContainer toggleOpenModal={toggleOpenModal} />
+      <NewBoardModal handleSubmit={handleSubmit} />
+      <BoardsContainer />
     </MainContent>
   )
 }

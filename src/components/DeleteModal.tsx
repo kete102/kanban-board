@@ -1,15 +1,16 @@
+import useModalStore from '@/store/ModalStore'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 
 interface Props {
   onConfirm: () => void
   onCancel: () => void
-  isOpen: boolean
 }
 
-export const DeleteModal = ({ isOpen, onConfirm, onCancel }: Props) => {
+export const DeleteModal = ({ onConfirm, onCancel }: Props) => {
+  const { modals } = useModalStore()
   return (
     <Dialog
-      open={isOpen}
+      open={modals.deleteBoard}
       as="div"
       className="relative z-10 focus:outline-none"
       onClose={onCancel}

@@ -1,27 +1,20 @@
 import { useBoards } from '@/hooks/useBoards'
 import useBoardStore from '@/store/BoardStore'
+import useModalStore from '@/store/ModalStore'
 import { Board } from '@/types'
 import { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { BoardItem } from './BoardItem'
 import { DeleteModal } from './DeleteModal'
 
-interface Props {
-  toggleOpenModal: () => void
-}
-
-export const BoardsContainer = ({ toggleOpenModal }: Props) => {
+export const BoardsContainer = () => {
+  const { toggleModal } = useModalStore()
   const { boards } = useBoardStore()
   const { deleteBoard } = useBoards()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
 
-  const toggleModal = () => {
-    setIsOpen(prevState => !prevState)
-  }
-
-  const handleDelete = ({ id }) => {
-    toggleModal()
+  const handleDeleteTasks = ({ id }) => {
+    toggleModal('deleteBoard')
     setSelectedBoard(id)
   }
 
@@ -29,7 +22,7 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
     console.log(selectedBoard)
     if (selectedBoard) {
       deleteBoard({ boardId: selectedBoard })
-      toggleModal()
+      toggleModal('deleteBoard')
       setSelectedBoard(null)
     }
   }
@@ -51,7 +44,7 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
           <section className="w-full">
             <button
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-2xl text-white shadow-lg shadow-indigo-800/50 transition-all duration-75 ease-in-out hover:scale-105 hover:bg-indigo-700 hover:shadow-xl active:scale-95"
-              onClick={toggleOpenModal}
+              onClick={() => toggleModal('createBoard')}
             >
               Add board
               <IoMdAddCircleOutline
@@ -65,18 +58,13 @@ export const BoardsContainer = ({ toggleOpenModal }: Props) => {
       {boards.length !== 0 && (
         <div className="mx-auto grid w-fit gap-3">
           {boards.map((board: Board, index) => (
-            <BoardItem
-              key={index}
-              board={board}
-              onDelete={() => handleDelete({ id: board.boardId })}
-            />
+            <BoardItem key={index} board={board} onDelete={handleDeleteTasks} />
           ))}
         </div>
       )}
       <DeleteModal
-        isOpen={isOpen}
         onConfirm={confirmDeleteBoard}
-        onCancel={toggleModal}
+        onCancel={() => toggleModal('deleteBoard')}
       />
     </div>
   )
