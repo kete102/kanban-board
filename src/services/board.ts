@@ -1,5 +1,6 @@
 import { API_URL } from '@/config'
 import { Board, Column, ColumnType } from '@/types'
+import axios from 'axios'
 
 interface BoardFromApi {
   _id: string
