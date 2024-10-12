@@ -1,26 +1,24 @@
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { addBoard, loadBoards, removeBoard } from '@/features/board/boardSlice'
+/* eslint-disable react-hooks/exhaustive-deps */
 import { boardActions } from '@/services/board'
-import { Board } from '@/types'
+import useBoardStore from '@/store/BoardStore'
 import { useAuth } from '@clerk/clerk-react'
 import { useCallback, useState } from 'react'
 
 export function useBoards() {
-  const boards = useAppSelector(state => state.boards.boards)
+  const { loadBoards, addBoard, removeBoard } = useBoardStore()
   const { startDeleteBoard, startFetchBoards, startCreateNewBoard } =
     boardActions()
-  const dispatch = useAppDispatch()
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const { getToken } = useAuth()
 
   const getBoards = useCallback(async () => {
+    const token = await getToken()
     try {
-      const token = await getToken()
       if (!token) return
       setLoading(true)
       const userBoards = await startFetchBoards({ token })
-      dispatch(loadBoards(userBoards))
+      loadBoards(userBoards)
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)
@@ -30,13 +28,12 @@ export function useBoards() {
     } finally {
       setLoading(false)
     }
-  }, [dispatch, getToken, startFetchBoards])
+  }, [getToken])
 
   const addNewBoard = async (boardData: {
     boardTitle: string
     boardDescription: string
   }) => {
-    console.log('Before adding', boards)
     try {
       const token = await getToken()
       if (token) {
@@ -46,7 +43,7 @@ export function useBoards() {
           token
         })
         if (newBoard) {
-          dispatch(addBoard(newBoard))
+          addBoard(newBoard)
         }
       } else {
         console.log('No session token provided')
@@ -58,7 +55,6 @@ export function useBoards() {
   }
 
   const deleteBoard = async ({ boardId }) => {
-    console.log('removeBoard:', boardId)
     try {
       const token = await getToken()
       if (token) {
@@ -66,7 +62,7 @@ export function useBoards() {
           boardId,
           token
         })
-        dispatch(removeBoard({ boardId: deletedBoard._id }))
+        removeBoard(deletedBoard._id)
       }
     } catch (error) {
       console.log(error)

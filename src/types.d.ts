@@ -25,5 +25,5 @@ export interface Board {
 interface User {
   userId: string
   userName: string
-  boards: Board[]
+  avatarImage: string
 }

@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useAppSelector } from '@/app/hooks'
-import { RootState } from '@/app/store'
 import { BoardsContainer, MainContent, NewBoardModal } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
+import useBoardStore from '@/store/BoardStore'
 import { useEffect, useState } from 'react'
 import { IoIosAdd } from 'react-icons/io'
 
 export const UserPage = () => {
-  const { boards } = useAppSelector((state: RootState) => state.boards)
+  const { boards } = useBoardStore()
   const { addNewBoard, getBoards } = useBoards()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleOpenModal = () => {

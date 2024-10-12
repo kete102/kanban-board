@@ -54,10 +54,10 @@ export function boardActions() {
         body: JSON.stringify({ boardTitle, boardDescription })
       })
 
-      const newBoard = await response.json()
+      const { newBoard } = await response.json()
       if (newBoard) {
         const mappedBoard: Board = {
-          columns: Object.fromEntries(new Map<ColumnType, Column>()),
+          columns: new Map<ColumnType, Column>(),
           boardId: newBoard._id,
           boardDescription: newBoard.boardDescription,
           boardTitle: newBoard.boardTitle

@@ -1,6 +1,5 @@
-import { useAppSelector } from '@/app/hooks'
-import { RootState } from '@/app/store'
 import { useBoards } from '@/hooks/useBoards'
+import useBoardStore from '@/store/BoardStore'
 import { Board } from '@/types'
 import { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -12,7 +11,7 @@ interface Props {
 }
 
 export const BoardsContainer = ({ toggleOpenModal }: Props) => {
-  const boards = useAppSelector((state: RootState) => state.boards.boards)
+  const { boards } = useBoardStore()
   const { deleteBoard } = useBoards()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
