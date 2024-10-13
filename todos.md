@@ -1,1 +1,10 @@
-- [] Fixear eliminar un board cuando se crea sin tener que recargar para poder hacerlo
+# 📝 TODOS:
+
+- [] Navegación y vista detalle board
+- [] Modal para añadir tareas
+- [] Modal para eliminar tareas
+
+## Mejoras:
+
+- ✅ Migrar a Zustand
+- [] Usar React Query con axios
