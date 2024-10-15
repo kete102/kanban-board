@@ -7,6 +7,7 @@ interface BoardState {
   addBoard: (newBoard: Board) => void
   removeBoard: (boardId: string) => void
 }
+
 const useBoardStore = create<BoardState>(set => ({
   boards: [],
   loadBoards: boards => set({ boards }),

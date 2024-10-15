@@ -1,8 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { useTasks } from '@/hooks/useTasks'
+import useBoardStore from '@/store/BoardStore'
 
 export const BoardPage = () => {
-  const { id } = useParams()
-  console.log(id)
+  const { tasks } = useTasks()
+  const { boards } = useBoardStore()
+  console.log(boards)
+  console.log(tasks.data)
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks
   return (
     <div>
