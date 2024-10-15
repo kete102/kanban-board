@@ -18,6 +18,7 @@ export function useBoards() {
       if (!token) return
       setLoading(true)
       const userBoards = await startFetchBoards({ token })
+      //TODO: logica para mapear las columnas en su forma correcta
       loadBoards(userBoards)
     } catch (error) {
       if (error instanceof Error) {
@@ -40,10 +41,12 @@ export function useBoards() {
         const newBoard = await startCreateNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
+          columns: Object.fromEntries(new Map()),
           token
         })
         if (newBoard) {
           addBoard(newBoard)
+          console.log(newBoard)
         }
       } else {
         console.log('No session token provided')

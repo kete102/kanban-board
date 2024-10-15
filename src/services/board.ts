@@ -5,6 +5,7 @@ interface BoardFromApi {
   _id: string
   boardTitle: string
   boardDescription: string
+  columns: Map<ColumnType, Column>
 }
 
 export function boardActions() {
@@ -25,7 +26,8 @@ export function boardActions() {
           return {
             boardId: board._id,
             boardDescription: board.boardDescription,
-            boardTitle: board.boardTitle
+            boardTitle: board.boardTitle,
+            columns: board.columns
           }
         })
       }
@@ -38,10 +40,12 @@ export function boardActions() {
   const startCreateNewBoard = async ({
     boardTitle,
     boardDescription,
-    token
+    token,
+    columns
   }: {
     boardTitle: string
     boardDescription: string
+    columns: Map<ColumnType, Column>
     token: string
   }) => {
     try {
@@ -51,7 +55,7 @@ export function boardActions() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ boardTitle, boardDescription })
+        body: JSON.stringify({ boardTitle, boardDescription, columns })
       })
 
       const { newBoard } = await response.json()
@@ -88,5 +92,9 @@ export function boardActions() {
       console.log(error)
     }
   }
-  return { startFetchBoards, startCreateNewBoard, startDeleteBoard }
+  return {
+    startFetchBoards,
+    startCreateNewBoard,
+    startDeleteBoard
+  }
 }

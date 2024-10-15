@@ -1,30 +1,29 @@
-import { loadUserTasks } from '@/services/task'
-// import { loadTasks } from '@/store/TaskStore'
+import { loadBoardTasks } from '@/services/task'
+import useColumnStore from '@/store/ColumnStore'
 import { useAuth } from '@clerk/clerk-react'
-import { useQuery } from '@tanstack/react-query'
 
 export function useTasks() {
+  const { loadColumns } = useColumnStore()
   const { getToken } = useAuth()
-  const tasks = useQuery({
-    queryKey: ['loadUserTasks'],
-    queryFn: async () => {
-      const token = await getToken()
-      if (token) {
-        const result = await loadUserTasks({ token })
-        //TODO: loadTasks
-        return result
+
+  const fetchUserTasks = async ({ boardId }: { boardId: string }) => {
+    const token = await getToken()
+    try {
+      if (token && boardId) {
+        const result = await loadBoardTasks({ boardId, token })
+        loadColumns(result)
+        console.log(result)
       }
+    } catch (error) {
+      console.log({ error })
     }
-  })
-  if (tasks.isSuccess) {
-    //TODO: dispatch de las tasks
   }
-  //TODO:get all users tasks
+  //TODO:
   // const fetchTaskById = () => {}
   // const updateTask = () => {}
   // const deleteTask = () => {}
 
   return {
-    tasks
+    fetchUserTasks
   }
 }
