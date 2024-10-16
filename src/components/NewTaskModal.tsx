@@ -115,7 +115,7 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
                       <RadioGroup
                         value={selected}
                         name="priority"
-                        onChange={setSelected}
+                        onChange={() => setSelected}
                         aria-label="Server size"
                         className="flex w-full flex-row flex-wrap items-start justify-between gap-y-2 md:flex-row md:items-center"
                       >
