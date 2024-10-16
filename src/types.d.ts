@@ -3,7 +3,7 @@ export type ColumnType = 'todo' | 'inprogess' | 'done'
 export interface Task {
   taskId: string
   userId: string
-  tasksTitle: string
+  taskTitle: string
   taskDescription: string
   status: ColumnType
   priority: 'high' | 'low' | 'medium'

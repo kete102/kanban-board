@@ -1,5 +1,6 @@
-import { loadBoardTasks } from '@/services/task'
+import { loadBoardTasks, startCreateTask } from '@/services/task'
 import useColumnStore from '@/store/ColumnStore'
+import { Column, ColumnType, Task } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 
 export function useTasks() {
@@ -10,8 +11,14 @@ export function useTasks() {
     const token = await getToken()
     try {
       if (token && boardId) {
-        const result = await loadBoardTasks({ boardId, token })
-        loadColumns(result)
+        const result = await loadBoardTasks({
+          boardId,
+          token
+        })
+        if (result) {
+          const mappedColumns: Map<ColumnType, Column> = result
+          loadColumns(mappedColumns)
+        }
         console.log(result)
       }
     } catch (error) {
@@ -19,11 +26,41 @@ export function useTasks() {
     }
   }
   //TODO:
+  const createNewTask = async ({
+    taskTitle,
+    taskDescription,
+    priority,
+    status,
+    boardId
+  }) => {
+    const token = await getToken()
+    const newTask = {
+      taskTitle,
+      taskDescription,
+      status,
+      priority,
+      createdAt: JSON.stringify(new Date())
+    }
+
+    try {
+      if (token) {
+        const result = await startCreateTask({
+          token,
+          newTaskData: newTask,
+          boardId
+        })
+        console.log(result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   // const fetchTaskById = () => {}
   // const updateTask = () => {}
   // const deleteTask = () => {}
 
   return {
-    fetchUserTasks
+    fetchUserTasks,
+    createNewTask
   }
 }

@@ -9,8 +9,6 @@ interface ColumnState {
   updateTask: (updatedTask: Task) => void
 }
 
-const columnsType: ColumnType[] = ['todo', 'done', 'inprogess']
-
 const useColumnStore = create<ColumnState>(set => ({
   columns: new Map<ColumnType, Column>(),
 

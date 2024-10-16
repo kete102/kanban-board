@@ -1,4 +1,5 @@
 import { API_URL } from '@/config'
+import { Column, ColumnType } from '@/types'
 import axios from 'axios'
 
 export const loadBoardTasks = async ({
@@ -16,12 +17,48 @@ export const loadBoardTasks = async ({
     })
     if (response.data) {
       const { objectColumns } = await response.data
-
-      const columnsMap = new Map(Object.entries(objectColumns))
-      return columnsMap
+      if (objectColumns) {
+        const columnsMap = new Map<ColumnType, Column>(
+          Object.entries(objectColumns) as [ColumnType, Column][]
+        )
+        return columnsMap
+      }
     } else {
       throw new Error('Error al cargar las tasks')
     }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+interface StartCreateTaskProps {
+  token: string
+  newTaskData: {
+    taskTitle: string
+    taskDescription: string
+    status: string
+    priority: string
+    createdAt: string
+  }
+  boardId: string
+}
+export const startCreateTask = async ({
+  token,
+  newTaskData,
+  boardId
+}: StartCreateTaskProps) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/tasks/${boardId}`,
+      newTaskData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    console.log(response)
   } catch (error) {
     console.log(error)
   }

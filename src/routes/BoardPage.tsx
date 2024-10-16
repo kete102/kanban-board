@@ -5,29 +5,46 @@ import { useTasks } from '@/hooks/useTasks'
 import useColumnStore from '@/store/ColumnStore'
 import useModalStore from '@/store/ModalStore'
 import { Task } from '@/types'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FcPlus } from 'react-icons/fc'
 import { useParams } from 'react-router-dom'
 
 export const BoardPage = () => {
+  const [selectedColumn, setSelectedColumn] = useState<string>('')
   const { modals, toggleModal } = useModalStore()
   const { columns } = useColumnStore()
   const { id } = useParams()
-  const { fetchUserTasks } = useTasks()
+  const { fetchUserTasks, createNewTask } = useTasks()
+
+  const handleAddTask = ({ columnId }: { columnId: string }) => {
+    console.log('Add Task')
+    setSelectedColumn(columnId)
+    toggleModal('createTask')
+  }
+
+  interface SubmitProps {
+    event: React.FormEvent<HTMLFormElement>
+  }
+
+  const handleSubmit = ({ event }: SubmitProps) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const taskData = {
+      taskTitle: formData.get('taskTitle') as string,
+      taskDescription: formData.get('taskDescription') as string,
+      priority: formData.get('priority') as string,
+      status: selectedColumn,
+      boardId: id
+    }
+    createNewTask(taskData)
+    toggleModal('createTask')
+    setSelectedColumn('')
+  }
 
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks
   useEffect(() => {
     if (id) fetchUserTasks({ boardId: id })
   }, [])
-
-  const handleAddTask = () => {
-    console.log('Add Task')
-    toggleModal('createTask')
-  }
-
-  const handleSubmit = () => {
-    console.log('submit')
-  }
 
   return (
     <MainContent
@@ -45,7 +62,7 @@ export const BoardPage = () => {
               <FcPlus
                 size={25}
                 className="cursor-pointer hover:scale-125"
-                onClick={handleAddTask}
+                onClick={() => handleAddTask({ columnId: column.columnId })}
               />
             </h4>
             {column.tasks.map((task: Task) => (
@@ -56,7 +73,7 @@ export const BoardPage = () => {
           </div>
         ))}
       </div>
-      <NewTaskModal handleSubmit={handleSubmit} />
+      <NewTaskModal handleSubmit={event => handleSubmit({ event })} />
     </MainContent>
   )
 }

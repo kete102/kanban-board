@@ -33,7 +33,7 @@ export const UserPage = () => {
       {boards.length !== 0 && (
         <button
           className="fixed bottom-12 right-12 z-10 inline-flex items-center rounded-full bg-indigo-600 p-1 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:bg-indigo-700 hover:shadow-xl active:scale-95 md:px-5 md:py-2.5"
-          onClick={() => toggleModal('createBoard')}
+          onClick={() => toggleModal}
         >
           <IoIosAdd
             size={`${45}`}
