@@ -34,6 +34,7 @@ export const BoardPage = () => {
       taskDescription: formData.get('taskDescription') as string,
       priority: formData.get('priority') as string,
       status: selectedColumn,
+      endDate: formData.get('taskEndDate') as string,
       boardId: id
     }
     createNewTask(taskData)

@@ -1,6 +1,6 @@
 import { loadBoardTasks, startCreateTask } from '@/services/task'
 import useColumnStore from '@/store/ColumnStore'
-import { Column, ColumnType, Task } from '@/types'
+import { Column, ColumnType } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 
 export function useTasks() {
@@ -31,7 +31,8 @@ export function useTasks() {
     taskDescription,
     priority,
     status,
-    boardId
+    boardId,
+    endDate
   }) => {
     const token = await getToken()
     const newTask = {
@@ -39,7 +40,8 @@ export function useTasks() {
       taskDescription,
       status,
       priority,
-      createdAt: JSON.stringify(new Date())
+      endDate,
+      createdAt: new Date().toISOString().split('T')[0]
     }
 
     try {

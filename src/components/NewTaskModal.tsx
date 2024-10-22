@@ -14,7 +14,7 @@ import {
 } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
@@ -58,7 +58,19 @@ const priorities: Priority[] = [
 
 export const NewTaskModal = ({ handleSubmit }: Props) => {
   const [selected, setSelected] = useState()
+  const [endDate, setEndDate] = useState<string>('')
   const { modals, toggleModal } = useModalStore()
+  const currentDate = new Date().toISOString().split('T')[0]
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(event.target.value)
+  }
+
+  useEffect(() => {
+    setEndDate(currentDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Dialog
       open={modals.createTask}
@@ -104,6 +116,23 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
                       'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
                     )}
                     rows={3}
+                  />
+                </Field>
+                <Field>
+                  <Label
+                    htmlFor="endDate"
+                    className="text-2xl font-medium text-white"
+                  >
+                    End date
+                  </Label>
+                  <input
+                    onChange={event => handleDateChange(event)}
+                    type="date"
+                    id="endDate"
+                    name="taskEndDate"
+                    min="2024-01-01"
+                    max="2100-01-01"
+                    value={endDate === '' ? currentDate : endDate}
                   />
                 </Field>
                 <Field>
