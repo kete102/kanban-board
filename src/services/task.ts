@@ -1,5 +1,4 @@
 import { API_URL } from '@/config'
-import { Column, ColumnType } from '@/types'
 import axios from 'axios'
 
 export const loadBoardTasks = async ({
@@ -10,22 +9,14 @@ export const loadBoardTasks = async ({
   boardId: string
 }) => {
   try {
-    const response = await axios.get(`${API_URL}/api/tasks/${boardId}`, {
+    const { data } = await axios.get(`${API_URL}/api/tasks/${boardId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    if (response.data) {
-      const { objectColumns } = await response.data
-      if (objectColumns) {
-        const columnsMap = new Map<ColumnType, Column>(
-          Object.entries(objectColumns) as [ColumnType, Column][]
-        )
-        return columnsMap
-      }
-    } else {
-      throw new Error('Error al cargar las tasks')
-    }
+    const tasks = data.tasks
+    console.log('Get tasks service: ', tasks)
+    return tasks
   } catch (error) {
     console.log(error)
   }
@@ -48,7 +39,7 @@ export const startCreateTask = async ({
   boardId
 }: StartCreateTaskProps) => {
   try {
-    const response = await axios.post(
+    const { data } = await axios.post(
       `${API_URL}/api/tasks/${boardId}`,
       newTaskData,
       {
@@ -58,8 +49,9 @@ export const startCreateTask = async ({
         }
       }
     )
-    console.log(response)
-    return response
+
+    console.log('New task created: ', { data })
+    return data
   } catch (error) {
     console.log(error)
   }
