@@ -14,7 +14,10 @@ import {
 } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { FcCalendar } from 'react-icons/fc'
+import DatePicker, { DateValueType } from 'react-tailwindcss-datepicker'
+import './style.css'
 
 interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
@@ -56,20 +59,23 @@ const priorities: Priority[] = [
   }
 ]
 
+const DEFAULT_START_DATE = new Date()
+const DEFAULT_END_DATE = new Date(DEFAULT_START_DATE)
+DEFAULT_END_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
+
 export const NewTaskModal = ({ handleSubmit }: Props) => {
   const [selected, setSelected] = useState()
-  const [endDate, setEndDate] = useState<string>('')
+  const [date, setDate] = useState<DateValueType>({
+    startDate: DEFAULT_START_DATE,
+    endDate: null
+  })
   const { modals, toggleModal } = useModalStore()
-  const currentDate = new Date().toISOString().split('T')[0]
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEndDate(event.target.value)
+  const handleDateChange = (event: DateValueType) => {
+    if (event?.endDate) {
+      setDate(event)
+    }
   }
-
-  useEffect(() => {
-    setEndDate(currentDate)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <Dialog
@@ -83,7 +89,7 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
             transition
             className="data-[closed]:transform-[scale(95%)] w-full max-w-md rounded-xl bg-zinc-950/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0 md:max-w-xl"
           >
-            <form onSubmit={e => handleSubmit(e)}>
+            <form onSubmit={event => handleSubmit(event)}>
               <Fieldset className="space-y-6 rounded-xl p-6 sm:p-10">
                 <Legend className="text-2xl font-semibold text-white">
                   Create new task
@@ -119,21 +125,31 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
                   />
                 </Field>
                 <Field>
-                  <Label
-                    htmlFor="endDate"
-                    className="text-2xl font-medium text-white"
-                  >
-                    End date
-                  </Label>
-                  <input
-                    onChange={event => handleDateChange(event)}
-                    type="date"
-                    id="endDate"
-                    name="taskEndDate"
-                    min="2024-01-01"
-                    max="2100-01-01"
-                    value={endDate === '' ? currentDate : endDate}
-                  />
+                  <div className="flex flex-col gap-2 align-middle">
+                    <Label
+                      htmlFor="endDate"
+                      className="inline-flex items-center gap-2 text-2xl font-medium text-white"
+                    >
+                      <FcCalendar />
+                      End date
+                    </Label>
+                    <Description className="text-md/6 mt-2 text-white/50">
+                      Choose and ending date for the task
+                    </Description>
+                    <div className="w-fit">
+                      <DatePicker
+                        inputClassName="text-white rounded-md outline-none font-medium text-lg p-2 bg-white/5 focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+                        placeholder={'Select a date'}
+                        useRange={false}
+                        asSingle={true}
+                        popoverDirection="up"
+                        primaryColor="indigo"
+                        value={date}
+                        onChange={event => handleDateChange(event)}
+                        inputName="taskEndDate"
+                      />
+                    </div>
+                  </div>
                 </Field>
                 <Field>
                   <Label className="text-2xl font-medium text-white">

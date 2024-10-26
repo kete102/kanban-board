@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MainContent } from '@/components'
 import { NewTaskModal } from '@/components/NewTaskModal'
+import { TaskItem } from '@/components/TaskItem'
 import { useTasks } from '@/hooks/useTasks'
 import useColumnStore from '@/store/ColumnStore'
 import useModalStore from '@/store/ModalStore'
@@ -17,7 +18,6 @@ export const BoardPage = () => {
   const { fetchUserTasks, createNewTask } = useTasks()
 
   const handleAddTask = ({ columnId }: { columnId: string }) => {
-    console.log('Add Task')
     setSelectedColumn(columnId)
     toggleModal('createTask')
   }
@@ -58,18 +58,16 @@ export const BoardPage = () => {
             id={id}
             className="my-2 flex min-h-20 w-full flex-col items-center rounded-md border-zinc-100 bg-zinc-200/90 p-2 shadow-xl shadow-white md:max-w-xl lg:max-w-2xl"
           >
-            <h4 className="inline-flex h-20 w-full items-center justify-between p-2 pt-2 text-center align-middle text-xl font-bold uppercase text-zinc-600/80">
+            <h4 className="inline-flex h-20 w-full items-center justify-between p-2 pt-2 text-center align-middle text-xl font-bold uppercase text-zinc-800/80">
               {column.columnId}
               <FcPlus
-                size={25}
+                size={30}
                 className="cursor-pointer hover:scale-125"
                 onClick={() => handleAddTask({ columnId: column.columnId })}
               />
             </h4>
             {column.tasks.map((task: Task) => (
-              <div className="">
-                <h3 className="text-black">wow increible</h3>
-              </div>
+              <TaskItem task={task} key={task._id} />
             ))}
           </div>
         ))}
