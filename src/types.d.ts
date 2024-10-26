@@ -1,14 +1,15 @@
 export type ColumnType = 'todo' | 'inprogess' | 'done'
 
 export interface Task {
-  taskId: string
+  _id: string
   userId: string
+  boardId: string
   taskTitle: string
   taskDescription: string
   status: ColumnType
   priority: 'high' | 'low' | 'medium'
-  endDate: string
   createdAt: string
+  endDate: string
 }
 
 export interface Column {
