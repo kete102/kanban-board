@@ -57,8 +57,12 @@ export const BoardsContainer = () => {
       )}
       {boards.length !== 0 && (
         <div className="mx-auto grid w-fit gap-3">
-          {boards.map((board: Board, index) => (
-            <BoardItem key={index} board={board} onDelete={handleDeleteTasks} />
+          {boards.map((board: Board) => (
+            <BoardItem
+              key={board.boardId}
+              board={board}
+              onDelete={handleDeleteTasks}
+            />
           ))}
         </div>
       )}
