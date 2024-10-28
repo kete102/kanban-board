@@ -34,7 +34,7 @@ const useColumnStore = create<ColumnState>(set => ({
     set(state => {
       const updatedColumns = new Map(state.columns)
       updatedColumns.forEach(column => {
-        column.tasks = column.tasks.filter(task => task.taskId !== taskId)
+        column.tasks = column.tasks.filter(task => task._id !== taskId)
       })
       return { columns: updatedColumns }
     })
@@ -46,9 +46,7 @@ const useColumnStore = create<ColumnState>(set => ({
       const updatedColumns = new Map(state.columns)
       updatedColumns.forEach(column => {
         column.tasks = column.tasks.map(task =>
-          task.taskId === updatedTask.taskId
-            ? { ...task, ...updatedTask }
-            : task
+          task._id === updatedTask._id ? { ...task, ...updatedTask } : task
         )
       })
       return { columns: updatedColumns }
