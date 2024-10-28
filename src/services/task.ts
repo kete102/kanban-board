@@ -15,7 +15,6 @@ export const loadBoardTasks = async ({
       }
     })
     const tasks = data.tasks
-    console.log('Get tasks service: ', tasks)
     return tasks
   } catch (error) {
     console.log(error)
