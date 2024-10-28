@@ -25,16 +25,16 @@ export const TaskItem = ({ task }: Props) => {
         <div className="flex items-center gap-3">
           <CiEdit
             size={23}
-            className="cursor-pointer lg:opacity-0 lg:group-hover:opacity-100"
+            className="cursor-pointer transition-all lg:opacity-0 lg:group-hover:opacity-100"
           />
           <CiTrash
             size={23}
-            className="cursor-pointer lg:opacity-0 lg:group-hover:opacity-100"
+            className="cursor-pointer transition-all lg:opacity-0 lg:group-hover:opacity-100"
           />
         </div>
       </section>
       <p
-        className={clsx('text-md mb-2 text-zinc-500', {
+        className={clsx('text-md mb-2 w-full max-w-[250px] text-zinc-500', {
           'line-through': task.status === 'done'
         })}
       >
