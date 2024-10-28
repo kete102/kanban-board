@@ -30,7 +30,7 @@ function getTasksByColumns({ tasks }) {
 }
 
 export function useTasks() {
-  const { loadColumns } = useColumnStore()
+  const { loadColumns, addTask } = useColumnStore()
   const { getToken } = useAuth()
 
   const fetchUserTasks = async ({ boardId }: { boardId: string }) => {
@@ -77,7 +77,8 @@ export function useTasks() {
           newTaskData: newTask,
           boardId
         })
-        console.log(result)
+        console.log('New task: ', result)
+        addTask(result)
       }
     } catch (error) {
       console.log(error)
