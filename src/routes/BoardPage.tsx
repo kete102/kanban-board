@@ -51,7 +51,7 @@ export const BoardPage = () => {
     <MainContent
       style={modals.createTask ? 'blur-sm bg-white/95 pointer-events-none' : ''}
     >
-      <div className="mx-auto flex h-full w-full min-w-fit max-w-xs flex-col items-center justify-center gap-4 sm:max-w-md md:max-w-2xl lg:max-w-4xl lg:flex-row xl:max-w-6xl">
+      <div className="mx-auto flex h-full w-full min-w-fit max-w-xs flex-col items-start justify-center gap-4 sm:max-w-md md:max-w-2xl lg:max-w-4xl lg:flex-row xl:max-w-6xl">
         {Array.from(columns.entries()).map(([id, column]) => (
           <div
             key={id}
@@ -66,9 +66,11 @@ export const BoardPage = () => {
                 onClick={() => handleAddTask({ columnId: column.columnId })}
               />
             </h4>
-            {column.tasks.map((task: Task) => (
-              <TaskItem task={task} key={task._id} />
-            ))}
+            <div className="flex w-full flex-col gap-2">
+              {column.tasks.map((task: Task) => (
+                <TaskItem task={task} key={task._id} />
+              ))}
+            </div>
           </div>
         ))}
       </div>
