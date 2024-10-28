@@ -1,4 +1,4 @@
-export type ColumnType = 'todo' | 'inprogess' | 'done'
+export type ColumnType = 'todo' | 'inprogress' | 'done'
 
 export interface Task {
   _id: string
