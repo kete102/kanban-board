@@ -17,7 +17,6 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { FcCalendar } from 'react-icons/fc'
 import DatePicker, { DateValueType } from 'react-tailwindcss-datepicker'
-import './style.css'
 
 interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
