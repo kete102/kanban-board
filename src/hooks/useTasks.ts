@@ -1,36 +1,9 @@
 import { loadBoardTasks, startCreateTask } from '@/services/task'
-import useColumnStore from '@/store/ColumnStore'
-import { Column, ColumnType, Task } from '@/types'
+import useTaskStore from '@/store/TaskStore'
 import { useAuth } from '@clerk/clerk-react'
 
-function getTasksByColumns({ tasks }) {
-  // Definir los tipos de columnas según tu interfaz
-  const columnTypes: ColumnType[] = ['todo', 'inprogess', 'done']
-
-  // Inicializar el Map con todas las columnas
-  const columns = columnTypes.reduce((acc, columnType) => {
-    acc.set(columnType, {
-      columnId: columnType,
-      tasks: []
-    })
-    return acc
-  }, new Map<ColumnType, Column>())
-
-  // Rellenar el Map con las tareas correspondientes
-  tasks.forEach((task: Task) => {
-    if (columns.has(task.status)) {
-      columns.get(task.status)!.tasks.push(task)
-    }
-  })
-  // Convertir el Map a un objeto plano para que sea compatible con JSON
-  // const objectColumns = Object.fromEntries(columns)
-
-  //Devolver las columnas como respuesta JSON
-  return columns
-}
-
 export function useTasks() {
-  const { loadColumns, addTask } = useColumnStore()
+  const { loadTasks, addTask } = useTaskStore()
   const { getToken } = useAuth()
 
   const fetchUserTasks = async ({ boardId }: { boardId: string }) => {
@@ -42,10 +15,8 @@ export function useTasks() {
           token
         })
 
-        const mappedColumns = getTasksByColumns({ tasks })
         //TODO: Mapear las tasks en cada columan y devolver las columnas
-        console.log(mappedColumns)
-        loadColumns(mappedColumns)
+        loadTasks(tasks)
       }
     } catch (error) {
       console.log({ error })
@@ -77,8 +48,8 @@ export function useTasks() {
           newTaskData: newTask,
           boardId
         })
-        console.log('New task: ', result)
-        addTask(result)
+        const task = result.newTask
+        addTask(task)
       }
     } catch (error) {
       console.log(error)
