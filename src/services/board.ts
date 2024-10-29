@@ -1,11 +1,11 @@
 import { API_URL } from '@/config'
-import { Board, Column, ColumnType } from '@/types'
+import { Board } from '@/types'
 
 interface BoardFromApi {
   _id: string
   boardTitle: string
   boardDescription: string
-  columns: Map<ColumnType, Column>
+  createdAt: string
 }
 
 export function boardActions() {
@@ -20,14 +20,15 @@ export function boardActions() {
       if (response.ok) {
         const { boards } = await response.json()
         if (!boards) {
-          throw new Error('Error fetching user boards')
+          throw new Error('No boards')
         }
+        console.log(boards)
         return boards.map((board: BoardFromApi) => {
           return {
             boardId: board._id,
             boardDescription: board.boardDescription,
             boardTitle: board.boardTitle,
-            columns: board.columns
+            createdAt: board.createdAt
           }
         })
       }
@@ -41,12 +42,12 @@ export function boardActions() {
     boardTitle,
     boardDescription,
     token,
-    columns
+    createdAt
   }: {
     boardTitle: string
     boardDescription: string
-    columns: Map<ColumnType, Column>
     token: string
+    createdAt: string
   }) => {
     try {
       const response = await fetch(`${API_URL}/api/boards`, {
@@ -55,18 +56,21 @@ export function boardActions() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ boardTitle, boardDescription, columns })
+        body: JSON.stringify({
+          boardTitle,
+          boardDescription,
+          createdAt
+        })
       })
 
       const { newBoard } = await response.json()
       if (newBoard) {
         const mappedBoard: Board = {
-          columns: new Map<ColumnType, Column>(),
           boardId: newBoard._id,
           boardDescription: newBoard.boardDescription,
-          boardTitle: newBoard.boardTitle
+          boardTitle: newBoard.boardTitle,
+          createdAt: newBoard.createdAt
         }
-
         return mappedBoard
       }
     } catch (error) {

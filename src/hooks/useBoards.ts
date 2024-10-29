@@ -41,7 +41,7 @@ export function useBoards() {
         const newBoard = await startCreateNewBoard({
           boardTitle: boardData.boardTitle,
           boardDescription: boardData.boardDescription,
-          columns: Object.fromEntries(new Map()),
+          createdAt: new Date().toLocaleDateString(),
           token
         })
         if (newBoard) {
