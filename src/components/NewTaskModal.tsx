@@ -1,3 +1,5 @@
+import { CustomDatePicker } from '@/atom/CustomDatePicker'
+import { CustomPriorityPicker } from '@/atom/CustomPriorityPicker'
 import useModalStore from '@/store/ModalStore'
 import {
   Description,
@@ -8,62 +10,22 @@ import {
   Input,
   Label,
   Legend,
-  Radio,
-  RadioGroup,
   Textarea
 } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { FcCalendar } from 'react-icons/fc'
-import DatePicker, { DateValueType } from 'react-tailwindcss-datepicker'
+import { DateValueType } from 'react-tailwindcss-datepicker'
 
 interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
-
-interface Priority {
-  level: string
-  bg: string
-  text: string
-  checkedBg: string
-  checkedText: string
-  fill: string
-}
-
-const priorities: Priority[] = [
-  {
-    level: 'low',
-    bg: 'bg-green-100',
-    text: 'text-green-800',
-    checkedBg: 'bg-green-600',
-    checkedText: 'text-white',
-    fill: 'fill-green-600'
-  },
-  {
-    level: 'medium',
-    bg: 'bg-yellow-100',
-    text: 'text-yellow-800',
-    checkedBg: 'bg-yellow-500',
-    checkedText: 'text-white',
-    fill: 'fill-yellow-500'
-  },
-  {
-    level: 'high',
-    bg: 'bg-red-100',
-    text: 'text-red-800',
-    checkedBg: 'bg-red-500 ',
-    checkedText: 'text-white',
-    fill: 'fill-red-500'
-  }
-]
 
 const DEFAULT_START_DATE = new Date()
 const DEFAULT_END_DATE = new Date(DEFAULT_START_DATE)
 DEFAULT_END_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
 
 export const NewTaskModal = ({ handleSubmit }: Props) => {
-  const [selected, setSelected] = useState()
+  const [selected, setSelected] = useState<string>('')
   const [date, setDate] = useState<DateValueType>({
     startDate: DEFAULT_START_DATE,
     endDate: null
@@ -82,7 +44,7 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
       as="div"
       onClose={() => toggleModal('createTask')}
     >
-      <div className="md:top-42 lg:top-32sm:max-w-xl fixed inset-0 top-32 z-10 mx-auto w-screen max-w-xs overflow-y-auto sm:max-w-lg md:max-w-xl lg:max-w-3xl">
+      <div className="fixed inset-0 z-10 mx-auto grid h-full w-full max-w-md place-content-center md:max-w-xl">
         <div className="flex h-full flex-col items-center justify-start">
           <DialogPanel
             transition
@@ -123,68 +85,23 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
                     rows={3}
                   />
                 </Field>
-                <Field>
-                  <div className="flex flex-col gap-2 align-middle">
-                    <Label
-                      htmlFor="endDate"
-                      className="inline-flex items-center gap-2 text-2xl font-medium text-white"
-                    >
-                      <FcCalendar />
-                      End date
+                <section className="flex flex-row items-center gap-2">
+                  <Field>
+                    <CustomDatePicker
+                      date={date}
+                      handleDateChange={handleDateChange}
+                    />
+                  </Field>
+                  <Field>
+                    <Label className="text-2xl font-medium text-white">
+                      Priority
                     </Label>
-                    <Description className="text-md/6 mt-2 text-white/50">
-                      Choose and ending date for the task
-                    </Description>
-                    <div className="w-fit">
-                      <DatePicker
-                        inputClassName="text-white rounded-md outline-none font-medium text-lg p-2 bg-white/5 focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
-                        placeholder={'Select a date'}
-                        useRange={false}
-                        asSingle={true}
-                        popoverDirection="up"
-                        primaryColor="indigo"
-                        value={date}
-                        onChange={event => handleDateChange(event)}
-                        inputName="taskEndDate"
-                      />
-                    </div>
-                  </div>
-                </Field>
-                <Field>
-                  <Label className="text-2xl font-medium text-white">
-                    Priority
-                  </Label>
-                  <div className="mt-4 w-full">
-                    <div className="mx-auto w-full">
-                      <RadioGroup
-                        value={selected}
-                        name="priority"
-                        onChange={() => setSelected}
-                        aria-label="Server size"
-                        className="flex w-full flex-row flex-wrap items-start justify-between gap-y-2 md:flex-row md:items-center"
-                      >
-                        {priorities.map(priority => (
-                          <Radio
-                            key={priority.level}
-                            value={priority.level}
-                            className={`group relative mx-auto flex h-fit w-full min-w-fit max-w-60 cursor-pointer justify-center rounded-lg ${priority.bg} ${priority.text} px-5 py-3 align-middle shadow-md transition focus:outline-none data-[checked]:${priority.checkedBg} data-[checked]:${priority.checkedText} data-[focus]:outline-1 data-[focus]:outline-white`}
-                          >
-                            <div className="flex w-full items-center justify-between">
-                              <div className="text-md/6 text-center">
-                                <p className="font-semibold">
-                                  {priority.level}
-                                </p>
-                              </div>
-                              <CheckCircleIcon
-                                className={`${priority.fill} size-6 opacity-0 transition group-data-[checked]:opacity-100`}
-                              />
-                            </div>
-                          </Radio>
-                        ))}
-                      </RadioGroup>
-                    </div>
-                  </div>
-                </Field>
+                    <CustomPriorityPicker
+                      setSelected={setSelected}
+                      selected={selected}
+                    />
+                  </Field>
+                </section>
                 <div className="mt-5 inline-flex w-full justify-center gap-4">
                   <button
                     type="submit"

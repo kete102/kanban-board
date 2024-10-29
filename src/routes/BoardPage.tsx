@@ -6,7 +6,8 @@ import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
 import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { IoIosArrowRoundBack } from 'react-icons/io'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export const BoardPage = () => {
   const [selectedColumn, setSelectedColumn] = useState<string>('')
@@ -15,7 +16,7 @@ export const BoardPage = () => {
   const { id } = useParams()
   const { fetchUserTasks, createNewTask } = useTasks()
   const columns = useMemo(() => getTasksByColumns(), [tasks])
-
+  const navigate = useNavigate()
   interface SubmitProps {
     event: React.FormEvent<HTMLFormElement>
   }
@@ -41,12 +42,17 @@ export const BoardPage = () => {
     if (id) fetchUserTasks({ boardId: id })
   }, [])
 
-  console.log(columns)
   return (
     <MainContent
       style={modals.createTask ? 'blur-sm bg-white/95 pointer-events-none' : ''}
     >
-      <div className="mx-auto flex h-full w-full min-w-fit max-w-xs flex-col items-start justify-center gap-4 sm:max-w-md md:max-w-2xl lg:max-w-4xl lg:flex-row xl:max-w-6xl">
+      <section className="mx-auto mt-3 flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
+        <button onClick={() => navigate(-1)}>
+          <IoIosArrowRoundBack size={35} />
+        </button>
+        <h1 className="text-md font-bold">Nombre de la board</h1>
+      </section>
+      <div className="mx-auto mt-2 flex h-full w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:items-start xl:max-w-6xl">
         {Array.from(columns).map(([columnType, column]) => (
           <KanbanColumn
             key={column.columnId}

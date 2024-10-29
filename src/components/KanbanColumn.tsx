@@ -1,6 +1,5 @@
 import useModalStore from '@/store/ModalStore'
 import { Column, Task } from '@/types'
-import { useState } from 'react'
 import { FcPlus } from 'react-icons/fc'
 import { TaskItem } from './TaskItem'
 
