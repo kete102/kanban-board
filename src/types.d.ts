@@ -21,7 +21,7 @@ export interface Board {
   boardId: string
   boardTitle: string
   boardDescription: string
-  columns: Map<ColumnType, Column>
+  createdAt: string
 }
 
 interface User {
