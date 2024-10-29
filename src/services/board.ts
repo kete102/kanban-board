@@ -22,7 +22,6 @@ export function boardActions() {
         if (!boards) {
           throw new Error('No boards')
         }
-        console.log(boards)
         return boards.map((board: BoardFromApi) => {
           return {
             boardId: board._id,

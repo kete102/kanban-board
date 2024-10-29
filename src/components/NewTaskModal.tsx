@@ -13,7 +13,7 @@ import {
   Textarea
 } from '@headlessui/react'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DateValueType } from 'react-tailwindcss-datepicker'
 
 interface Props {
@@ -25,7 +25,7 @@ const DEFAULT_END_DATE = new Date(DEFAULT_START_DATE)
 DEFAULT_END_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
 
 export const NewTaskModal = ({ handleSubmit }: Props) => {
-  const [selected, setSelected] = useState<string>('')
+  const [priority, setPriority] = useState<string>('')
   const [date, setDate] = useState<DateValueType>({
     startDate: DEFAULT_START_DATE,
     endDate: null
@@ -36,6 +36,10 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
     if (event?.endDate) {
       setDate(event)
     }
+  }
+
+  const handlePriorityChange = (priorityLevel: string) => {
+    setPriority(priorityLevel)
   }
 
   return (
@@ -97,8 +101,8 @@ export const NewTaskModal = ({ handleSubmit }: Props) => {
                       Priority
                     </Label>
                     <CustomPriorityPicker
-                      setSelected={setSelected}
-                      selected={selected}
+                      changePriority={handlePriorityChange}
+                      priority={priority}
                     />
                   </Field>
                 </section>

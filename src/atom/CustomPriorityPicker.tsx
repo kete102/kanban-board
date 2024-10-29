@@ -3,19 +3,19 @@ import { Radio, RadioGroup } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
 interface Props {
-  selected: string
-  setSelected: React.Dispatch<React.SetStateAction<string>>
+  priority: string
+  changePriority: (priorityLevel: string) => void
 }
 
-export const CustomPriorityPicker = ({ selected, setSelected }: Props) => {
+export const CustomPriorityPicker = ({ priority, changePriority }: Props) => {
   return (
     <div className="mt-4 w-full">
       <div className="mx-auto w-full">
         <RadioGroup
-          value={selected}
+          value={priority}
           name="priority"
-          onChange={() => setSelected}
-          aria-label="Server size"
+          onChange={priorityLevel => changePriority(priorityLevel)}
+          aria-label="Priority level"
           className="flex w-full flex-row flex-wrap items-start justify-between gap-y-2 md:flex-row md:items-center"
         >
           {priorities.map(priority => (
