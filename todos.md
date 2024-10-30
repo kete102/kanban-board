@@ -1,24 +1,31 @@
-# 📝 TODOS:
+# 📝 **Lista de tareas**
 
-- ✅ Navegación y vista detalle board
-- ✅ Modal para añadir tareas
-- Modal para eliminar tareas
-- Añadir notificacion de email
-  cuando una tarea está próxima a terminar
+### Funcionalidades principales:
 
-## Mejoras:
+- [x] **Navegación y vista detalle** de cada board.
+- [x] **Modal** para añadir nuevas tareas.
+- [ ] **Modal** para eliminar tareas.
+- [ ] **Notificación por email** cuando una tarea está próxima a vencer *(usando react-email)*.
+- [ ] **Arrastrar y soltar (Drag & Drop)** para gestionar tareas entre columnas.
 
-- ❓ Usar React Query con axios
+---
 
-- ✅ Migrar a Zustand
-- Reestructurar store de columnas a tareas
-- Utilizar una funcion para display de las tareas en cada columna
+### Mejoras:
 
-## Today:
+- [ ] **Integración con React Query** y Axios para manejo de datos.
+- [x] **Migración a Zustand** como manejador de estado.
+- [x] **Reestructuración del store** para centrarlo en tareas, en lugar de columnas.
+- [x] **Función de display** para mostrar tareas en cada columna.
+- [ ] **Notificaciones tipo Toast** para confirmar acciones como crear, eliminar o actualizar boards/tareas *(usando react-hot-toast)*.
 
-- ✅ Añadir un calendario para fin de tarea.
-- ✅ Action para añadir tarea
-- ✅ Display de las tareas en su respectiva columna
-- ✅ TaskItem style
-- Fix display tarea al añadir una nueva
-- Action para eliminar y actualizar tareas
+---
+
+### Tareas de hoy:
+
+- [x] **Añadir calendario** para seleccionar la fecha de vencimiento de tareas.
+- [x] **Action para añadir tareas.**
+- [x] **Mostrar tareas** en sus respectivas columnas.
+- [x] **Estilizar TaskItem** para mejorar la apariencia de cada tarea.
+- [x] **Corregir el display de tareas** al añadir una nueva.
+- [ ] **Actions para eliminar y actualizar** tareas existentes.
+

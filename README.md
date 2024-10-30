@@ -1,50 +1,69 @@
-# React + TypeScript + Vite
+# 📌 Kanban Board App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Kanban Board application where users can organize their tasks across different boards. Each board consists of columns ('todo', 'inprogress', 'done') and allows users to add, edit, and delete tasks as they progress through their workflow.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multiple Boards**: Each user can create and manage multiple boards.
+- **Task Organization**: Each board has three columns:
+  - **Todo**: Tasks that need to be started.
+  - **In Progress**: Tasks currently in progress.
+  - **Done**: Completed tasks.
+- **Task Details**: Tasks have attributes such as:
+  - **Title**
+  - **Description**
+  - **Priority** (high, medium, low)
+  - **Due Date**
+- **Filtering Options**: Sort boards by date or alphabetically.
+- **Authentication**: Clerk Authentication for secure user login and management.
+- **State Management**: Zustand is used to handle app state.
+- **Drag & Drop (DnD)**: Allows tasks to be moved across columns.
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+- **Node.js** version 16+
+- **npm** version 8+ or **yarn** version 1.22+
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Installation
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. Clone this repository:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+   ```bash
+   git clone https://github.com/your-username/kanban-board-app.git
+   cd kanban-board-app
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 🛠️ Tech Stack
+
+- **Frontend**: React, Tailwind CSS
+- **UI Components**: HeadlessUI for accessible, unstyled components
+- **Icons**: Heroicons, React-icons
+- **State Management**: Zustand
+- **Drag & Drop**: DnD Context (or an alternative library for drag-and-drop functionality)
+- **Authentication**: Clerk Authentication
+- **Data Fetching**: React Query with Axios
+- **Utilities**: Day.js, clsx
+- **Dev Tools**: Vite, ESLint, Prettier
+
+## 📂 Project Structure
+
+- `src/atom`: Contains small, reusable UI components.
+- `src/components`: Contains larger, reusable UI components.
+- `src/hooks`: Custom hooks for reusable logic.
+- `src/routes`: Defines routes for different pages in the application.
+- `src/services`: Services for handling API requests and data fetching.
+- `src/store`: Zustand configuration for state management.
+- `src/utils`: Helper functions and utility files.
+
+## 📑 Available Scripts
+
+- **`npm run dev`**: Start the development server.
+- **`npm run build`**: Build the app for production.
+- **`npm run lint`**: Run linting checks.
+
+## 🌟 Future Enhancements
+
+- **Email Notifications**: Send reminders for tasks nearing their due dates (using `react-email`).
+- **Toasts**: Show success/error messages when creating, updating, or deleting tasks/boards (using `react-hot-toast`).
