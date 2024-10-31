@@ -12,10 +12,8 @@
 
 ### Mejoras:
 
-- [ ] **Integración con React Query** y Axios para manejo de datos.
-- [x] **Migración a Zustand** como manejador de estado.
-- [x] **Reestructuración del store** para centrarlo en tareas, en lugar de columnas.
-- [x] **Función de display** para mostrar tareas en cada columna.
+- [ ] **Integración con Axios** para manejo de datos.
+- [x] **Integración con Zustand** como manejador de estado.
 - [ ] **Notificaciones tipo Toast** para confirmar acciones como crear, eliminar o actualizar boards/tareas *(usando react-hot-toast)*.
 
 ---
