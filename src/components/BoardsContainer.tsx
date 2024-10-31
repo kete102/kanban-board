@@ -1,4 +1,5 @@
 import { NoBoards } from '@/atom/NoBoards'
+import { BoardItem, DeleteModal } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
 import useBoardStore from '@/store/BoardStore'
 import useModalStore from '@/store/ModalStore'
@@ -7,8 +8,6 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { useState } from 'react'
 import { IoIosAdd } from 'react-icons/io'
 import { IoChevronDown } from 'react-icons/io5'
-import { BoardItem } from './BoardItem'
-import { DeleteModal } from './DeleteModal'
 
 export const BoardsContainer = () => {
   const { toggleModal } = useModalStore()
