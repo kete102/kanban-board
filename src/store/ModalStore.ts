@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 
-type ModalType = 'createBoard' | 'deleteBoard' | 'createTask' | 'deleteTask'
+export type ModalType =
+  | 'createBoard'
+  | 'deleteBoard'
+  | 'createTask'
+  | 'deleteTask'
 
 interface ModalState {
   modals: Record<ModalType, boolean>
