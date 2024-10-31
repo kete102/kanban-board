@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { MainContent } from '@/components'
-import { KanbanColumn } from '@/components/KanbanColumn'
-import { NewTaskModal } from '@/components/NewTaskModal'
+import { CustomCreateModal, TaskModal } from '@/atom'
+import { KanbanColumn, MainContent } from '@/components'
 import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
+import { DEFAULT_START_DATE } from '@/utils/dates'
 import { useEffect, useMemo, useState } from 'react'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { useNavigate, useParams } from 'react-router-dom'
+import { DateValueType } from 'react-tailwindcss-datepicker'
 
 export const BoardPage = () => {
   const [selectedColumn, setSelectedColumn] = useState<string>('')
@@ -17,11 +18,8 @@ export const BoardPage = () => {
   const { fetchUserTasks, createNewTask } = useTasks()
   const columns = useMemo(() => getTasksByColumns(), [tasks])
   const navigate = useNavigate()
-  interface SubmitProps {
-    event: React.FormEvent<HTMLFormElement>
-  }
 
-  const handleSubmit = ({ event }: SubmitProps) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const taskData = {
@@ -35,6 +33,22 @@ export const BoardPage = () => {
     createNewTask(taskData)
     toggleModal('createTask')
     setSelectedColumn('')
+  }
+
+  const [priority, setPriority] = useState<string>('')
+  const [date, setDate] = useState<DateValueType>({
+    startDate: DEFAULT_START_DATE,
+    endDate: null
+  })
+
+  const handleDateChange = (event: DateValueType) => {
+    if (event?.endDate) {
+      setDate(event)
+    }
+  }
+
+  const handlePriorityChange = (priorityLevel: string) => {
+    setPriority(priorityLevel)
   }
 
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks
@@ -62,7 +76,18 @@ export const BoardPage = () => {
           />
         ))}
       </div>
-      <NewTaskModal handleSubmit={event => handleSubmit({ event })} />
+      <CustomCreateModal
+        handleSubmit={handleSubmit}
+        isOpen={modals.createTask}
+        modal="createTask"
+      >
+        <TaskModal
+          date={date}
+          priority={priority}
+          handleDateChange={handleDateChange}
+          handlePriorityChange={handlePriorityChange}
+        />
+      </CustomCreateModal>
     </MainContent>
   )
 }
