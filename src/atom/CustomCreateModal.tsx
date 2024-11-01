@@ -22,7 +22,7 @@ export const CustomCreateModal = ({
       <ModalContainer>
         <DialogPanel
           transition
-          className="data-[closed]:transform-[scale(95%)] w-screen max-w-sm rounded-xl bg-zinc-950/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0 md:max-w-xl"
+          className="data-[closed]:transform-[scale(95%)] h-full max-h-[550px] min-h-[450px] w-screen max-w-sm overflow-y-scroll rounded-xl bg-zinc-950/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0 md:max-w-xl"
         >
           <form onSubmit={e => handleSubmit(e)}>{children}</form>
         </DialogPanel>

@@ -28,7 +28,7 @@ export const TaskModal = ({
 }: Props) => {
   const { toggleModal } = useModalStore()
   return (
-    <Fieldset className="space-y-6 rounded-xl p-6 sm:p-10">
+    <Fieldset className="space-y-7 rounded-xl p-6 sm:p-10">
       <Legend className="text-2xl font-semibold text-white">
         Create new task
       </Legend>
