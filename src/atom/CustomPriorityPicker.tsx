@@ -16,13 +16,13 @@ export const CustomPriorityPicker = ({ priority, changePriority }: Props) => {
           name="priority"
           onChange={priorityLevel => changePriority(priorityLevel)}
           aria-label="Priority level"
-          className="flex w-full flex-row flex-wrap items-start justify-between gap-y-2 md:flex-row md:items-center"
+          className="flex w-full flex-row flex-wrap items-start justify-between gap-y-2 md:flex-col md:items-center"
         >
           {priorities.map(priority => (
             <Radio
               key={priority.level}
               value={priority.level}
-              className={`group relative mx-auto flex h-fit w-full max-w-28 cursor-pointer justify-center rounded-lg ${priority.bg} ${priority.text} px-5 py-3 align-middle shadow-md transition focus:outline-none data-[checked]:${priority.checkedBg} data-[checked]:${priority.checkedText} data-[focus]:outline-1 data-[focus]:outline-white`}
+              className={`group relative mx-auto flex h-fit w-full max-w-32 cursor-pointer justify-center rounded-lg ${priority.bg} ${priority.text} px-5 py-3 align-middle shadow-md transition focus:outline-none data-[checked]:${priority.checkedBg} data-[checked]:${priority.checkedText} data-[focus]:outline-1 data-[focus]:outline-white`}
             >
               <div className="flex w-full items-center justify-between">
                 <div className="text-md/6 text-center">

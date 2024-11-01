@@ -19,6 +19,12 @@ export const BoardPage = () => {
   const columns = useMemo(() => getTasksByColumns(), [tasks])
   const navigate = useNavigate()
 
+  const [priority, setPriority] = useState<string>('')
+  const [date, setDate] = useState<DateValueType>({
+    startDate: DEFAULT_START_DATE,
+    endDate: null
+  })
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -34,12 +40,6 @@ export const BoardPage = () => {
     toggleModal('createTask')
     setSelectedColumn('')
   }
-
-  const [priority, setPriority] = useState<string>('')
-  const [date, setDate] = useState<DateValueType>({
-    startDate: DEFAULT_START_DATE,
-    endDate: null
-  })
 
   const handleDateChange = (event: DateValueType) => {
     if (event?.endDate) {

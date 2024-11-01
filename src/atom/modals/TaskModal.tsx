@@ -60,7 +60,7 @@ export const TaskModal = ({
           rows={3}
         />
       </Field>
-      <section className="flex flex-row items-center gap-2">
+      <section className="flex flex-col items-start gap-2 md:flex-row md:gap-8">
         <Field>
           <CustomDatePicker date={date} handleDateChange={handleDateChange} />
         </Field>
