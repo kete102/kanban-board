@@ -7,11 +7,13 @@ export type ModalType =
   | 'deleteTask'
 
 interface ModalState {
+  isModalOpen: boolean
   modals: Record<ModalType, boolean>
   toggleModal: (modalName: ModalType) => void
 }
 
 const useModalStore = create<ModalState>(set => ({
+  isModalOpen: false,
   modals: {
     createTask: false,
     deleteTask: false,
@@ -20,6 +22,7 @@ const useModalStore = create<ModalState>(set => ({
   },
   toggleModal: modalName =>
     set(state => ({
+      isModalOpen: !state.isModalOpen,
       modals: {
         ...state.modals,
         [modalName]: !state.modals[modalName]
