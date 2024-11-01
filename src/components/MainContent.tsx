@@ -8,8 +8,8 @@ interface Props {
   children: React.ReactNode
 }
 
-export const MainContent = ({ children, style }: Props) => {
-  const { modals, toggleModal } = useModalStore()
+export const MainContent = ({ children }: Props) => {
+  const { modals, toggleModal, isModalOpen } = useModalStore()
   const { addNewBoard } = useBoards()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,13 +26,13 @@ export const MainContent = ({ children, style }: Props) => {
   return (
     <div
       id="main-content"
-      className={`mx-auto flex h-full w-full max-w-full flex-col items-center justify-center rounded-md ${style}`}
+      className={`mx-auto flex h-full w-full max-w-full flex-col items-center justify-center rounded-md ${isModalOpen && 'pointer-events-none bg-white/95 blur-sm'}`}
     >
       {children}
       <CustomCreateModal
         handleSubmit={handleSubmit}
-        modal="createBoard"
         isOpen={modals.createBoard}
+        modal="createBoard"
       >
         <BoardModal />
       </CustomCreateModal>

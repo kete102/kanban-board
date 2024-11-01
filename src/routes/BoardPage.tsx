@@ -57,9 +57,7 @@ export const BoardPage = () => {
   }, [])
 
   return (
-    <MainContent
-      style={modals.createTask ? 'blur-sm bg-white/95 pointer-events-none' : ''}
-    >
+    <MainContent>
       <section className="mx-auto mt-3 flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
         <button onClick={() => navigate(-1)}>
           <IoIosArrowRoundBack size={35} />
