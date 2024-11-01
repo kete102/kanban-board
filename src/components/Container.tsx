@@ -35,7 +35,7 @@ export const Container = ({ children }: Props) => {
       </section>
       {children}
       <footer className="w-full bg-zinc-950 p-4 text-center text-white">
-        <a href="https://github.com/kete102" className="">
+        <a href="https://github.com/kete102">
           Made with 🧡 by{' '}
           <strong className="inline-flex items-center gap-1 underline">
             Flavius Catalin <VscGithub size={20} />
