@@ -1,5 +1,6 @@
+import { CustomDeleteModal } from '@/atom'
 import { NoBoards } from '@/atom/NoBoards'
-import { BoardItem, DeleteModal } from '@/components'
+import { BoardItem } from '@/components'
 import { useBoards } from '@/hooks/useBoards'
 import useBoardStore from '@/store/BoardStore'
 import useModalStore from '@/store/ModalStore'
@@ -10,7 +11,7 @@ import { IoIosAdd } from 'react-icons/io'
 import { IoChevronDown } from 'react-icons/io5'
 
 export const BoardsContainer = () => {
-  const { toggleModal } = useModalStore()
+  const { toggleModal, modals } = useModalStore()
   const { boards } = useBoardStore()
   const { deleteBoard } = useBoards()
   const [selectedBoard, setSelectedBoard] = useState<string | null>(null)
@@ -21,7 +22,6 @@ export const BoardsContainer = () => {
   }
 
   const confirmDeleteBoard = () => {
-    console.log(selectedBoard)
     if (selectedBoard) {
       deleteBoard({ boardId: selectedBoard })
       toggleModal('deleteBoard')
@@ -82,9 +82,11 @@ export const BoardsContainer = () => {
           ))}
         </div>
       )}
-      <DeleteModal
+      <CustomDeleteModal
         onConfirm={confirmDeleteBoard}
         onCancel={() => toggleModal('deleteBoard')}
+        isOpen={modals.deleteBoard}
+        modal="deleteBoard"
       />
     </div>
   )

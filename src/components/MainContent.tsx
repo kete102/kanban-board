@@ -1,4 +1,4 @@
-import { BoardModal, CustomCreateModal } from '@/atom'
+import { BoardModal, CustomCreateModal, CustomDeleteModal } from '@/atom'
 import { useBoards } from '@/hooks/useBoards'
 import useModalStore from '@/store/ModalStore'
 import React from 'react'

@@ -4,10 +4,12 @@ import { useBoards } from '@/hooks/useBoards'
 import { useEffect } from 'react'
 
 export const UserPage = () => {
-  const { getBoards } = useBoards()
+  const { getBoards, boards } = useBoards()
 
   useEffect(() => {
-    getBoards()
+    if (boards.length === 0) {
+      getBoards()
+    }
   }, [])
 
   return (
