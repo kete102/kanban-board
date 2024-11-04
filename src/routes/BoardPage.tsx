@@ -5,12 +5,14 @@ import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
 import { DEFAULT_START_DATE } from '@/utils/dates'
+import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useMemo, useState } from 'react'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { useNavigate, useParams } from 'react-router-dom'
 import { DateValueType } from 'react-tailwindcss-datepicker'
 
 export const BoardPage = () => {
+  const { userId } = useAuth()
   const [selectedColumn, setSelectedColumn] = useState<string>('')
   const { modals, toggleModal } = useModalStore()
   const { getTasksByColumns, tasks } = useTaskStore()
@@ -24,6 +26,10 @@ export const BoardPage = () => {
     startDate: DEFAULT_START_DATE,
     endDate: null
   })
+
+  const handleNavigation = () => {
+    navigate(`/${userId}`)
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -59,7 +65,7 @@ export const BoardPage = () => {
   return (
     <MainContent>
       <section className="mx-auto mt-3 flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
-        <button onClick={() => navigate(-1)}>
+        <button onClick={handleNavigation}>
           <IoIosArrowRoundBack size={35} />
         </button>
         <h1 className="text-md font-bold">Nombre de la board</h1>

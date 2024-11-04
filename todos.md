@@ -25,5 +25,6 @@
 - [x] **Mostrar tareas** en sus respectivas columnas.
 - [x] **Estilizar TaskItem** para mejorar la apariencia de cada tarea.
 - [x] **Corregir el display de tareas** al añadir una nueva.
+- [ ] **Corregir persistencia de ubicación al recargar** al añadir una nueva.
 - [ ] **Actions para eliminar y actualizar** tareas existentes.
 

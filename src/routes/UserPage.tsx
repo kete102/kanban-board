@@ -7,6 +7,7 @@ export const UserPage = () => {
   const { getBoards, boards } = useBoards()
 
   useEffect(() => {
+    console.log('userPage get Boards')
     if (boards.length === 0) {
       getBoards()
     }

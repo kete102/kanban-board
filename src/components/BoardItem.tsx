@@ -12,8 +12,8 @@ interface Props {
 export const BoardItem = ({ board, onDelete }: Props) => {
   const navigate = useNavigate()
   const handleBoardNavigation = () => {
+    console.log('Navigate to board: ', location.pathname)
     navigate(`/boards/${board.boardId}`)
-    console.log('Nav to board:', board.boardId)
   }
 
   return (
