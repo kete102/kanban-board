@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react'
 import { PiKanbanBold } from 'react-icons/pi'
 import { VscGithub } from 'react-icons/vsc'
 import { UserInfo } from './UserInfo'
@@ -8,20 +7,6 @@ interface Props {
 }
 
 export const Container = ({ children }: Props) => {
-  const { user } = useUser()
-
-  if (!user) {
-    return (
-      <div className="mx-auto flex min-h-screen w-screen flex-col items-center justify-start gap-10 bg-[#e3e3e3] py-20">
-        <section>
-          <h1 className="rounded-md bg-zinc-950 px-6 py-3 text-5xl font-bold text-[#e3e3e3] md:text-7xl">
-            Welcome!
-          </h1>
-        </section>
-        {children}
-      </div>
-    )
-  }
   return (
     <div
       className="mx-auto flex h-dvh w-screen flex-col items-center bg-[#e3e3e3]"
