@@ -1,3 +1,4 @@
+import { API_URL } from '@/config'
 import { useAuth } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,19 +18,20 @@ export function UserActions() {
     try {
       const token = await getToken()
       if (!token) return
-      const res = await fetch(
-        'https://kanban-baord-app-backend-production-f913.up.railway.app/api/auth',
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+
+      const res = await fetch(`${API_URL}/api/auth`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
+
       if (!res.ok) {
-        console.error(res.statusText)
+        console.error('Error saving user')
       }
+
       const userId = await res.json()
+      console.log(userId)
       navigate(`/${userId}`)
     } catch (error) {
       console.error('Error saving the user', error)
