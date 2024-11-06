@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CustomCreateModal, TaskModal } from '@/atom'
-import { KanbanColumn, MainContent } from '@/components'
+import { Container, KanbanColumn, MainContent } from '@/components'
 import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
@@ -63,35 +63,37 @@ export const BoardPage = () => {
   }, [])
 
   return (
-    <MainContent>
-      <section className="mx-auto mt-3 flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
-        <button onClick={handleNavigation}>
-          <IoIosArrowRoundBack size={35} />
-        </button>
-        <h1 className="text-md font-bold">Nombre de la board</h1>
-      </section>
-      <div className="mx-auto mt-2 flex h-full w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:items-start xl:max-w-6xl">
-        {Array.from(columns).map(([columnType, column]) => (
-          <KanbanColumn
-            key={column.columnId}
-            column={column}
-            columnType={columnType}
-            setSelectedColumn={setSelectedColumn}
+    <Container>
+      <MainContent>
+        <section className="mx-auto mt-3 flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
+          <button onClick={handleNavigation}>
+            <IoIosArrowRoundBack size={35} />
+          </button>
+          <h1 className="text-md font-bold">Nombre de la board</h1>
+        </section>
+        <div className="mx-auto mt-2 flex h-full w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:items-start xl:max-w-6xl">
+          {Array.from(columns).map(([columnType, column]) => (
+            <KanbanColumn
+              key={column.columnId}
+              column={column}
+              columnType={columnType}
+              setSelectedColumn={setSelectedColumn}
+            />
+          ))}
+        </div>
+        <CustomCreateModal
+          handleSubmit={handleSubmit}
+          isOpen={modals.createTask}
+          modal="createTask"
+        >
+          <TaskModal
+            date={date}
+            priority={priority}
+            handleDateChange={handleDateChange}
+            handlePriorityChange={handlePriorityChange}
           />
-        ))}
-      </div>
-      <CustomCreateModal
-        handleSubmit={handleSubmit}
-        isOpen={modals.createTask}
-        modal="createTask"
-      >
-        <TaskModal
-          date={date}
-          priority={priority}
-          handleDateChange={handleDateChange}
-          handlePriorityChange={handlePriorityChange}
-        />
-      </CustomCreateModal>
-    </MainContent>
+        </CustomCreateModal>
+      </MainContent>
+    </Container>
   )
 }

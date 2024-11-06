@@ -1,21 +1,19 @@
-import {
-  BoardPage,
-  ErrorPage,
-  RootLayout,
-  SignInPage,
-  UserPage
-} from '@/routes'
 import { createBrowserRouter } from 'react-router-dom'
+import { BoardPage, ErrorPage, SignInPage, UserPage } from './routes'
+import { ProtectedRoute } from './routes/middlewares/checkAuth'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: <ProtectedRoute />,
+    errorElement: <ErrorPage />,
     children: [
-      { path: '/:id', element: <UserPage /> },
-      { path: '/auth/sign-in', element: <SignInPage /> },
-      { path: '/boards/:id', element: <BoardPage /> }
-    ],
-    errorElement: <ErrorPage />
-  }
+      {
+        path: '/:id',
+        element: <UserPage />
+      },
+      { path: '/:id/boards/:id', element: <BoardPage /> }
+    ]
+  },
+  { path: '/auth/sign-in', element: <SignInPage /> }
 ])

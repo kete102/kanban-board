@@ -1,5 +1,4 @@
 export * from './BoardPage'
 export * from './ErrorPage'
 export * from './UserPage'
-export * from './RootLayout'
-export * from './auth/SignIn'
+export * from './auth/SignInPage'
