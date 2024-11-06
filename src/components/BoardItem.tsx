@@ -1,8 +1,9 @@
 import { Board } from '@/types'
+import { useAuth } from '@clerk/clerk-react'
 import { BiSearch } from 'react-icons/bi'
 import { CiCalendar } from 'react-icons/ci'
 import { MdDeleteForever } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 interface Props {
   board: Board
@@ -10,11 +11,7 @@ interface Props {
 }
 
 export const BoardItem = ({ board, onDelete }: Props) => {
-  const navigate = useNavigate()
-  const handleBoardNavigation = () => {
-    console.log('Navigate to board: ', location.pathname)
-    navigate(`/boards/${board.boardId}`)
-  }
+  const { userId } = useAuth()
 
   return (
     <div className="flex w-full min-w-fit flex-col items-start justify-between rounded-md border border-gray-400 bg-zinc-300/50 px-10 py-5 shadow-xl">
@@ -33,12 +30,14 @@ export const BoardItem = ({ board, onDelete }: Props) => {
         </h5>
       </div>
       <section className="flex gap-4">
-        <button
-          className="inline-flex items-center rounded-md border-2 border-indigo-600 bg-indigo-300 px-5 py-2.5 text-sm font-bold text-zinc-600"
-          onClick={handleBoardNavigation}
-        >
-          <BiSearch size={18} />
-          View
+        <button className="inline-flex items-center rounded-md border-2 border-indigo-600 bg-indigo-300 px-5 py-2.5 text-sm font-bold text-zinc-600">
+          <Link
+            to={`/${userId}/boards/${board.boardId}`}
+            className="inline-flex items-center"
+          >
+            <BiSearch size={18} />
+            View
+          </Link>
         </button>
         <button
           className="inline-flex items-center rounded-md border-2 border-red-700 bg-red-300 px-5 py-2.5 text-sm font-bold text-zinc-600"
