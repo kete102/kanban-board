@@ -18,13 +18,14 @@
 
 ---
 
-### Tareas de hoy:
+### Tareas:
 
 - [x] **Añadir calendario** para seleccionar la fecha de vencimiento de tareas.
 - [x] **Action para añadir tareas.**
 - [x] **Mostrar tareas** en sus respectivas columnas.
 - [x] **Estilizar TaskItem** para mejorar la apariencia de cada tarea.
 - [x] **Corregir el display de tareas** al añadir una nueva.
-- [ ] **Corregir persistencia de ubicación al recargar** al añadir una nueva.
+- [x] **Corregir persistencia de ubicación al recargar.**
+- [ ] **Borrar datos al hacer 'logout'**
 - [ ] **Actions para eliminar y actualizar** tareas existentes.
 
