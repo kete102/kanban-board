@@ -12,8 +12,9 @@
 
 ### Mejoras:
 
-- [ ] **Integración con Axios** para manejo de datos.
+- [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
 - [x] **Integración con Zustand** como manejador de estado.
+- [ ] **Integración con Axios** para manejo de datos.
 - [ ] **Notificaciones tipo Toast** para confirmar acciones como crear, eliminar o actualizar boards/tareas *(usando react-hot-toast)*.
 
 ---
