@@ -1,4 +1,4 @@
-import { BoardModal, CustomCreateModal, CustomDeleteModal } from '@/atom'
+import { BoardModal, CustomCreateModal } from '@/atom'
 import { useBoards } from '@/hooks/useBoards'
 import useModalStore from '@/store/ModalStore'
 import React from 'react'
@@ -26,7 +26,7 @@ export const MainContent = ({ children }: Props) => {
   return (
     <div
       id="main-content"
-      className={`mx-auto flex h-full w-full max-w-full flex-col items-center justify-center rounded-md ${isModalOpen && 'pointer-events-none bg-white/95 blur-sm'}`}
+      className={`mx-auto flex h-full min-h-fit w-full max-w-full flex-1 flex-col overflow-y-scroll rounded-md ${isModalOpen && 'pointer-events-none bg-white/95 blur-sm'}`}
     >
       {children}
       <CustomCreateModal
