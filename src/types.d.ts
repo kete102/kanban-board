@@ -29,3 +29,15 @@ interface User {
   userName: string
   avatarImage: string
 }
+
+export interface StartCreateTaskProps {
+  token: string
+  newTaskData: {
+    taskTitle: string
+    taskDescription: string
+    status: string
+    priority: string
+    createdAt: string
+  }
+  boardId: string
+}

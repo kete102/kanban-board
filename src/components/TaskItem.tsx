@@ -1,4 +1,5 @@
 import Badge from '@/atom/Badge'
+import { useTasks } from '@/hooks/useTasks'
 import { Task } from '@/types'
 import clsx from 'clsx'
 import { BsCalendar2Check } from 'react-icons/bs'
@@ -9,6 +10,11 @@ interface Props {
 }
 
 export const TaskItem = ({ task }: Props) => {
+  const { deleteTask } = useTasks()
+  const handleTaskDelete = () => {
+    deleteTask({ taskId: task._id, boardId: task.boardId })
+  }
+
   return (
     <div
       className="group w-full rounded-md bg-zinc-400/50 px-4 py-3"
@@ -29,6 +35,7 @@ export const TaskItem = ({ task }: Props) => {
           />
           <CiTrash
             size={23}
+            onClick={handleTaskDelete}
             className="cursor-pointer transition-all lg:opacity-0 lg:group-hover:opacity-100"
           />
         </div>

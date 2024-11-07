@@ -3,32 +3,32 @@ import { create } from 'zustand'
 
 interface TaskState {
   tasks: Task[]
-  loadTasks: (tasks: Task[]) => void
-  addTask: (task: Task) => void
-  deleteTask: (taskId: string) => void
-  updateTask: (updatedTask: Task) => void
+  onLoadTasks: (tasks: Task[]) => void
+  onAddTask: (task: Task) => void
+  onDeleteTask: (taskId: string) => void
+  onUpdateTask: (updatedTask: Task) => void
   getTasksByColumns: () => Map<ColumnType, Column>
 }
 
 const useTaskStore = create<TaskState>(set => ({
   tasks: [],
 
-  loadTasks: tasks =>
+  onLoadTasks: tasks =>
     set(() => ({
       tasks: tasks
     })),
 
-  addTask: task =>
+  onAddTask: task =>
     set(state => ({
       tasks: [...state.tasks, task]
     })),
 
-  deleteTask: taskId =>
+  onDeleteTask: taskId =>
     set(state => ({
       tasks: state.tasks.filter(task => task._id !== taskId)
     })),
 
-  updateTask: updatedTask =>
+  onUpdateTask: updatedTask =>
     set(state => ({
       tasks: state.tasks.map(task =>
         task._id === updatedTask._id ? { ...task, ...updatedTask } : task
