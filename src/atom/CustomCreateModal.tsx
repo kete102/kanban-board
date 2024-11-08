@@ -1,32 +1,37 @@
-import useModalStore, { ModalType } from '@/store/ModalStore'
+import { ModalContextProps, Props } from '@/interfaces/modal'
+import useModalStore from '@/store/ModalStore'
 import { Dialog, DialogPanel } from '@headlessui/react'
+import { createContext } from 'react'
 import { ModalContainer } from './ModalContainer'
+import { BoardModal, TaskModal } from './modals'
 
-interface Props {
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
-  isOpen: boolean
-  modal: ModalType
-  children: React.ReactNode
-}
+export const ModalContext = createContext({} as ModalContextProps)
+const { Provider } = ModalContext
 
-export const CustomCreateModal = ({
-  handleSubmit,
-  isOpen,
-  modal,
-  children
-}: Props) => {
+export const CustomCreateModal = ({ isOpen, modalType, children }: Props) => {
   const { toggleModal } = useModalStore()
 
   return (
-    <Dialog open={isOpen} as="div" onClose={() => toggleModal(modal)}>
-      <ModalContainer>
-        <DialogPanel
-          transition
-          className="data-[closed]:transform-[scale(95%)] h-full max-h-[550px] min-h-[450px] w-screen max-w-sm overflow-y-scroll rounded-xl bg-zinc-950/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0 md:max-w-xl"
-        >
-          <form onSubmit={e => handleSubmit(e)}>{children}</form>
-        </DialogPanel>
-      </ModalContainer>
-    </Dialog>
+    <Provider
+      value={{
+        isUpdating: false,
+        isOpen,
+        modalType
+      }}
+    >
+      <Dialog open={isOpen} as="div" onClose={() => toggleModal(modalType)}>
+        <ModalContainer>
+          <DialogPanel
+            transition
+            className="data-[closed]:transform-[scale(95%)] h-full max-h-[550px] min-h-[450px] w-screen max-w-sm overflow-y-scroll rounded-xl bg-zinc-950/50 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0 md:max-w-xl"
+          >
+            {children}
+          </DialogPanel>
+        </ModalContainer>
+      </Dialog>
+    </Provider>
   )
 }
+
+CustomCreateModal.Board = BoardModal
+CustomCreateModal.Task = TaskModal
