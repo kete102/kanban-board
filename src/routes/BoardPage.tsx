@@ -1,60 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CustomCreateModal, TaskModal } from '@/atom'
+import { CustomCreateModal } from '@/atom'
 import { Container, KanbanColumn, MainContent } from '@/components'
+import { useModals } from '@/hooks/useModals'
 import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
-import { DEFAULT_START_DATE } from '@/utils/dates'
 import { useAuth } from '@clerk/clerk-react'
-import { useEffect, useMemo, useState } from 'react'
-import { IoIosArrowBack, IoIosArrowRoundBack } from 'react-icons/io'
+import { useEffect, useMemo } from 'react'
+import { IoIosAdd, IoIosArrowBack } from 'react-icons/io'
 import { useNavigate, useParams } from 'react-router-dom'
-import { DateValueType } from 'react-tailwindcss-datepicker'
 
 export const BoardPage = () => {
+  const { isUpdating } = useModals()
   const { userId } = useAuth()
-  const [selectedColumn, setSelectedColumn] = useState<string>('')
   const { modals, toggleModal } = useModalStore()
   const { getTasksByColumns, tasks } = useTaskStore()
   const { id } = useParams()
-  const { fetchUserTasks, createNewTask } = useTasks()
+  const boardId = id!
+  const { fetchUserTasks } = useTasks()
   const columns = useMemo(() => getTasksByColumns(), [tasks])
   const navigate = useNavigate()
 
-  const [priority, setPriority] = useState<string>('')
-  const [date, setDate] = useState<DateValueType>({
-    startDate: DEFAULT_START_DATE,
-    endDate: null
-  })
-
   const handleNavigation = () => {
     navigate(`/${userId}`)
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const taskData = {
-      taskTitle: formData.get('taskTitle') as string,
-      taskDescription: formData.get('taskDescription') as string,
-      priority: formData.get('priority') as string,
-      status: selectedColumn,
-      endDate: formData.get('taskEndDate') as string,
-      boardId: id
-    }
-    createNewTask(taskData)
-    toggleModal('createTask')
-    setSelectedColumn('')
-  }
-
-  const handleDateChange = (event: DateValueType) => {
-    if (event?.endDate) {
-      setDate(event)
-    }
-  }
-
-  const handlePriorityChange = (priorityLevel: string) => {
-    setPriority(priorityLevel)
   }
 
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks
@@ -65,14 +33,24 @@ export const BoardPage = () => {
   return (
     <Container>
       <MainContent>
-        <section className="mx-auto flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
+        <section className="mx-auto mt-8 flex w-full max-w-lg flex-row items-center justify-between px-3 md:max-w-2xl lg:max-w-4xl xl:max-w-[1250px]">
           <button
             onClick={handleNavigation}
             className="rounded-full border border-zinc-400/50 bg-zinc-300 p-2"
           >
             <IoIosArrowBack size={25} fill="#858483" />
           </button>
-          <h1 className="text-md font-bold">Nombre de la board</h1>
+
+          <button
+            className="inline-flex items-center gap-2 rounded-md border-2 border-violet-800 bg-violet-600 px-3 py-1.5 text-lg font-semibold text-white shadow-inner shadow-white/10"
+            onClick={() => toggleModal('createTask')}
+          >
+            Add task
+            <IoIosAdd
+              size={28}
+              className="transition-transform duration-300 ease-in-out hover:rotate-90"
+            />
+          </button>
         </section>
         <div className="mx-auto mt-2 flex h-full max-h-fit w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 p-4 sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:items-start xl:max-w-6xl">
           {Array.from(columns).map(([columnType, column]) => (
@@ -80,21 +58,11 @@ export const BoardPage = () => {
               key={column.columnId}
               column={column}
               columnType={columnType}
-              setSelectedColumn={setSelectedColumn}
             />
           ))}
         </div>
-        <CustomCreateModal
-          handleSubmit={handleSubmit}
-          isOpen={modals.createTask}
-          modal="createTask"
-        >
-          <TaskModal
-            date={date}
-            priority={priority}
-            handleDateChange={handleDateChange}
-            handlePriorityChange={handlePriorityChange}
-          />
+        <CustomCreateModal isOpen={modals.createTask} modalType="createTask">
+          <CustomCreateModal.Task isUpdating={isUpdating} boardId={boardId} />
         </CustomCreateModal>
       </MainContent>
     </Container>

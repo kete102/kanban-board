@@ -1,4 +1,5 @@
 import Badge from '@/atom/Badge'
+import { useModals } from '@/hooks/useModals'
 import { useTasks } from '@/hooks/useTasks'
 import { Task } from '@/types'
 import clsx from 'clsx'
@@ -11,6 +12,7 @@ interface Props {
 
 export const TaskItem = ({ task }: Props) => {
   const { deleteTask } = useTasks()
+  const { handleIsUpdating } = useModals()
   const handleTaskDelete = () => {
     deleteTask({ taskId: task._id, boardId: task.boardId })
   }
@@ -32,6 +34,7 @@ export const TaskItem = ({ task }: Props) => {
           <CiEdit
             size={23}
             className="cursor-pointer transition-all lg:opacity-0 lg:group-hover:opacity-100"
+            onClick={() => handleIsUpdating(task)}
           />
           <CiTrash
             size={23}

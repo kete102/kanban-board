@@ -1,5 +1,5 @@
-import { BoardModal, CustomCreateModal } from '@/atom'
-import { useBoards } from '@/hooks/useBoards'
+import { CustomCreateModal } from '@/atom'
+import { useModals } from '@/hooks/useModals'
 import useModalStore from '@/store/ModalStore'
 import React from 'react'
 
@@ -9,19 +9,8 @@ interface Props {
 }
 
 export const MainContent = ({ children }: Props) => {
-  const { modals, toggleModal, isModalOpen } = useModalStore()
-  const { addNewBoard } = useBoards()
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const boardData = {
-      boardTitle: formData.get('boardTitle') as string,
-      boardDescription: formData.get('boardDescription') as string
-    }
-    addNewBoard(boardData)
-    toggleModal('createBoard')
-  }
+  const { handleSubmitBoard } = useModals()
+  const { modals, isModalOpen } = useModalStore()
 
   return (
     <div
@@ -29,12 +18,8 @@ export const MainContent = ({ children }: Props) => {
       className={`mx-auto flex h-full min-h-fit w-full max-w-full flex-1 flex-col overflow-y-scroll rounded-md ${isModalOpen && 'pointer-events-none bg-white/95 blur-sm'}`}
     >
       {children}
-      <CustomCreateModal
-        handleSubmit={handleSubmit}
-        isOpen={modals.createBoard}
-        modal="createBoard"
-      >
-        <BoardModal />
+      <CustomCreateModal isOpen={modals.createBoard} modalType="createBoard">
+        <CustomCreateModal.Board handleSubmit={handleSubmitBoard} />
       </CustomCreateModal>
     </div>
   )
