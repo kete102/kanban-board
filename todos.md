@@ -30,5 +30,6 @@
 - [x] **Actions para eliminar tareas.**
 - [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
 - [ ] **Actions para actualizar tareas.**
+- [ ] **Filtros de las Kanban Columns**
 - [ ] **Limpiar el estado al hacer 'logout'**
 
