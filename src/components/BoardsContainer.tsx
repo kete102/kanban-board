@@ -72,7 +72,7 @@ export const BoardsContainer = () => {
       </div>
       {boards.length === 0 && <NoBoards />}
       {boards.length !== 0 && (
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4 md:max-w-xl md:grid-cols-2 md:p-3 lg:max-w-2xl lg:grid-cols-3 xl:max-w-4xl">
+        <div className="mx-auto grid max-w-xl grid-cols-1 gap-4 md:max-w-2xl md:grid-cols-2 md:p-3 lg:max-w-5xl lg:grid-cols-3 xl:max-w-6xl">
           {boards.map((board: Board) => (
             <BoardItem
               key={board.boardId}
