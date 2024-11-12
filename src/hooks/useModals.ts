@@ -1,5 +1,4 @@
 import useModalStore from '@/store/ModalStore'
-import { Task } from '@/types'
 import { DEFAULT_START_DATE } from '@/utils/dates'
 import { useState } from 'react'
 import { DateValueType } from 'react-tailwindcss-datepicker'
@@ -17,7 +16,6 @@ const dateInitialState = {
 }
 
 export function useModals() {
-  const [isUpdating, setIsUpdating] = useState<boolean>(false)
   const { toggleModal } = useModalStore()
   const { addNewBoard } = useBoards()
   const { createNewTask } = useTasks()
@@ -53,11 +51,6 @@ export function useModals() {
     setDate(dateInitialState)
   }
 
-  const handleIsUpdating = (task: Task) => {
-    setIsUpdating(true)
-    console.log('Is updating', isUpdating, task)
-  }
-
   const handleDateChange = (event: DateValueType) => {
     if (event?.endDate) {
       setDate(event)
@@ -73,9 +66,7 @@ export function useModals() {
     handleSubmitTask,
     handleDateChange,
     handlePriorityChange,
-    handleIsUpdating,
     priority,
-    date,
-    isUpdating
+    date
   }
 }

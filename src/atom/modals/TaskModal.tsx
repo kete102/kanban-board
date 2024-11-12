@@ -14,11 +14,10 @@ import { CustomDatePicker } from '../CustomDatePicker'
 import { CustomPriorityPicker } from '../CustomPriorityPicker'
 
 interface Props {
-  isUpdating: boolean
   boardId: string
 }
 
-export const TaskModal = ({ isUpdating, boardId }: Props) => {
+export const TaskModal = ({ boardId }: Props) => {
   const { toggleModal } = useModalStore()
   const {
     priority,
@@ -27,13 +26,12 @@ export const TaskModal = ({ isUpdating, boardId }: Props) => {
     handleDateChange,
     handlePriorityChange
   } = useModals()
-  console.log(isUpdating)
 
   return (
     <form onSubmit={event => handleSubmitTask({ event, boardId })}>
       <Fieldset className="space-y-7 rounded-xl p-6 sm:p-10">
         <Legend className="text-2xl font-semibold text-white">
-          Create new task
+          Create new Task
         </Legend>
         <Field>
           <Label className="text-lg font-medium text-white">

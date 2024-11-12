@@ -1,10 +1,9 @@
 import Badge from '@/atom/Badge'
-import { useModals } from '@/hooks/useModals'
 import { useTasks } from '@/hooks/useTasks'
 import { Task } from '@/types'
 import clsx from 'clsx'
 import { BsCalendar2Check } from 'react-icons/bs'
-import { CiCalendar, CiEdit, CiTrash } from 'react-icons/ci'
+import { CiCalendar, CiTrash } from 'react-icons/ci'
 
 interface Props {
   task: Task
@@ -12,7 +11,6 @@ interface Props {
 
 export const TaskItem = ({ task }: Props) => {
   const { deleteTask } = useTasks()
-  const { handleIsUpdating } = useModals()
 
   const handleTaskDelete = () => {
     deleteTask({ taskId: task._id, boardId: task.boardId })
@@ -32,11 +30,6 @@ export const TaskItem = ({ task }: Props) => {
           {task.taskTitle}
         </h3>
         <div className="flex items-center gap-3">
-          <CiEdit
-            size={23}
-            className="cursor-pointer transition-all lg:opacity-0 lg:group-hover:opacity-100"
-            onClick={() => handleIsUpdating(task)}
-          />
           <CiTrash
             size={23}
             onClick={handleTaskDelete}
