@@ -16,7 +16,7 @@
 - [x] **Integración con Zustand** como manejador de estado.
 - [ ] **Cambiar a FireBaseAuth**
 - [ ] **Integración con Axios** para manejo de datos.
-- [ ] **Gestion de los diferentes tipos de modales con HOC**. Los modales están construido con *HeadlessUI*
+- [x] **Gestion de los diferentes tipos de modales con HOC**. Los modales están construido con *HeadlessUI*
 ---
 
 ### Tareas:
