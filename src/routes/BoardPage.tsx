@@ -52,7 +52,7 @@ export const BoardPage = () => {
             />
           </button>
         </section>
-        <div className="mx-auto mt-2 flex h-full max-h-fit w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 p-4 sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:items-start xl:max-w-6xl">
+        <div className="mx-auto mt-2 flex h-full max-h-fit w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 p-4 sm:max-w-md md:max-w-lg lg:max-w-4xl lg:flex-row lg:items-start xl:max-w-6xl">
           {Array.from(columns).map(([columnType, column]) => (
             <KanbanColumn
               key={column.columnId}

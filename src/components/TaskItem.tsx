@@ -13,6 +13,7 @@ interface Props {
 export const TaskItem = ({ task }: Props) => {
   const { deleteTask } = useTasks()
   const { handleIsUpdating } = useModals()
+
   const handleTaskDelete = () => {
     deleteTask({ taskId: task._id, boardId: task.boardId })
   }

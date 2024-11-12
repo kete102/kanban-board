@@ -12,7 +12,7 @@ export const Container = ({ children }: Props) => {
       className="mx-auto flex min-h-dvh w-screen flex-col items-center bg-[#e3e3e3]"
       id="container"
     >
-      <section className="sticky left-0 top-0 mb-2 flex w-full items-center justify-between bg-zinc-950 p-3 md:mb-6 md:w-[calc(100%-100px)] md:rounded-b-lg md:p-6 lg:w-[calc(100%-150px)]">
+      <section className="sticky left-0 top-0 mb-2 flex w-full items-center justify-between bg-zinc-950 p-3 xl:w-[calc(100%-150px)] xl:rounded-b-md">
         <h1 className="inline-flex items-center gap-3 text-2xl font-bold text-white md:text-3xl">
           Kanban App <PiKanbanBold size={`${25}`} />
         </h1>
