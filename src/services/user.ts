@@ -31,7 +31,6 @@ export function UserActions() {
       }
 
       const userId = await res.json()
-      console.log(userId)
       navigate(`/${userId}`)
     } catch (error) {
       console.error('Error saving the user', error)

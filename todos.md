@@ -6,9 +6,10 @@
 - [x] **Vista detalle de cada board** con las tareas respectivas.
 - [x] **Diferentes columnas para los estado de las tasks.** Cada task tiene un estado que pude ser *done, inprogress y todo*
 - [x] **Cada tarea muestra un nivel de prioridad.** El nivel de prioridad puede ser *HIGH, MEDIUM, LOW*.
+- [x] **Notificaciones tipo Toast** para confirmar acciones como crear, eliminar boards/tasks
+      *(usando react-hot-toast)*.
 - [ ] **Drag & Drop** para gestionar las tasks entre las posibles columnas.
 - [ ] **Notificación por email** cuando una tarea está próxima a vencer *(usando react-email)*.
-- [ ] **Notificaciones tipo Toast** para confirmar acciones como crear, eliminar boards/tasks *(usando react-hot-toast)*.
 ---
 
 ### Mejoras:
@@ -29,6 +30,6 @@
 - [x] **Corregir persistencia de ubicación al recargar.**
 - [x] **Actions para eliminar tareas.**
 - [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
+- [x] **Notificación tipo toast** cuando se creat/elimina una board/task.
 - [ ] **Filtros de las Kanban Columns**
 - [ ] **Limpiar el estado al hacer 'logout'**
-

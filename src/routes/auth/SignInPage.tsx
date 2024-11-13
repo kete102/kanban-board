@@ -8,7 +8,6 @@ export const SignInPage = () => {
   const { isSignedIn, userId } = useAuth()
   const { saveUserData } = UserActions()
 
-  console.log('SignIn Page load')
   useEffect(() => {
     if (isSignedIn) saveUserData()
   }, [])
