@@ -32,4 +32,5 @@
 - [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
 - [x] **Notificación tipo toast** cuando se creat/elimina una board/task.
 - [ ] **Filtros de las Kanban Columns**
+- [ ] **Implementar el DnD en las KanbanColumns**
 - [ ] **Limpiar el estado al hacer 'logout'**
