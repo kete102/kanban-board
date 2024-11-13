@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CustomCreateModal } from '@/atom'
 import { Container, KanbanColumn, MainContent } from '@/components'
-import { useModals } from '@/hooks/useModals'
 import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
@@ -11,7 +10,6 @@ import { IoIosAdd, IoIosArrowBack } from 'react-icons/io'
 import { useNavigate, useParams } from 'react-router-dom'
 
 export const BoardPage = () => {
-  const { isUpdating } = useModals()
   const { userId } = useAuth()
   const { modals, toggleModal } = useModalStore()
   const { getTasksByColumns, tasks } = useTaskStore()
@@ -27,7 +25,9 @@ export const BoardPage = () => {
 
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks
   useEffect(() => {
-    if (id) fetchUserTasks({ boardId: id })
+    if (id && tasks.length === 0) {
+      fetchUserTasks({ boardId: id })
+    }
   }, [])
 
   return (
@@ -62,7 +62,7 @@ export const BoardPage = () => {
           ))}
         </div>
         <CustomCreateModal isOpen={modals.createTask} modalType="createTask">
-          <CustomCreateModal.Task isUpdating={isUpdating} boardId={boardId} />
+          <CustomCreateModal.Task boardId={boardId} />
         </CustomCreateModal>
       </MainContent>
     </Container>
