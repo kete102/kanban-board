@@ -5,6 +5,7 @@ import {
 } from '@/services/task'
 import useTaskStore from '@/store/TaskStore'
 import { useAuth } from '@clerk/clerk-react'
+import toast from 'react-hot-toast'
 
 export function useTasks() {
   const { onLoadTasks, onAddTask, onDeleteTask } = useTaskStore()
@@ -54,8 +55,10 @@ export function useTasks() {
         })
         const task = result.newTask
         onAddTask(task)
+        toast.success('New task created')
       }
     } catch (error) {
+      toast.error('Error creating task')
       console.log(error)
     }
   }
@@ -80,7 +83,7 @@ export function useTasks() {
         if (deletedTaskId) {
           //2. Eliminar del estado
           onDeleteTask(deletedTaskId)
-          console.log('Tarea eliminada')
+          toast.error('Task deleted')
         }
       }
     } catch (error) {

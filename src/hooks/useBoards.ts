@@ -3,6 +3,7 @@ import { boardActions } from '@/services/board'
 import useBoardStore from '@/store/BoardStore'
 import { useAuth } from '@clerk/clerk-react'
 import { useCallback, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export function useBoards() {
   const { boards, loadBoards, addBoard, removeBoard } = useBoardStore()
@@ -46,13 +47,14 @@ export function useBoards() {
         })
         if (newBoard) {
           addBoard(newBoard)
-          console.log(newBoard)
+          toast.success('New board created')
         }
       } else {
         console.log('No session token provided')
         return
       }
     } catch (error) {
+      toast.error('Error creating board')
       console.log(error)
     }
   }
@@ -66,6 +68,7 @@ export function useBoards() {
           token
         })
         removeBoard(deletedBoard._id)
+        toast.error('Board deleted')
       }
     } catch (error) {
       console.log(error)

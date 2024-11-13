@@ -2,6 +2,7 @@ import { CustomCreateModal } from '@/atom'
 import { useModals } from '@/hooks/useModals'
 import useModalStore from '@/store/ModalStore'
 import React from 'react'
+import { Toaster } from 'react-hot-toast'
 
 interface Props {
   style?: string
@@ -21,6 +22,7 @@ export const MainContent = ({ children }: Props) => {
       <CustomCreateModal isOpen={modals.createBoard} modalType="createBoard">
         <CustomCreateModal.Board handleSubmit={handleSubmitBoard} />
       </CustomCreateModal>
+      <Toaster position="bottom-right" />
     </div>
   )
 }
