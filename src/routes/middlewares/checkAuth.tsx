@@ -7,10 +7,12 @@ export function ProtectedRoute() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      navigate('/auth/sign-in', { replace: true })
-    } else {
-      navigate(`/${userId}`)
+    if (isLoaded) {
+      if (!isSignedIn) {
+        navigate('/auth/sign-in', { replace: true })
+      } else if (userId) {
+        navigate(`/${userId}`, { replace: true })
+      }
     }
   }, [navigate, isSignedIn, isLoaded, userId])
 
