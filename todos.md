@@ -31,6 +31,7 @@
 - [x] **Actions para eliminar tareas.**
 - [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
 - [x] **Notificación tipo toast** cuando se creat/elimina una board/task.
+- [x] **Fix estado de las tasks cuando salimos de la vista de la board.** Limpiar el estado para evitar que se vean las tareas de un board al entrar a un board distinto.
 - [ ] **Filtros de las Kanban Columns**
 - [ ] **Implementar el DnD en las KanbanColumns**
 - [ ] **Limpiar el estado al hacer 'logout'**
