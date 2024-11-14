@@ -9,7 +9,7 @@ export const UserPage = () => {
   const { getBoards } = useBoards()
 
   useEffect(() => {
-    if (boards.length === 0) {
+    if (!boards) {
       getBoards()
     }
   }, [])

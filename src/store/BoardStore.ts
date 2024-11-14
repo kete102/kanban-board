@@ -2,22 +2,24 @@ import { Board } from '@/types'
 import { create } from 'zustand'
 
 interface BoardState {
-  boards: Board[]
-  loadBoards: (boards: Board[]) => void
+  boards: Board[] | null
+  loadBoards: (boards: Board[] | null) => void
   addBoard: (newBoard: Board) => void
   removeBoard: (boardId: string) => void
 }
 
 const useBoardStore = create<BoardState>(set => ({
-  boards: [],
+  boards: null,
   loadBoards: boards => set({ boards }),
   addBoard: newBoard =>
     set(state => ({
-      boards: [...state.boards, newBoard]
+      boards: state.boards ? [...state.boards, newBoard] : [newBoard]
     })),
   removeBoard: boardId =>
     set(state => ({
-      boards: state.boards.filter(board => board.boardId !== boardId)
+      boards: state.boards
+        ? state.boards.filter(board => board.boardId !== boardId)
+        : null
     }))
 }))
 
