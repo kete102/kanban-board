@@ -17,10 +17,7 @@ export const TaskItem = ({ task }: Props) => {
   }
 
   return (
-    <div
-      className="group w-full rounded-md bg-zinc-400/50 px-4 py-3"
-      key={task._id}
-    >
+    <div className="group w-full cursor-grab rounded-md bg-zinc-400/50 px-4 py-3 active:animate-pulse active:cursor-grabbing">
       <section className="inline-flex w-full items-center justify-between">
         <h3
           className={clsx('text-lg font-bold text-zinc-950', {
