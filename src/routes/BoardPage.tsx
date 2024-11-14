@@ -25,7 +25,7 @@ export const BoardPage = () => {
 
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks
   useEffect(() => {
-    if (id && tasks.length === 0) {
+    if (id) {
       fetchUserTasks({ boardId: id })
     }
   }, [])
