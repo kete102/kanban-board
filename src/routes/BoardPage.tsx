@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 export const BoardPage = () => {
   const { userId } = useAuth()
   const { modals, toggleModal } = useModalStore()
-  const { getTasksByColumns, tasks } = useTaskStore()
+  const { getTasksByColumns, tasks, clearTaskStore } = useTaskStore()
   const { id } = useParams()
   const boardId = id!
   const { fetchUserTasks } = useTasks()
@@ -21,6 +21,7 @@ export const BoardPage = () => {
 
   const handleNavigation = () => {
     navigate(`/${userId}`)
+    clearTaskStore()
   }
 
   //TODO: Cuando se navega aqui, se hace el fetch de las tasks

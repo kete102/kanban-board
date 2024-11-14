@@ -2,16 +2,17 @@ import { Column, ColumnType, Task } from '@/types'
 import { create } from 'zustand'
 
 interface TaskState {
-  tasks: Task[]
-  onLoadTasks: (tasks: Task[]) => void
+  tasks: Task[] | null
+  onLoadTasks: (tasks: Task[] | null) => void
   onAddTask: (task: Task) => void
   onDeleteTask: (taskId: string) => void
   onUpdateTask: (updatedTask: Task) => void
   getTasksByColumns: () => Map<ColumnType, Column>
+  clearTaskStore: () => void
 }
 
 const useTaskStore = create<TaskState>(set => ({
-  tasks: [],
+  tasks: null,
 
   onLoadTasks: tasks =>
     set(() => ({
@@ -20,19 +21,23 @@ const useTaskStore = create<TaskState>(set => ({
 
   onAddTask: task =>
     set(state => ({
-      tasks: [...state.tasks, task]
+      tasks: state.tasks ? [...state.tasks, task] : [task]
     })),
 
   onDeleteTask: taskId =>
     set(state => ({
-      tasks: state.tasks.filter(task => task._id !== taskId)
+      tasks: state.tasks
+        ? state.tasks.filter(task => task._id !== taskId)
+        : null
     })),
 
   onUpdateTask: updatedTask =>
     set(state => ({
-      tasks: state.tasks.map(task =>
-        task._id === updatedTask._id ? { ...task, ...updatedTask } : task
-      )
+      tasks: state.tasks
+        ? state.tasks.map(task =>
+            task._id === updatedTask._id ? { ...task, ...updatedTask } : task
+          )
+        : null
     })),
 
   getTasksByColumns: () => {
@@ -49,13 +54,20 @@ const useTaskStore = create<TaskState>(set => ({
     }, new Map<ColumnType, Column>())
 
     // Rellenar el Map con las tareas correspondientes
-    useTaskStore.getState().tasks.forEach((task: Task) => {
-      if (columns.has(task.status)) {
-        columns.get(task.status)!.tasks.push(task)
-      }
-    })
-
+    const currentTasks = useTaskStore.getState().tasks
+    if (currentTasks) {
+      currentTasks.forEach((task: Task) => {
+        if (columns.has(task.status)) {
+          columns.get(task.status)!.tasks.push(task)
+        }
+      })
+    }
     return columns
+  },
+  clearTaskStore: () => {
+    set({
+      tasks: null
+    })
   }
 }))
 
