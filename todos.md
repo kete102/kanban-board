@@ -15,9 +15,9 @@
 ### Mejoras:
 
 - [x] **Integración con Zustand** como manejador de estado.
-- [ ] **Cambiar a FireBaseAuth**
-- [ ] **Integración con Axios** para manejo de datos.
 - [x] **Gestion de los diferentes tipos de modales con HOC**. Los modales están construido con *HeadlessUI*
+- [ ] **Integración con Axios** para manejo de datos❓
+- [ ] **Cambiar a FireBaseAuth**❓
 ---
 
 ### Tareas:
@@ -32,6 +32,6 @@
 - [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
 - [x] **Notificación tipo toast** cuando se creat/elimina una board/task.
 - [x] **Fix estado de las tasks cuando salimos de la vista de la board.** Limpiar el estado para evitar que se vean las tareas de un board al entrar a un board distinto.
+- [ ] **DnD de las tareas.** Las tareas se pueden arrastrar de una column a otra cambiando su state.
 - [ ] **Filtros de las Kanban Columns**
-- [ ] **Implementar el DnD en las KanbanColumns**
 - [ ] **Limpiar el estado al hacer 'logout'**
