@@ -6,7 +6,7 @@ interface TaskState {
   onLoadTasks: (tasks: Task[] | null) => void
   onAddTask: (task: Task) => void
   onDeleteTask: (taskId: string) => void
-  onUpdateTask: (updatedTask: Task) => void
+  onStateChange: (taskId: string, newStatus: ColumnType) => void
   getTasksByColumns: () => Map<ColumnType, Column>
   clearTaskStore: () => void
 }
@@ -31,11 +31,11 @@ const useTaskStore = create<TaskState>(set => ({
         : null
     })),
 
-  onUpdateTask: updatedTask =>
+  onStateChange: (taskId: string, newStatus: ColumnType) =>
     set(state => ({
       tasks: state.tasks
         ? state.tasks.map(task =>
-            task._id === updatedTask._id ? { ...task, ...updatedTask } : task
+            task._id === taskId ? { ...task, status: newStatus } : task
           )
         : null
     })),
@@ -64,6 +64,7 @@ const useTaskStore = create<TaskState>(set => ({
     }
     return columns
   },
+
   clearTaskStore: () => {
     set({
       tasks: null
