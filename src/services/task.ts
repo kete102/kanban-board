@@ -1,5 +1,6 @@
 import { API_URL } from '@/config'
 import { StartCreateTaskProps } from '@/types'
+import { mapTask, mapTasks } from '@/utils/mapRawTasks'
 import axios from 'axios'
 
 export const loadBoardTasks = async ({
@@ -15,7 +16,8 @@ export const loadBoardTasks = async ({
         Authorization: `Bearer ${token}`
       }
     })
-    const tasks = data.tasks
+    const tasks = mapTasks(data.tasks)
+    console.log(tasks)
     return tasks
   } catch (error) {
     console.log(error)
@@ -40,7 +42,8 @@ export const startCreateTask = async ({
     )
 
     console.log('New task created: ', { data })
-    return data
+    const newTask = mapTask(data.newTask)
+    return newTask
   } catch (error) {
     console.log(error)
   }

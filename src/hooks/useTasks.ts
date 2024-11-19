@@ -20,8 +20,9 @@ export function useTasks() {
           token
         })
 
-        //TODO: Mapear las tasks en cada columan y devolver las columnas
-        onLoadTasks(tasks)
+        if (tasks) {
+          onLoadTasks(tasks)
+        }
       }
     } catch (error) {
       console.log({ error })
@@ -48,14 +49,15 @@ export function useTasks() {
 
     try {
       if (token) {
-        const result = await startCreateTask({
+        const task = await startCreateTask({
           token,
           newTaskData: newTask,
           boardId
         })
-        const task = result.newTask
-        onAddTask(task)
-        toast.success('New task created')
+        if (task) {
+          onAddTask(task)
+          toast.success('New task created')
+        }
       }
     } catch (error) {
       toast.error('Error creating task')
@@ -71,7 +73,7 @@ export function useTasks() {
     boardId: string
   }) => {
     const token = await getToken()
-
+    console.log({ boardId, taskId })
     try {
       if (token) {
         //1. Primero eliminar de la DB
