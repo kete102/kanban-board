@@ -1,23 +1,39 @@
 import Badge from '@/atom/Badge'
 import { useTasks } from '@/hooks/useTasks'
 import { Task } from '@/types'
+import { useDraggable } from '@dnd-kit/core'
 import clsx from 'clsx'
 import { BsCalendar2Check } from 'react-icons/bs'
 import { CiCalendar, CiTrash } from 'react-icons/ci'
 
 interface Props {
   task: Task
+  id: string
 }
 
-export const TaskItem = ({ task }: Props) => {
+export const TaskItem = ({ task, id }: Props) => {
   const { deleteTask } = useTasks()
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: id
+  })
+
+  const style = transform
+    ? { transform: `translate(${transform.x}px, ${transform?.y}px)` }
+    : undefined
 
   const handleTaskDelete = () => {
-    deleteTask({ taskId: task._id, boardId: task.boardId })
+    console.log(task.id, task.boardId)
+    deleteTask({ taskId: id, boardId: task.boardId })
   }
 
   return (
-    <div className="group w-full cursor-grab rounded-md bg-zinc-400/50 px-4 py-3 active:animate-pulse active:cursor-grabbing">
+    <div
+      style={style}
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      className="group w-full cursor-grab rounded-md bg-zinc-400/50 px-4 py-3 active:animate-pulse active:cursor-grabbing active:touch-none"
+    >
       <section className="inline-flex w-full items-center justify-between">
         <h3
           className={clsx('text-lg font-bold text-zinc-950', {
