@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CustomCreateModal } from '@/atom'
-import { Container, KanbanColumn, MainContent } from '@/components'
+import { Container, MainContent } from '@/components'
+import { ColumnsContainer } from '@/components/ColumnsContainer'
 import { useTasks } from '@/hooks/useTasks'
 import useModalStore from '@/store/ModalStore'
 import useTaskStore from '@/store/TaskStore'
 import { useAuth } from '@clerk/clerk-react'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { IoIosAdd, IoIosArrowBack } from 'react-icons/io'
 import { useNavigate, useParams } from 'react-router-dom'
 
 export const BoardPage = () => {
   const { userId } = useAuth()
   const { modals, toggleModal } = useModalStore()
-  const { getTasksByColumns, tasks, clearTaskStore } = useTaskStore()
+  const { clearTaskStore } = useTaskStore()
   const { id } = useParams()
   const boardId = id!
   const { fetchUserTasks } = useTasks()
-  const columns = useMemo(() => getTasksByColumns(), [tasks])
   const navigate = useNavigate()
 
   const handleNavigation = () => {
@@ -53,15 +53,7 @@ export const BoardPage = () => {
             />
           </button>
         </section>
-        <div className="mx-auto mt-2 flex h-full max-h-fit w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 p-4 sm:max-w-md md:max-w-lg lg:max-w-4xl lg:flex-row lg:items-start xl:max-w-6xl">
-          {Array.from(columns).map(([columnType, column]) => (
-            <KanbanColumn
-              key={column.columnId}
-              column={column}
-              columnType={columnType}
-            />
-          ))}
-        </div>
+        <ColumnsContainer />
         <CustomCreateModal isOpen={modals.createTask} modalType="createTask">
           <CustomCreateModal.Task boardId={boardId} />
         </CustomCreateModal>
