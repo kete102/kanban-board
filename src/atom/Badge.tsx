@@ -19,7 +19,7 @@ const Badge: React.FC<CustomBadgeProps> = ({ priority }) => {
 
   return (
     <span
-      className={`rounded-full px-3 py-1.5 text-xs font-bold ${badgeColor[priority]}`}
+      className={`select-none rounded-full px-3 py-1.5 text-xs font-bold ${badgeColor[priority]}`}
     >
       {priority.toUpperCase()}
     </span>

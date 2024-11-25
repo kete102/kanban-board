@@ -37,7 +37,7 @@ export const TaskItem = ({ task, id }: Props) => {
         { 'select-none': isDragging }
       )}
     >
-      <section className="inline-flex w-full items-center justify-between">
+      <section className="inline-flex w-full select-none items-center justify-between">
         <h3
           className={clsx('text-lg font-bold text-zinc-950', {
             'line-through': task.status === 'done'
@@ -56,13 +56,16 @@ export const TaskItem = ({ task, id }: Props) => {
         </button>
       </section>
       <p
-        className={clsx('text-md mb-2 w-full max-w-[250px] text-zinc-500', {
-          'line-through': task.status === 'done'
-        })}
+        className={clsx(
+          'text-md mb-2 w-full max-w-[250px] select-none text-zinc-500',
+          {
+            'line-through': task.status === 'done'
+          }
+        )}
       >
         {task.taskDescription}
       </p>
-      <section className="inline-flex w-full items-center justify-between">
+      <section className="inline-flex w-full select-none items-center justify-between">
         <h5 className="inline-flex items-center gap-1 font-semibold text-zinc-500">
           {task.status === 'done' ? (
             <BsCalendar2Check size={20} />
