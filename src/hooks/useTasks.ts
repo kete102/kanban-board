@@ -1,14 +1,16 @@
 import {
   loadBoardTasks,
   startCreateTask,
-  startDeleteTask
+  startDeleteTask,
+  startUpdateTaskStatus
 } from '@/services/task'
 import useTaskStore from '@/store/TaskStore'
+import { ColumnType } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 import toast from 'react-hot-toast'
 
 export function useTasks() {
-  const { onLoadTasks, onAddTask, onDeleteTask } = useTaskStore()
+  const { onLoadTasks, onAddTask, onDeleteTask, onStateChange } = useTaskStore()
   const { getToken } = useAuth()
 
   const fetchUserTasks = async ({ boardId }: { boardId: string }) => {
@@ -44,8 +46,10 @@ export function useTasks() {
       status,
       priority,
       endDate,
-      createdAt: new Date().toISOString().split('T')[0]
+      createdAt: new Date().toISOString().split('T')[0],
+      lastUpdate: Date.now()
     }
+    console.log(newTask)
 
     try {
       if (token) {
@@ -61,6 +65,37 @@ export function useTasks() {
       }
     } catch (error) {
       toast.error('Error creating task')
+      console.log(error)
+    }
+  }
+
+  const updateStatus = async ({
+    taskId,
+    targetColumn
+  }: {
+    taskId: string
+    targetColumn: ColumnType
+  }) => {
+    const token = await getToken()
+    try {
+      if (token) {
+        //1. Primero actualizar en la DB
+        const result = await startUpdateTaskStatus({
+          taskId,
+          targetColumn,
+          token
+        })
+        if (!result.ok) {
+          console.error(result.error)
+        }
+        const updatedTaskId = result.res
+        if (updatedTaskId) {
+          //2. Actualizar la task en el estado
+          onStateChange(taskId, targetColumn)
+          toast.success('Task updated')
+        }
+      }
+    } catch (error) {
       console.log(error)
     }
   }
@@ -96,6 +131,7 @@ export function useTasks() {
   return {
     fetchUserTasks,
     createNewTask,
+    updateStatus,
     deleteTask
   }
 }

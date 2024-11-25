@@ -1,8 +1,10 @@
+import { useTasks } from '@/hooks/useTasks'
 import useTaskStore from '@/store/TaskStore'
 import { Column, ColumnType, Task } from '@/types'
 import {
   DndContext,
   DragEndEvent,
+  DragOverlay,
   DragStartEvent,
   KeyboardSensor,
   PointerSensor,
@@ -10,52 +12,77 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
+import { snapCenterToCursor } from '@dnd-kit/modifiers'
+import { arrayMove } from '@dnd-kit/sortable'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { KanbanColumn } from './KanbanColumn'
+import { TaskOverlay } from './TaskOverlay'
 
 export const ColumnsContainer = () => {
-  const { getTasksByColumns, findTaskById, onStateChange } = useTaskStore()
-  const columns = getTasksByColumns()
+  const { updateStatus } = useTasks()
+  const { getTasksByColumns, findTaskById } = useTaskStore()
   const [isDragging, setIsDragging] = useState<Task | undefined>(undefined)
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
+        delay: 500,
         tolerance: 100
       }
     }),
     useSensor(KeyboardSensor)
   )
+  const columns = getTasksByColumns()
 
   const handleDragStart = (event: DragStartEvent) => {
     const activeTask = findTaskById(event.active.id.toString())
     setIsDragging(activeTask)
-    const { active } = event
-    console.log('drag start', active)
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
     setIsDragging(undefined)
-    console.log('drag end', { active, over })
 
     if (!over) return
 
-    const taskId = active.id as string
-    const newStatus = over.id as Task['status']
-    console.log('Task dragged: ', { taskId, newStatus })
-    onStateChange(taskId, newStatus)
+    console.log({ over })
 
-    if (!over?.id) {
-      toast.error(`Can't drop it there 😑`)
+    const sourceColumn = active.data.current?.columnId as ColumnType
+    let targetColumn = sourceColumn
+    if (over.data.current?.columnId) {
+      targetColumn = over.data.current?.columnId as ColumnType
+    } else {
+      targetColumn = over.id as ColumnType
     }
+    const taskId = active.id as string
+
+    console.log({ sourceColumn, targetColumn })
+    //TODO: is same column return
+    if (sourceColumn === targetColumn) {
+      console.log('misma columna')
+      return
+      // const column = columns.get(sourceColumn)
+      // if (!column) return
+      //
+      // const oldIndex = column.tasks.findIndex(
+      //   (task: Task) => task.id === active.id
+      // )
+      // const newIndex = column.tasks.findIndex(
+      //   (task: Task) => task.id === over.id
+      // )
+      //
+      // const newUpdatedTaskArray = arrayMove(column.tasks, oldIndex, newIndex)
+      // onUpdateTasks(newUpdatedTaskArray)
+      // console.log('Tasks despues: ', newUpdatedTaskArray)
+    }
+
+    updateStatus({ taskId, targetColumn })
   }
 
   return (
     <DndContext
       sensors={sensors}
+      modifiers={[snapCenterToCursor]}
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
     >
@@ -65,13 +92,14 @@ export const ColumnsContainer = () => {
             <KanbanColumn
               key={columnType}
               tasks={column.tasks}
-              refId={column.columnId}
               columnType={columnType}
-              isDragging={isDragging}
             />
           )
         )}
       </div>
+      <DragOverlay>
+        {isDragging && <TaskOverlay task={isDragging} />}
+      </DragOverlay>
     </DndContext>
   )
 }

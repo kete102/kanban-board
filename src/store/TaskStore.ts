@@ -8,6 +8,7 @@ interface TaskState {
   onDeleteTask: (taskId: string) => void
   onStateChange: (taskId: string, newStatus: ColumnType) => void
   getTasksByColumns: () => Map<ColumnType, Column>
+  onUpdateTasks: (tasks: Task[]) => void
   findTaskById: (taskId: string) => Task | undefined
   clearTaskStore: () => void
 }
@@ -30,11 +31,11 @@ const useTaskStore = create<TaskState>(set => ({
       tasks: state.tasks ? state.tasks.filter(task => task.id !== taskId) : null
     })),
 
-  onStateChange: (taskId: string, newStatus: ColumnType) =>
+  onStateChange: (sourceColumn: string, targetColumn: ColumnType) =>
     set(state => ({
       tasks: state.tasks
         ? state.tasks.map(task =>
-            task.id === taskId ? { ...task, status: newStatus } : task
+            task.id === sourceColumn ? { ...task, status: targetColumn } : task
           )
         : null
     })),
@@ -69,6 +70,13 @@ const useTaskStore = create<TaskState>(set => ({
       .getState()
       .tasks?.find((task: Task) => task.id === taskId)
   },
+
+  onUpdateTasks: (tasks: Task[]) => {
+    set({
+      tasks: tasks
+    })
+  },
+
   clearTaskStore: () => {
     set({
       tasks: null
