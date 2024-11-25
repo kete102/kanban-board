@@ -2,6 +2,8 @@ import Badge from '@/atom/Badge'
 import { useTasks } from '@/hooks/useTasks'
 import { Task } from '@/types'
 import { useDraggable } from '@dnd-kit/core'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import clsx from 'clsx'
 import { BsCalendar2Check } from 'react-icons/bs'
 import { CiCalendar, CiTrash } from 'react-icons/ci'
@@ -14,14 +16,19 @@ interface Props {
 export const TaskItem = ({ task, id }: Props) => {
   const { deleteTask } = useTasks()
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: id
+    id: id,
+    data: { status: task.status }
   })
 
-  const style = transform
-    ? { transform: `translate(${transform.x}px, ${transform?.y}px)` }
-    : undefined
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition: 'transform 100ms ease-in-out'
+  }
 
-  const handleTaskDelete = () => {
+  const handleTaskDelete = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event?.stopPropagation()
     console.log(task.id, task.boardId)
     deleteTask({ taskId: id, boardId: task.boardId })
   }
@@ -32,7 +39,7 @@ export const TaskItem = ({ task, id }: Props) => {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="group w-full cursor-grab rounded-md bg-zinc-400/50 px-4 py-3 active:animate-pulse active:cursor-grabbing active:touch-none"
+      className={`group w-full cursor-grab rounded-md border border-zinc-600 bg-zinc-400/50 px-4 py-3 active:animate-pulse active:cursor-grabbing active:touch-none`}
     >
       <section className="inline-flex w-full items-center justify-between">
         <h3
@@ -42,13 +49,15 @@ export const TaskItem = ({ task, id }: Props) => {
         >
           {task.taskTitle}
         </h3>
-        <div className="flex items-center gap-3">
+        <button
+          className="flex items-center gap-3"
+          onClick={e => handleTaskDelete(e)}
+        >
           <CiTrash
             size={23}
-            onClick={handleTaskDelete}
             className="cursor-pointer transition-all lg:opacity-0 lg:group-hover:opacity-100"
           />
-        </div>
+        </button>
       </section>
       <p
         className={clsx('text-md mb-2 w-full max-w-[250px] text-zinc-500', {

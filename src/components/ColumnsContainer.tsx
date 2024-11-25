@@ -45,36 +45,11 @@ export const ColumnsContainer = () => {
 
     if (!over) return
 
-    console.log({ over })
-
-    const sourceColumn = active.data.current?.columnId as ColumnType
-    let targetColumn = sourceColumn
-    if (over.data.current?.columnId) {
-      targetColumn = over.data.current?.columnId as ColumnType
-    } else {
-      targetColumn = over.id as ColumnType
-    }
+    const sourceColumn = active.data.current?.status as ColumnType
+    const targetColumn = over.id as ColumnType
     const taskId = active.id as string
 
-    console.log({ sourceColumn, targetColumn })
-    //TODO: is same column return
-    if (sourceColumn === targetColumn) {
-      console.log('misma columna')
-      return
-      // const column = columns.get(sourceColumn)
-      // if (!column) return
-      //
-      // const oldIndex = column.tasks.findIndex(
-      //   (task: Task) => task.id === active.id
-      // )
-      // const newIndex = column.tasks.findIndex(
-      //   (task: Task) => task.id === over.id
-      // )
-      //
-      // const newUpdatedTaskArray = arrayMove(column.tasks, oldIndex, newIndex)
-      // onUpdateTasks(newUpdatedTaskArray)
-      // console.log('Tasks despues: ', newUpdatedTaskArray)
-    }
+    if (sourceColumn === targetColumn) return
 
     updateStatus({ taskId, targetColumn })
   }
