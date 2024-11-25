@@ -1,5 +1,8 @@
 import { ColumnType, Task } from '@/types'
 
+/**
+ * Task response from API
+ **/
 interface RawTask {
   _id: string
   userId: string
@@ -9,10 +12,13 @@ interface RawTask {
   status: ColumnType
   priority: 'high' | 'low' | 'medium'
   createdAt: string
+  lastUpdate: number
   endDate: string
 }
 /**
- * Mapea una tarea cruda (RawTask) al formato esperado de la interfaz Task.
+ * Maps a rawTask to satisfy the Task interface
+ * @param rawTask - Task from API
+ * @returns Mapped task
  */
 export function mapTask(rawTask: RawTask): Task {
   return {
@@ -24,12 +30,15 @@ export function mapTask(rawTask: RawTask): Task {
     status: rawTask.status,
     priority: rawTask.priority,
     createdAt: rawTask.createdAt,
+    lastUpdate: rawTask.lastUpdate,
     endDate: rawTask.endDate
   }
 }
 
 /**
- * Mapea un arreglo de tareas crudas (RawTask) al formato esperado.
+ * Maps the raw response of tasks from API
+ * @param rawTasks - Tasks response from API
+ * @returns Mapped tasks
  */
 export function mapTasks(rawTasks: RawTask[]): Task[] {
   return rawTasks.map(mapTask)
