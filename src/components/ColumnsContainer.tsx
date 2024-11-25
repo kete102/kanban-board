@@ -1,4 +1,3 @@
-import { DropZone } from '@/atom/DropZone'
 import { useTasks } from '@/hooks/useTasks'
 import useTaskStore from '@/store/TaskStore'
 import { Column, ColumnType, Task } from '@/types'
@@ -8,6 +7,7 @@ import {
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
+  MouseSensor,
   PointerSensor,
   TouchSensor,
   useSensor,
@@ -23,11 +23,10 @@ export const ColumnsContainer = () => {
   const { getTasksByColumns, findTaskById } = useTaskStore()
   const [isDragging, setIsDragging] = useState<Task | undefined>(undefined)
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor, {
+    useSensor(PointerSensor, {
       activationConstraint: {
-        delay: 500,
-        tolerance: 100
+        delay: 200,
+        tolerance: 50
       }
     }),
     useSensor(KeyboardSensor)
@@ -75,7 +74,7 @@ export const ColumnsContainer = () => {
       </div>
       <DragOverlay dropAnimation={{ duration: 200, easing: 'ease-in-out' }}>
         {isDragging && (
-          <div className="scale-125 opacity-90">
+          <div className="scale-110 opacity-90">
             <TaskOverlay task={isDragging} />
           </div>
         )}
