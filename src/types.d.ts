@@ -9,6 +9,7 @@ export interface Task {
   status: ColumnType
   priority: 'high' | 'low' | 'medium'
   createdAt: string
+  lastUpdate: number
   endDate: string
 }
 
