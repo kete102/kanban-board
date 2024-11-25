@@ -33,7 +33,8 @@ export const TaskItem = ({ task, id }: Props) => {
       {...attributes}
       className={clsx(
         'group w-full cursor-grab rounded-md border border-zinc-600 bg-zinc-400/50 px-4 py-3 transition-transform duration-200 ease-in-out active:cursor-grabbing active:touch-none',
-        { 'opacity-0': isDragging }
+        { 'opacity-0': isDragging },
+        { 'select-none': isDragging }
       )}
     >
       <section className="inline-flex w-full items-center justify-between">

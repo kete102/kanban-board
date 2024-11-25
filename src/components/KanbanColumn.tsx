@@ -1,6 +1,7 @@
 import { DropZone } from '@/atom/DropZone'
 import { Task } from '@/types'
 import { useDroppable } from '@dnd-kit/core'
+import clsx from 'clsx'
 import { IoFilter } from 'react-icons/io5'
 import { TaskItem } from './TaskItem'
 
@@ -18,7 +19,11 @@ export const KanbanColumn = ({ columnType, tasks, isDragging }: Props) => {
   return (
     <div
       ref={setNodeRef}
-      className={`my-2 flex min-h-20 w-full flex-col items-center rounded-md border-zinc-200 px-3 py-2 shadow-xl md:max-w-xl lg:max-w-2xl ${isOver ? 'bg-stone-100' : 'bg-zinc-200/90'}`}
+      className={clsx(
+        'my-2 flex min-h-20 w-full flex-col items-center rounded-md border-zinc-200 bg-zinc-200/90 px-3 py-2 shadow-xl md:max-w-xl lg:max-w-2xl',
+        { 'bg-stone-100': isOver },
+        { 'select-none': isDragging }
+      )}
     >
       <h4 className="inline-flex w-full items-center justify-between p-2 pt-2 text-center align-middle text-xl font-bold uppercase text-zinc-800/80">
         {columnType}
