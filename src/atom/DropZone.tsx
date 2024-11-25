@@ -1,16 +1,20 @@
 import { Task } from '@/types'
-import React from 'react'
+import clsx from 'clsx'
 
-export const DropZone = ({ isDragging }: { isDragging: Task | undefined }) => {
+export const DropZone = ({
+  isDragging,
+  isOver
+}: {
+  isDragging: Task | undefined
+  isOver: boolean
+}) => {
   return (
-    <React.Fragment>
-      {isDragging ? (
-        <div className="w-full rounded-md border-2 border-dashed border-green-900 bg-green-300 p-2 text-center text-zinc-700">
-          Drop it here!
-        </div>
-      ) : (
-        ''
+    <div
+      className={clsx(
+        'relative h-2 w-full transition-[padding,opacity] before:absolute before:inset-2 before:rounded-xl before:border-2 before:border-dashed before:border-zinc-800 before:bg-zinc-400/60 only:h-32',
+        { 'py-8 opacity-100': isDragging },
+        { 'opacity-0': !isDragging }
       )}
-    </React.Fragment>
+    ></div>
   )
 }
