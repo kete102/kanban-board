@@ -1,8 +1,4 @@
-import Badge from '@/atom/Badge'
 import { Task } from '@/types'
-import clsx from 'clsx'
-import { BsCalendar2Check } from 'react-icons/bs'
-import { CiCalendar } from 'react-icons/ci'
 
 export const TaskOverlay = ({ task }: { task: Task }) => {
   return (

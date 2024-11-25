@@ -1,3 +1,4 @@
+import { DropZone } from '@/atom/DropZone'
 import { useTasks } from '@/hooks/useTasks'
 import useTaskStore from '@/store/TaskStore'
 import { Column, ColumnType, Task } from '@/types'
@@ -13,7 +14,6 @@ import {
   useSensors
 } from '@dnd-kit/core'
 import { snapCenterToCursor } from '@dnd-kit/modifiers'
-import { arrayMove } from '@dnd-kit/sortable'
 import { useState } from 'react'
 import { KanbanColumn } from './KanbanColumn'
 import { TaskOverlay } from './TaskOverlay'
@@ -68,12 +68,17 @@ export const ColumnsContainer = () => {
               key={columnType}
               tasks={column.tasks}
               columnType={columnType}
+              isDragging={isDragging}
             />
           )
         )}
       </div>
-      <DragOverlay>
-        {isDragging && <TaskOverlay task={isDragging} />}
+      <DragOverlay dropAnimation={{ duration: 200, easing: 'ease-in-out' }}>
+        {isDragging && (
+          <div className="scale-125 opacity-90">
+            <TaskOverlay task={isDragging} />
+          </div>
+        )}
       </DragOverlay>
     </DndContext>
   )
