@@ -32,6 +32,8 @@
 - [x] **Cuando se borra un board** eliminar las tareas correspondientes a esa board.
 - [x] **Notificación tipo toast** cuando se creat/elimina una board/task.
 - [x] **Fix estado de las tasks cuando salimos de la vista de la board.** Limpiar el estado para evitar que se vean las tareas de un board al entrar a un board distinto.
+- [ ] **Fix user auth**
+- [ ] **Implementar  un debounce** para evitar demasiadas llamadas a la api cuando se hacen demsiados drag and drop.
 - [ ] **DnD de las tareas.** Las tareas se pueden arrastrar de una column a otra cambiando su state.
 - [ ] **Filtros de las Kanban Columns**
 - [ ] **Limpiar el estado al hacer 'logout'**
