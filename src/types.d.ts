@@ -27,8 +27,7 @@ export interface Board {
 
 interface User {
   userId: string
-  userName: string
-  avatarImage: string
+  clerkId: string
 }
 
 export interface StartCreateTaskProps {

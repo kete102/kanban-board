@@ -1,30 +1,22 @@
-import { Container } from '@/components'
-import { UserActions } from '@/services/user'
-import { SignedOut, SignIn, useAuth } from '@clerk/clerk-react'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { SignInButton } from '@clerk/clerk-react'
 
 export const SignInPage = () => {
-  const { isSignedIn, userId } = useAuth()
-  const { saveUserData } = UserActions()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isSignedIn) {
-      saveUserData()
-      navigate(`/${userId}`)
-    }
-  }, [isSignedIn, navigate, saveUserData, userId])
-
-  //TODO: hacer un login custom
+  console.log('sign in')
   return (
-    <Container>
-      <div className="grid h-dvh w-full place-content-center">
-        <h1 className="mb-4 text-center text-4xl font-bold">Welcome! 🙃</h1>
-        <SignedOut>
-          <SignIn />
-        </SignedOut>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900">
+      <div className="flex w-full max-w-md flex-col items-center space-y-6 rounded-lg p-8">
+        <h1 className="text-center text-5xl font-extrabold text-white">
+          Kanban Board
+        </h1>
+        <p className="text-center text-lg text-gray-300">
+          The best way to manage your tasks
+        </p>
+        <SignInButton mode="redirect">
+          <button className="w-full max-w-[200px] rounded-md border-2 border-purple-900 bg-gradient-to-r from-purple-400 to-purple-600 px-6 py-3 text-lg font-bold text-white shadow-md transition duration-300 hover:from-blue-600 hover:to-indigo-700">
+            Sign In
+          </button>
+        </SignInButton>
       </div>
-    </Container>
+    </div>
   )
 }

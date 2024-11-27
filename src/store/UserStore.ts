@@ -2,22 +2,22 @@ import { User } from '@/types'
 import { create } from 'zustand'
 
 interface UserState {
-  userId: string
-  userName: string
-  avatarImage: string
+  userState: User | null
   setUser: (user: User) => void
   cleanUser: () => void
 }
 
-const initialState: User = {
-  userId: '',
-  userName: '',
-  avatarImage: ''
-}
 const useUserState = create<UserState>(set => ({
-  ...initialState,
-  setUser: user => set(() => user),
-  cleanUser: () => set(() => ({ ...initialState }))
+  userState: null,
+  setUser: (user: User) =>
+    set(() => ({
+      userState: user
+    })),
+  cleanUser: () => {
+    set(() => ({
+      userState: null
+    }))
+  }
 }))
 
 export default useUserState

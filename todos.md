@@ -14,6 +14,7 @@
 ### Mejoras:
 - [x] **Integración con Zustand** como manejador de estado.
 - [x] **Gestion de los diferentes tipos de modales con HOC**. Los modales están construido con *HeadlessUI*.
+- [ ] **Support dark mode.** With tailwindcss dark mode.
 - [ ] **Integración con Axios** para manejo de datos❓
 ---
 
