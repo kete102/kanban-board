@@ -1,7 +1,20 @@
-import { SignInButton } from '@clerk/clerk-react'
+import { SignInButton, useAuth } from '@clerk/clerk-react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const SignInPage = () => {
-  console.log('sign in')
+  const navigate = useNavigate()
+  const { isSignedIn, isLoaded, userId } = useAuth()
+  useEffect(() => {
+    if (isLoaded) {
+      if (!isSignedIn) {
+        console.log('no esta  signed in')
+      } else {
+        navigate(`/${userId}`)
+      }
+    }
+  }, [navigate, isSignedIn, isLoaded, userId])
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-zinc-700 to-zinc-900">
       <div className="flex w-full max-w-md flex-col items-center space-y-6 rounded-lg p-8">

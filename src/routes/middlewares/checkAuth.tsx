@@ -8,13 +8,9 @@ export function ProtectedRoute() {
   const { checkUserData } = UserActions()
   const navigate = useNavigate()
 
-  console.log('ProtectedRoute')
-
   useEffect(() => {
     const verifyUser = async () => {
-      console.log('verificar usuario')
       if (!isSignedIn) {
-        console.log('no esta  signed in')
         navigate('/auth/sign-in', { replace: true })
         return
       }
