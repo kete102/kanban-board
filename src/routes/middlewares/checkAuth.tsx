@@ -1,25 +1,21 @@
-import { UserActions } from '@/services/user'
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 export function ProtectedRoute() {
   const { isSignedIn, isLoaded, userId } = useAuth()
-  const { checkUserData } = UserActions()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const verifyUser = async () => {
-      if (!isSignedIn) {
-        navigate('/auth/sign-in', { replace: true })
+    if (isLoaded) {
+      if (isSignedIn) {
+        navigate(`/${userId}`)
         return
       }
-      navigate(`/${userId}`)
+      navigate('/auth/sign-in', { replace: true })
+      return
     }
-    if (isLoaded) {
-      verifyUser()
-    }
-  }, [navigate, isSignedIn, isLoaded, checkUserData, userId])
+  }, [navigate, isSignedIn, isLoaded, userId])
 
   return <Outlet />
 }
