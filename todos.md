@@ -18,9 +18,9 @@
 - [ ] **Integración con Axios** para manejo de datos❓
 ---
 
-### Tareas:
+### Tareas para hoy:
+- [ ] **Fix user auth**.
 - [ ] **Filtros de las Kanban Columns**. Ordenar tasks por priority o endDate.
 - [ ] **Fix del titulo de las kanban columns**. Error en 'InProgress'.
-- [ ] **Fix user auth**.
+- [ ] **Hacer el dnd mas smoth.**
 - [ ] **Cambiar task priority** en el modal por un select.
-- [ ] **Limpiar el estado al hacer 'logout'**.
