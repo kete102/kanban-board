@@ -19,9 +19,8 @@ export function boardActions() {
       })
       if (response.ok) {
         const { boards } = await response.json()
-        if (!boards) {
-          throw new Error('No boards')
-        }
+        if (!boards) return null
+
         return boards.map((board: BoardFromApi) => {
           return {
             boardId: board._id,
