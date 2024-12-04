@@ -1,15 +1,13 @@
 import { useTasks } from '@/hooks/useTasks'
 import useTaskStore from '@/store/TaskStore'
-import { Column, ColumnType, Task } from '@/types'
+import { Column, Task, TaskColumnType } from '@/types'
 import {
   DndContext,
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
-  MouseSensor,
   PointerSensor,
-  TouchSensor,
   useSensor,
   useSensors
 } from '@dnd-kit/core'
@@ -44,8 +42,8 @@ export const ColumnsContainer = () => {
 
     if (!over) return
 
-    const sourceColumn = active.data.current?.status as ColumnType
-    const targetColumn = over.id as ColumnType
+    const sourceColumn = active.data.current?.status as TaskColumnType
+    const targetColumn = over.id as TaskColumnType
     const taskId = active.id as string
 
     if (sourceColumn === targetColumn) return
@@ -61,7 +59,7 @@ export const ColumnsContainer = () => {
       onDragStart={handleDragStart}
     >
       <div className="mx-auto mt-2 flex h-full max-h-fit w-full min-w-fit max-w-xs flex-col items-center justify-start gap-4 p-4 sm:max-w-md md:max-w-lg lg:max-w-4xl lg:flex-row lg:items-start xl:max-w-6xl">
-        {Array.from(columns as Map<ColumnType, Column>).map(
+        {Array.from(columns as Map<TaskColumnType, Column>).map(
           ([columnType, column]) => (
             <KanbanColumn
               key={columnType}
