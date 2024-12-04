@@ -63,12 +63,12 @@ export function useBoards() {
     try {
       const token = await getToken()
       if (token) {
-        const { deletedBoard } = await startDeleteBoard({
+        const deletedBoardId = await startDeleteBoard({
           boardId,
           token
         })
-        removeBoard(deletedBoard._id)
-        toast.error('Board deleted')
+        removeBoard(deletedBoardId)
+        toast.success('Board deleted')
       }
     } catch (error) {
       console.log(error)

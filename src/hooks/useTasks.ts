@@ -5,7 +5,7 @@ import {
   startUpdateTaskStatus
 } from '@/services/task'
 import useTaskStore from '@/store/TaskStore'
-import { ColumnType } from '@/types'
+import { TaskColumnType } from '@/types'
 import { useAuth } from '@clerk/clerk-react'
 import toast from 'react-hot-toast'
 
@@ -30,7 +30,7 @@ export function useTasks() {
       console.log({ error })
     }
   }
-  //TODO:
+
   const createNewTask = async ({
     taskTitle,
     taskDescription,
@@ -74,29 +74,28 @@ export function useTasks() {
     targetColumn
   }: {
     taskId: string
-    targetColumn: ColumnType
+    targetColumn: TaskColumnType
   }) => {
     const token = await getToken()
     try {
       if (token) {
-        //1. Primero actualizar en la DB
         const result = await startUpdateTaskStatus({
           taskId,
           targetColumn,
           token
         })
-        if (!result.ok) {
-          console.error(result.error)
+        console.log(result)
+        if (!result.ok && result.error) {
+          toast.error(result.error)
         }
-        const updatedTaskId = result.res
-        if (updatedTaskId) {
-          //2. Actualizar la task en el estado
-          onStateChange(taskId, targetColumn)
-          toast.success('Task updated')
+
+        if (result.updatedTaskId && result.message) {
+          onStateChange(result.updatedTaskId, targetColumn)
+          toast.success(result.message)
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log('Error updating task status: ', error)
     }
   }
 
@@ -108,19 +107,16 @@ export function useTasks() {
     boardId: string
   }) => {
     const token = await getToken()
-    console.log({ boardId, taskId })
     try {
       if (token) {
-        //1. Primero eliminar de la DB
         const result = await startDeleteTask({ taskId, boardId, token })
         if (!result.ok) {
           console.error(result.error)
         }
-        const deletedTaskId = result.res
+        const deletedTaskId = result.deletedTaskId
         if (deletedTaskId) {
-          //2. Eliminar del estado
           onDeleteTask(deletedTaskId)
-          toast.error('Task deleted')
+          toast.success('Task deleted')
         }
       }
     } catch (error) {

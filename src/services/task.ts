@@ -1,6 +1,11 @@
 import { API_URL } from '@/config'
-import { ColumnType, StartCreateTaskProps } from '@/types'
-import { mapTask, mapTasks } from '@/utils/mapRawTasks'
+import {
+  StartCreateTaskProps,
+  Task,
+  TaskColumnType,
+  TaskPriorityType
+} from '@/types'
+import { tasksAdapter } from '@/utils/tasksAdapter'
 import axios from 'axios'
 
 export const loadBoardTasks = async ({
@@ -11,14 +16,17 @@ export const loadBoardTasks = async ({
   boardId: string
 }) => {
   try {
-    const { data } = await axios.get(`${API_URL}/api/tasks/${boardId}`, {
+    const response = await fetch(`${API_URL}/api/tasks/${boardId}`, {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    const tasks = mapTasks(data.tasks)
-    console.log(tasks)
-    return tasks
+    if (response.ok) {
+      const data = await response.json()
+      const tasks = tasksAdapter(data.tasks)
+      return tasks
+    }
   } catch (error) {
     console.log(error)
   }
@@ -28,7 +36,7 @@ export const startCreateTask = async ({
   token,
   newTaskData,
   boardId
-}: StartCreateTaskProps) => {
+}: StartCreateTaskProps): Promise<Task> => {
   try {
     const { data } = await axios.post(
       `${API_URL}/api/tasks/${boardId}`,
@@ -41,11 +49,23 @@ export const startCreateTask = async ({
       }
     )
 
-    console.log('New task created: ', { data })
-    const newTask = mapTask(data.newTask)
-    return newTask
+    const { tasks: task } = await data
+
+    return {
+      taskId: task._id,
+      userId: task.userId,
+      boardId: task.boardId,
+      taskTitle: task.taskTitle,
+      taskDescription: task.taskDescription,
+      taskStatus: task.status as TaskColumnType,
+      taskPriority: task.priority as TaskPriorityType,
+      createdAt: task.createdAt,
+      lastUpdate: task.lastUpdate,
+      endDate: task.endDate
+    }
   } catch (error) {
     console.log(error)
+    throw new Error(`Error creating new Task: ${error}`)
   }
 }
 
@@ -57,7 +77,12 @@ export const startDeleteTask = async ({
   taskId: string
   boardId: string
   token: string
-}): Promise<{ ok: boolean; res: string | null; error: string | null }> => {
+}): Promise<{
+  ok: boolean
+  message?: string
+  error?: string
+  deletedTaskId?: string | null
+}> => {
   try {
     const { data } = await axios.delete(`${API_URL}/api/tasks`, {
       headers: {
@@ -72,14 +97,14 @@ export const startDeleteTask = async ({
     if (!data) {
       return {
         ok: false,
-        res: null,
+        deletedTaskId: null,
         error: 'No ha sido posible eliminar la tarea'
       }
     }
     return {
       ok: true,
-      res: data.deletedTaskId,
-      error: null
+      message: 'Task deleted',
+      deletedTaskId: data.deletedTaskId
     }
   } catch (error) {
     let errorMessage = 'Error al eliminar la tarea'
@@ -92,7 +117,6 @@ export const startDeleteTask = async ({
 
     return {
       ok: false,
-      res: null,
       error: errorMessage
     }
   }
@@ -104,44 +128,38 @@ export const startUpdateTaskStatus = async ({
   token
 }: {
   taskId: string
-  targetColumn: ColumnType
+  targetColumn: TaskColumnType
   token: string
-}): Promise<{ ok: boolean; res: string | null; error: string | null }> => {
-  console.log('startUpdateTaskStatus: ', {
-    taskId,
-    targetColumn,
-    token
-  })
-
+}) => {
   try {
-    const { data } = await axios.patch(
-      `${API_URL}/api/tasks/update-status`,
-      {
+    const response = await fetch(`${API_URL}/api/tasks`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         taskId,
         newStatus: targetColumn
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-    console.log(data)
-    if (!data) {
+      })
+    })
+
+    if (!response.ok) {
       return {
-        ok: false,
-        res: null,
-        error: 'No ha sido posible actualizar la tarea'
+        success: false,
+        error: 'Error updating task'
       }
     }
-    console.log(data)
+
+    const { task } = await response.json()
+
     return {
-      ok: true,
-      res: data.updatedTask,
-      error: null
+      success: true,
+      message: 'Task updated',
+      updatedTaskId: task._id
     }
   } catch (error) {
+    console.log(error)
     let errorMessage = 'Error al actualizar la tarea'
 
     if (axios.isAxiosError(error) && error.response) {
@@ -152,7 +170,6 @@ export const startUpdateTaskStatus = async ({
 
     return {
       ok: false,
-      res: null,
       error: errorMessage
     }
   }

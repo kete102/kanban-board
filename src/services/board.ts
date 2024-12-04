@@ -17,6 +17,7 @@ export function boardActions() {
           Authorization: `Bearer ${token}`
         }
       })
+
       if (response.ok) {
         const { boards } = await response.json()
         if (!boards) return null
@@ -61,22 +62,21 @@ export function boardActions() {
         })
       })
 
-      const { newBoard } = await response.json()
-      if (newBoard) {
-        const mappedBoard: Board = {
-          boardId: newBoard._id,
-          boardDescription: newBoard.boardDescription,
-          boardTitle: newBoard.boardTitle,
-          createdAt: newBoard.createdAt
-        }
-        return mappedBoard
+      const { boards: board } = await response.json()
+      const mappedBoard: Board = {
+        boardId: board._id,
+        boardDescription: board.boardDescription,
+        createdAt: board.createdAt,
+        boardTitle: board.boardTitle
       }
+      return mappedBoard
     } catch (error) {
       console.error(error)
     }
   }
 
   const startDeleteBoard = async ({ token, boardId }) => {
+    console.log('delete board')
     try {
       const response = await fetch(`${API_URL}/api/boards/${boardId}`, {
         method: 'DELETE',
@@ -85,11 +85,10 @@ export function boardActions() {
         }
       })
 
-      if (!response.ok) {
-        return false
+      if (response.ok) {
+        const { board } = await response.json()
+        return board._id
       }
-
-      return await response.json()
     } catch (error) {
       console.log(error)
     }
