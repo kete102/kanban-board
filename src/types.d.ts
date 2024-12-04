@@ -1,20 +1,21 @@
-export type ColumnType = 'todo' | 'inprogress' | 'done'
+export type TaskColumnType = 'todo' | 'inprogress' | 'done'
+export type TaskPriorityType = 'high' | 'low' | 'medium'
 
 export interface Task {
-  id: string
+  taskId: string
   userId: string
   boardId: string
   taskTitle: string
   taskDescription: string
-  status: ColumnType
-  priority: 'high' | 'low' | 'medium'
+  taskStatus: TaskColumnType
+  taskPriority: TaskPriorityType
   createdAt: string
   lastUpdate: number
   endDate: string
 }
 
 export interface Column {
-  columnId: ColumnType
+  columnId: TaskColumnType
   tasks: Task[]
 }
 

@@ -10,7 +10,7 @@ export const TaskOverlay = ({ task }: { task: Task }) => {
       <section className="inline-flex w-full items-center justify-between">
         <h3
           className={clsx('text-lg font-bold text-zinc-950', {
-            'line-through': task.status === 'done'
+            'line-through': task.taskStatus === 'done'
           })}
         >
           {task.taskTitle}
@@ -18,14 +18,14 @@ export const TaskOverlay = ({ task }: { task: Task }) => {
       </section>
       <p
         className={clsx('text-md mb-2 w-full max-w-[250px] text-zinc-500', {
-          'line-through': task.status === 'done'
+          'line-through': task.taskStatus === 'done'
         })}
       >
         {task.taskDescription}
       </p>
       <section className="inline-flex w-full items-center justify-between">
         <h5 className="inline-flex items-center gap-1 font-semibold text-zinc-500">
-          {task.status === 'done' ? (
+          {task.taskStatus === 'done' ? (
             <BsCalendar2Check size={20} />
           ) : (
             <CiCalendar size={24} />
@@ -33,7 +33,7 @@ export const TaskOverlay = ({ task }: { task: Task }) => {
           {new Date(task.endDate).toLocaleDateString()}
         </h5>
 
-        <Badge priority={task.priority} />
+        <Badge priority={task.taskPriority} />
       </section>
     </div>
   )

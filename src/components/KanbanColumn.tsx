@@ -34,8 +34,8 @@ export const KanbanColumn = ({ columnType, tasks, isDragging }: Props) => {
       <DropZone isDragging={isDragging} />
       <div className="flex w-full flex-col gap-2 py-2">
         {tasks.map(task => (
-          <div key={task.id}>
-            <TaskItem task={task} id={task.id} />
+          <div key={task.taskId}>
+            <TaskItem task={task} id={task.taskId} />
           </div>
         ))}
       </div>

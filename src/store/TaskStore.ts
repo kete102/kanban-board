@@ -1,4 +1,4 @@
-import { Column, ColumnType, Task } from '@/types'
+import { Column, Task, TaskColumnType } from '@/types'
 import { create } from 'zustand'
 
 interface TaskState {
@@ -6,8 +6,8 @@ interface TaskState {
   onLoadTasks: (tasks: Task[] | null) => void
   onAddTask: (task: Task) => void
   onDeleteTask: (taskId: string) => void
-  onStateChange: (taskId: string, newStatus: ColumnType) => void
-  getTasksByColumns: () => Map<ColumnType, Column>
+  onStateChange: (taskId: string, newStatus: TaskColumnType) => void
+  getTasksByColumns: () => Map<TaskColumnType, Column>
   onUpdateTasks: (tasks: Task[]) => void
   findTaskById: (taskId: string) => Task | undefined
   clearTaskStore: () => void
@@ -28,21 +28,25 @@ const useTaskStore = create<TaskState>(set => ({
 
   onDeleteTask: taskId =>
     set(state => ({
-      tasks: state.tasks ? state.tasks.filter(task => task.id !== taskId) : null
+      tasks: state.tasks
+        ? state.tasks.filter(task => task.taskId !== taskId)
+        : null
     })),
 
-  onStateChange: (sourceColumn: string, targetColumn: ColumnType) =>
+  onStateChange: (sourceColumn: string, targetColumn: TaskColumnType) =>
     set(state => ({
       tasks: state.tasks
         ? state.tasks.map(task =>
-            task.id === sourceColumn ? { ...task, status: targetColumn } : task
+            task.taskId === sourceColumn
+              ? { ...task, taskStatus: targetColumn }
+              : task
           )
         : null
     })),
 
   getTasksByColumns: () => {
     // Definir los tipos de columnas según tu interfaz
-    const columnTypes: ColumnType[] = ['todo', 'inprogress', 'done']
+    const columnTypes: TaskColumnType[] = ['todo', 'inprogress', 'done']
 
     // Inicializar el Map con todas las columnas
     const columns = columnTypes.reduce((acc, columnType) => {
@@ -51,14 +55,14 @@ const useTaskStore = create<TaskState>(set => ({
         tasks: []
       })
       return acc
-    }, new Map<ColumnType, Column>())
+    }, new Map<TaskColumnType, Column>())
 
     // Rellenar el Map con las tareas correspondientes
     const currentTasks = useTaskStore.getState().tasks
     if (currentTasks) {
       currentTasks.forEach((task: Task) => {
-        if (columns.has(task.status)) {
-          columns.get(task.status)!.tasks.push(task)
+        if (columns.has(task.taskStatus)) {
+          columns.get(task.taskStatus)!.tasks.push(task)
         }
       })
     }
@@ -68,7 +72,7 @@ const useTaskStore = create<TaskState>(set => ({
   findTaskById: (taskId: string) => {
     return useTaskStore
       .getState()
-      .tasks?.find((task: Task) => task.id === taskId)
+      .tasks?.find((task: Task) => task.taskId === taskId)
   },
 
   onUpdateTasks: (tasks: Task[]) => {

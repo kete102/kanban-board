@@ -15,14 +15,14 @@ export const TaskItem = ({ task, id }: Props) => {
   const { deleteTask } = useTasks()
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: id,
-    data: { status: task.status }
+    data: { status: task.taskStatus }
   })
 
   const handleTaskDelete = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event?.stopPropagation()
-    console.log(task.id, task.boardId)
+    console.log(task.taskId, task.boardId)
     deleteTask({ taskId: id, boardId: task.boardId })
   }
 
@@ -40,7 +40,7 @@ export const TaskItem = ({ task, id }: Props) => {
       <section className="inline-flex w-full select-none items-center justify-between">
         <h3
           className={clsx('text-lg font-bold text-zinc-950', {
-            'line-through': task.status === 'done'
+            'line-through': task.taskStatus === 'done'
           })}
         >
           {task.taskTitle}
@@ -59,7 +59,7 @@ export const TaskItem = ({ task, id }: Props) => {
         className={clsx(
           'text-md mb-2 w-full max-w-[250px] select-none text-zinc-500',
           {
-            'line-through': task.status === 'done'
+            'line-through': task.taskStatus === 'done'
           }
         )}
       >
@@ -67,7 +67,7 @@ export const TaskItem = ({ task, id }: Props) => {
       </p>
       <section className="inline-flex w-full select-none items-center justify-between">
         <h5 className="inline-flex items-center gap-1 font-semibold text-zinc-500">
-          {task.status === 'done' ? (
+          {task.taskStatus === 'done' ? (
             <BsCalendar2Check size={20} />
           ) : (
             <CiCalendar size={24} />
@@ -75,7 +75,7 @@ export const TaskItem = ({ task, id }: Props) => {
           {new Date(task.endDate).toLocaleDateString()}
         </h5>
 
-        <Badge priority={task.priority} />
+        <Badge priority={task.taskPriority} />
       </section>
     </div>
   )
