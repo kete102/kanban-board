@@ -19,7 +19,8 @@
 ---
 
 ### Tareas para hoy:
-- [ ] **Fix user auth**.
+- [x] **Fix user auth**.
+- [ ] **Fix** eliminar board. Cambios en el back.
 - [ ] **Filtros de las Kanban Columns**. Ordenar tasks por priority o endDate.
 - [ ] **Fix del titulo de las kanban columns**. Error en 'InProgress'.
 - [ ] **Hacer el dnd mas smoth.**
