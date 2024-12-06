@@ -32,7 +32,7 @@ export function boardActions() {
         })
       }
     } catch (error) {
-      console.error(error)
+      console.log('Error fetching the users  boards', error)
       throw new Error('Error fetching the user boards')
     }
   }
