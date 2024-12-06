@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self' amusing-mayfly-73.accounts.dev amusing-mayfly-73.clerk.accounts.dev cdn.jsdelivr.net js.sentry-cdn.com browser.sentry-cdn.com *.ingest.sentry.io challenges.cloudflare.com scdn.clerk.com segapi.clerk.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' clerk.accounts.dev clerk.com cdn.jsdelivr.net; script-src-elem 'self' clerk.accounts.dev clerk.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net; connect-src 'self' *.clerk.com api.clerk.dev; frame-src 'self' scdn.clerk.com"
+          "value": "default-src 'self' amusing-mayfly-73.accounts.dev amusing-mayfly-73.clerk.accounts.dev cdn.jsdelivr.net js.sentry-cdn.com browser.sentry-cdn.com *.ingest.sentry.io challenges.cloudflare.com scdn.clerk.com segapi.clerk.com vercel.live; script-src 'self' 'unsafe-eval' 'unsafe-inline' clerk.accounts.dev clerk.com cdn.jsdelivr.net vercel.live; script-src-elem 'self' clerk.accounts.dev clerk.com vercel.live; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net; connect-src 'self' *.clerk.com api.clerk.dev; frame-src 'self' scdn.clerk.com"
         }
       ]
     }
