@@ -1,73 +1,32 @@
 import useModalStore from '@/store/ModalStore'
+import { BoardInputs, TaskInputs } from '@/types/modals/modals.types'
 import { DEFAULT_START_DATE } from '@/utils/dates'
-import { useState } from 'react'
-import { DateValueType } from 'react-tailwindcss-datepicker'
 import { useBoards } from './useBoards'
 import { useTasks } from './useTasks'
 
 interface HandleSubmitTaskProps {
-  event: React.FormEvent<HTMLFormElement>
+  taskData: TaskInputs
   boardId: string
-}
-
-const dateInitialState = {
-  startDate: DEFAULT_START_DATE,
-  endDate: null
 }
 
 export function useModals() {
   const { toggleModal } = useModalStore()
   const { addNewBoard } = useBoards()
-  const { createNewTask } = useTasks()
-  const [priority, setPriority] = useState<string>('')
-  const [date, setDate] = useState<DateValueType>(dateInitialState)
+  const { addNewTask } = useTasks()
 
-  const handleSubmitBoard = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const boardData = {
-      boardTitle: formData.get('boardTitle') as string,
-      boardDescription: formData.get('boardDescription') as string
-    }
+  const handleSubmitBoard = (boardData: BoardInputs) => {
     addNewBoard(boardData)
     toggleModal('createBoard')
   }
 
-  const handleSubmitTask = ({ event, boardId }: HandleSubmitTaskProps) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const taskData = {
-      taskTitle: formData.get('taskTitle') as string,
-      taskDescription: formData.get('taskDescription') as string,
-      priority: formData.get('priority') as string,
-      status: 'todo',
-      endDate: formData.get('taskEndDate') as string,
-      boardId
-    }
-    console.log(taskData)
-    createNewTask(taskData)
+  const handleSubmitTask = ({ taskData, boardId }: HandleSubmitTaskProps) => {
+    const newTask = { ...taskData, boardId }
+    addNewTask(newTask)
     toggleModal('createTask')
-    setPriority('')
-    setDate(dateInitialState)
-  }
-
-  const handleDateChange = (event: DateValueType) => {
-    if (event?.endDate) {
-      setDate(event)
-    }
-  }
-
-  const handlePriorityChange = (priorityLevel: string) => {
-    console.log(priorityLevel)
-    setPriority(priorityLevel)
   }
 
   return {
     handleSubmitBoard,
-    handleSubmitTask,
-    handleDateChange,
-    handlePriorityChange,
-    priority,
-    date
+    handleSubmitTask
   }
 }
