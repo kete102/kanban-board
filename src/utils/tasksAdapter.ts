@@ -21,7 +21,9 @@ interface TaskAPIResponse {
  * @param apiResponse - Tasks response from API
  * @returns Mapped tasks if apiReponse is a Task array, else returns null.
  */
-export function tasksAdapter(apiResponse: TaskAPIResponse[]): Task[] | null {
+export function tasksAdapter(
+  apiResponse: TaskAPIResponse[] | TaskAPIResponse
+): Task[] | null {
   if (Array.isArray(apiResponse) && apiResponse.length) {
     return apiResponse.map(task => ({
       taskId: task._id,
@@ -37,4 +39,24 @@ export function tasksAdapter(apiResponse: TaskAPIResponse[]): Task[] | null {
     }))
   }
   return null
+}
+
+/**
+ * Maps a single TaskAPIResponse object to a Task object.
+ * @param task - Single task response from API.
+ * @returns Mapped task.
+ */
+export function mapTask(task: TaskAPIResponse): Task {
+  return {
+    taskId: task._id,
+    userId: task.userId,
+    boardId: task.boardId,
+    taskTitle: task.taskTitle,
+    taskDescription: task.taskDescription,
+    taskStatus: task.taskStatus as TaskColumnType,
+    taskPriority: task.taskPriority as TaskPriority,
+    createdAt: task.createdAt,
+    lastUpdate: task.lastUpdate,
+    taskEndDate: task.taskEndDate
+  }
 }

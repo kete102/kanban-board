@@ -2,10 +2,9 @@ import { API_URL } from '@/config'
 import {
   StartCreateTaskProps,
   Task,
-  TaskColumnType,
-  TaskPriority
+  TaskColumnType
 } from '@/types/tasks/tasks.types'
-import { tasksAdapter } from '@/utils/tasksAdapter'
+import { mapTask, tasksAdapter } from '@/utils/tasksAdapter'
 import axios from 'axios'
 
 export const loadBoardTasks = async ({
@@ -48,20 +47,10 @@ export const startCreateTask = async ({
       }
     )
 
-    const { tasks: task } = await data
+    const { tasks } = await data
+    const task = mapTask(tasks)
 
-    return {
-      taskId: task._id,
-      userId: task.userId,
-      boardId: task.boardId,
-      taskTitle: task.taskTitle,
-      taskDescription: task.taskDescription,
-      taskStatus: task.status as TaskColumnType,
-      taskPriority: task.priority as TaskPriority,
-      createdAt: task.createdAt,
-      lastUpdate: task.lastUpdate,
-      taskEndDate: task.endDate
-    }
+    return task
   } catch (error) {
     console.log(error)
     throw new Error(`Error creating new Task: ${error}`)

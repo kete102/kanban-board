@@ -80,7 +80,7 @@ export function useTasks() {
           targetColumn,
           token
         })
-        console.log(result)
+
         if (!result.ok && result.error) {
           toast.error(result.error)
         }
