@@ -19,7 +19,6 @@ export function useBoards() {
       if (!token) return
       setLoading(true)
       const userBoards = await startFetchBoards({ token })
-      //TODO: logica para mapear las columnas en su forma correcta
       loadBoards(userBoards)
     } catch (error) {
       if (error instanceof Error) {
@@ -32,21 +31,26 @@ export function useBoards() {
     }
   }, [])
 
-  const addNewBoard = async (boardData: {
+  interface AddNewBoard {
     boardTitle: string
     boardDescription: string
-  }) => {
+  }
+
+  const addNewBoard = async (boardData: AddNewBoard) => {
     try {
       const token = await getToken()
+      const newBoard = {
+        ...boardData,
+        createdAt: new Date().toLocaleDateString()
+      }
+
       if (token) {
-        const newBoard = await startCreateNewBoard({
-          boardTitle: boardData.boardTitle,
-          boardDescription: boardData.boardDescription,
-          createdAt: new Date().toLocaleDateString(),
+        const board = await startCreateNewBoard({
+          newBoard,
           token
         })
-        if (newBoard) {
-          addBoard(newBoard)
+        if (board) {
+          addBoard(board)
           toast.success('New board created')
         }
       } else {

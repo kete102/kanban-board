@@ -37,17 +37,19 @@ export function boardActions() {
     }
   }
 
-  const startCreateNewBoard = async ({
-    boardTitle,
-    boardDescription,
-    token,
-    createdAt
-  }: {
-    boardTitle: string
-    boardDescription: string
+  interface StartCreateNewBoard {
+    newBoard: {
+      boardTitle: string
+      boardDescription: string
+      createdAt: string
+    }
     token: string
-    createdAt: string
-  }) => {
+  }
+
+  const startCreateNewBoard = async ({
+    newBoard,
+    token
+  }: StartCreateNewBoard) => {
     try {
       const response = await fetch(`${API_URL}/api/boards`, {
         method: 'POST',
@@ -56,9 +58,7 @@ export function boardActions() {
           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-          boardTitle,
-          boardDescription,
-          createdAt
+          newBoard
         })
       })
 

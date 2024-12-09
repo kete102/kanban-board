@@ -1,4 +1,6 @@
+import { useModals } from '@/hooks/useModals'
 import useModalStore from '@/store/ModalStore'
+import { BoardInputs } from '@/types/modals/modals.types'
 import {
   Field,
   Fieldset,
@@ -8,14 +10,22 @@ import {
   Textarea
 } from '@headlessui/react'
 import clsx from 'clsx'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { CustomModalError } from './CustomModalError'
 
-interface BoardModalProps {
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
-}
-export const BoardModal = ({ handleSubmit }: BoardModalProps) => {
+export const BoardModal = () => {
+  const { handleSubmitBoard } = useModals()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<BoardInputs>()
   const { toggleModal } = useModalStore()
+  const onSubmit: SubmitHandler<BoardInputs> = data => {
+    handleSubmitBoard(data)
+  }
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset className="space-y-6 rounded-xl p-6 sm:p-10">
         <Legend className="text-center text-3xl font-semibold text-white">
           Create new board
@@ -23,27 +33,29 @@ export const BoardModal = ({ handleSubmit }: BoardModalProps) => {
         <Field>
           <Label className="text-2xl font-medium text-white">Title</Label>
           <Input
-            required
+            {...register('boardTitle', { required: 'Title is required' })}
             placeholder="Trip to L.A"
-            name="boardTitle"
             className={clsx(
               'text-md mt-3 block min-h-[50px] w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-white',
               'placeholder:text-lg focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
             )}
           />
+          <CustomModalError errors={errors.boardTitle} />
         </Field>
         <Field>
           <Label className="text-2xl font-medium text-white">Description</Label>
           <Textarea
+            {...register('boardDescription', {
+              required: 'Decription is required'
+            })}
             placeholder="What's it about?"
-            required
-            name="boardDescription"
             className={clsx(
               'text-md mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-white',
               'placeholder:text-lg focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
             )}
             rows={3}
           />
+          <CustomModalError errors={errors.boardDescription} />
         </Field>
         <div className="mx-auto mt-4 inline-flex w-full justify-center gap-4">
           <button
