@@ -1,5 +1,4 @@
-import { Description, Label } from '@headlessui/react'
-import { FcCalendar } from 'react-icons/fc'
+import { Label } from '@headlessui/react'
 import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker'
 
 interface Props {
@@ -9,17 +8,13 @@ interface Props {
 
 export const CustomDatePicker = ({ date, handleDateChange }: Props) => {
   return (
-    <div className="flex flex-col gap-2 align-middle">
+    <div className="mb-2 flex flex-col gap-2 align-middle">
       <Label
         htmlFor="endDate"
-        className="inline-flex items-center gap-2 text-2xl font-medium text-white"
+        className="inline-flex items-center gap-2 text-xl font-medium text-white md:text-2xl"
       >
-        <FcCalendar />
         End date
       </Label>
-      <Description className="text-md/6 mt-2 text-white/50">
-        Choose and ending date for the task
-      </Description>
       <div className="w-fit">
         <Datepicker
           inputClassName="text-white rounded-md outline-none font-medium text-lg p-2 bg-white/5 focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
@@ -31,6 +26,7 @@ export const CustomDatePicker = ({ date, handleDateChange }: Props) => {
           value={date}
           onChange={event => handleDateChange(event)}
           inputName="taskEndDate"
+          readOnly
         />
       </div>
     </div>

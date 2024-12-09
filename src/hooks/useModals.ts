@@ -58,6 +58,7 @@ export function useModals() {
   }
 
   const handlePriorityChange = (priorityLevel: string) => {
+    console.log(priorityLevel)
     setPriority(priorityLevel)
   }
 

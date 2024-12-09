@@ -19,13 +19,8 @@ interface Props {
 
 export const TaskModal = ({ boardId }: Props) => {
   const { toggleModal } = useModalStore()
-  const {
-    priority,
-    date,
-    handleSubmitTask,
-    handleDateChange,
-    handlePriorityChange
-  } = useModals()
+  const { date, handleSubmitTask, handleDateChange, handlePriorityChange } =
+    useModals()
 
   return (
     <form onSubmit={event => handleSubmitTask({ event, boardId })}>
@@ -34,8 +29,8 @@ export const TaskModal = ({ boardId }: Props) => {
           Create new Task
         </Legend>
         <Field>
-          <Label className="text-lg font-medium text-white">
-            What's it about
+          <Label className="text-xl font-medium text-white md:text-2xl">
+            Title
           </Label>
           <Input
             required
@@ -47,10 +42,12 @@ export const TaskModal = ({ boardId }: Props) => {
           />
         </Field>
         <Field>
-          <Label className="text-2xl font-medium text-white">Description</Label>
-          <Description className="text-md/6 mt-2 text-white/50">
+          <Label className="text-xl font-medium text-white md:text-2xl">
             What's it about?
-          </Description>
+          </Label>
+          {/* <Description className="text-md/6 mt-2 text-white/50"> */}
+          {/*   What's it about? */}
+          {/* </Description> */}
           <Textarea
             required
             name="taskDescription"
@@ -62,15 +59,12 @@ export const TaskModal = ({ boardId }: Props) => {
           />
         </Field>
         <section className="flex flex-col items-start gap-2 md:flex-row md:gap-8">
-          <Field>
+          <Field className="w-full">
             <CustomDatePicker date={date} handleDateChange={handleDateChange} />
           </Field>
-          <Field>
+          <Field className="w-full">
             <Label className="text-2xl font-medium text-white">Priority</Label>
-            <CustomPriorityPicker
-              changePriority={handlePriorityChange}
-              priority={priority}
-            />
+            <CustomPriorityPicker changePriority={handlePriorityChange} />
           </Field>
         </section>
         <div className="mt-5 inline-flex w-full justify-center gap-4">
