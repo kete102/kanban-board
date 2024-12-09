@@ -1,6 +1,6 @@
 import Badge from '@/atom/Badge'
 import { useTasks } from '@/hooks/useTasks'
-import { Task } from '@/types'
+import { Task } from '@/types/tasks/tasks.types'
 import { useDraggable } from '@dnd-kit/core'
 import clsx from 'clsx'
 import { BsCalendar2Check } from 'react-icons/bs'
@@ -72,7 +72,7 @@ export const TaskItem = ({ task, id }: Props) => {
           ) : (
             <CiCalendar size={24} />
           )}
-          {new Date(task.endDate).toLocaleDateString()}
+          {new Date(task.taskEndDate).toLocaleDateString()}
         </h5>
 
         <Badge priority={task.taskPriority} />

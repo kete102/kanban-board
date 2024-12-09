@@ -1,4 +1,4 @@
-import { Task, TaskColumnType, TaskPriorityType } from '@/types'
+import { Task, TaskColumnType, TaskPriority } from '@/types/tasks/tasks.types'
 
 /**
  * Task response from API
@@ -9,11 +9,11 @@ interface TaskAPIResponse {
   boardId: string
   taskTitle: string
   taskDescription: string
-  status: string
-  priority: string
+  taskStatus: string
+  taskPriority: string
   createdAt: string
   lastUpdate: number
-  endDate: string
+  taskEndDate: string
 }
 
 /**
@@ -29,11 +29,11 @@ export function tasksAdapter(apiResponse: TaskAPIResponse[]): Task[] | null {
       boardId: task.boardId,
       taskTitle: task.taskTitle,
       taskDescription: task.taskDescription,
-      taskStatus: task.status as TaskColumnType,
-      taskPriority: task.priority as TaskPriorityType,
+      taskStatus: task.taskStatus as TaskColumnType,
+      taskPriority: task.taskPriority as TaskPriority,
       createdAt: task.createdAt,
       lastUpdate: task.lastUpdate,
-      endDate: task.endDate
+      taskEndDate: task.taskEndDate
     }))
   }
   return null

@@ -1,4 +1,4 @@
-import { Column, Task, TaskColumnType } from '@/types'
+import { Column, Task, TaskColumnType } from '@/types/tasks/tasks.types'
 import { create } from 'zustand'
 
 interface TaskState {

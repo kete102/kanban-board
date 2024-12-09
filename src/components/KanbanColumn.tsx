@@ -1,5 +1,5 @@
 import { DropZone } from '@/atom/DropZone'
-import { Task } from '@/types'
+import { columnNames, Task } from '@/types/tasks/tasks.types'
 import { useDroppable } from '@dnd-kit/core'
 import clsx from 'clsx'
 import { IoFilter } from 'react-icons/io5'
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const KanbanColumn = ({ columnType, tasks, isDragging }: Props) => {
+  const columnName = columnNames[columnType]
   const { setNodeRef, isOver } = useDroppable({
     id: columnType
   })
@@ -26,7 +27,7 @@ export const KanbanColumn = ({ columnType, tasks, isDragging }: Props) => {
       )}
     >
       <h4 className="inline-flex w-full items-center justify-between p-2 pt-2 text-center align-middle text-xl font-bold uppercase text-zinc-800/80">
-        {columnType}
+        {columnName}
         <span className="text-md font-medium normal-case">
           <IoFilter />
         </span>

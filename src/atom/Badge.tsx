@@ -1,11 +1,8 @@
+import { TaskPriority } from '@/types/tasks/tasks.types'
 import React from 'react'
 
-// Tipos de prioridad
-type Priority = 'low' | 'medium' | 'high'
-
-// Propiedades del Badge
 interface CustomBadgeProps {
-  priority: Priority
+  priority: TaskPriority
 }
 
 // Componente CustomBadge

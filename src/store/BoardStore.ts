@@ -1,4 +1,4 @@
-import { Board } from '@/types'
+import { Board } from '@/types/boards/board.types'
 import { create } from 'zustand'
 
 interface BoardState {

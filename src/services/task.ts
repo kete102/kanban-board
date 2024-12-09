@@ -3,8 +3,8 @@ import {
   StartCreateTaskProps,
   Task,
   TaskColumnType,
-  TaskPriorityType
-} from '@/types'
+  TaskPriority
+} from '@/types/tasks/tasks.types'
 import { tasksAdapter } from '@/utils/tasksAdapter'
 import axios from 'axios'
 
@@ -57,10 +57,10 @@ export const startCreateTask = async ({
       taskTitle: task.taskTitle,
       taskDescription: task.taskDescription,
       taskStatus: task.status as TaskColumnType,
-      taskPriority: task.priority as TaskPriorityType,
+      taskPriority: task.priority as TaskPriority,
       createdAt: task.createdAt,
       lastUpdate: task.lastUpdate,
-      endDate: task.endDate
+      taskEndDate: task.endDate
     }
   } catch (error) {
     console.log(error)

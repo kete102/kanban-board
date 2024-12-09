@@ -1,6 +1,6 @@
 import { useTasks } from '@/hooks/useTasks'
 import useTaskStore from '@/store/TaskStore'
-import { Column, Task, TaskColumnType } from '@/types'
+import { Column, Task, TaskColumnType } from '@/types/tasks/tasks.types'
 import {
   DndContext,
   DragEndEvent,

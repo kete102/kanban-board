@@ -1,5 +1,5 @@
 import Badge from '@/atom/Badge'
-import { Task } from '@/types'
+import { Task } from '@/types/tasks/tasks.types'
 import clsx from 'clsx'
 import { BsCalendar2Check } from 'react-icons/bs'
 import { CiCalendar } from 'react-icons/ci'
@@ -30,7 +30,7 @@ export const TaskOverlay = ({ task }: { task: Task }) => {
           ) : (
             <CiCalendar size={24} />
           )}
-          {new Date(task.endDate).toLocaleDateString()}
+          {new Date(task.taskEndDate).toLocaleDateString()}
         </h5>
 
         <Badge priority={task.taskPriority} />

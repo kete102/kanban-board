@@ -1,4 +1,4 @@
-import { Task } from '@/types'
+import { Task } from '@/types/tasks/tasks.types'
 import clsx from 'clsx'
 
 export const DropZone = ({ isDragging }: { isDragging: Task | undefined }) => {

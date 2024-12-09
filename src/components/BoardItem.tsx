@@ -1,4 +1,4 @@
-import { Board } from '@/types'
+import { Board } from '@/types/boards/board.types'
 import { useAuth } from '@clerk/clerk-react'
 import { BiSearch } from 'react-icons/bi'
 import { CiCalendar } from 'react-icons/ci'

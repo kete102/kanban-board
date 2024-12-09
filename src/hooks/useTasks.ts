@@ -5,7 +5,7 @@ import {
   startUpdateTaskStatus
 } from '@/services/task'
 import useTaskStore from '@/store/TaskStore'
-import { TaskColumnType } from '@/types'
+import { TaskColumnType } from '@/types/tasks/tasks.types'
 import { useAuth } from '@clerk/clerk-react'
 import toast from 'react-hot-toast'
 
