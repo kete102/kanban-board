@@ -1,7 +1,6 @@
-import { useModals } from '@/hooks/useModals'
 import useModalStore from '@/store/ModalStore'
+import { priorities } from '@/utils/priority'
 import {
-  Description,
   Field,
   Fieldset,
   Input,
@@ -10,61 +9,119 @@ import {
   Textarea
 } from '@headlessui/react'
 import clsx from 'clsx'
-import { CustomDatePicker } from '../CustomDatePicker'
-import { CustomPriorityPicker } from '../CustomPriorityPicker'
+import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
 
 interface Props {
   boardId: string
 }
 
+interface Inputs {
+  taskTitle: string
+  taskDescription: string
+  taskPriority: string
+  taskEndDate: string
+}
+
+interface CustomErrorProps {
+  errors: FieldError | undefined
+}
+
+const CustomError = ({ errors }: CustomErrorProps) => {
+  return (
+    <>
+      {errors && (
+        <span className="mt-1 text-sm text-red-500">{errors.message}</span>
+      )}
+    </>
+  )
+}
+
 export const TaskModal = ({ boardId }: Props) => {
   const { toggleModal } = useModalStore()
-  const { date, handleSubmitTask, handleDateChange, handlePriorityChange } =
-    useModals()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Inputs>()
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    if (data.taskPriority === 'default') {
+      data.taskPriority = 'low'
+    }
+    console.log({ ...data, boardId })
+  }
 
   return (
-    <form onSubmit={event => handleSubmitTask({ event, boardId })}>
-      <Fieldset className="space-y-7 rounded-xl p-6 sm:p-10">
-        <Legend className="text-2xl font-semibold text-white">
-          Create new Task
-        </Legend>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Fieldset className="space-y-8 rounded-xl p-6 sm:p-10">
         <Field>
           <Label className="text-xl font-medium text-white md:text-2xl">
             Title
           </Label>
           <Input
-            required
-            name="taskTitle"
+            {...register('taskTitle', { required: 'Title is required' })}
+            placeholder="Call Andy..."
             className={clsx(
-              'mt-3 block w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
+              'mt-3 block w-full rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white placeholder:text-lg',
               'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
             )}
           />
+          <CustomError errors={errors.taskTitle} />
         </Field>
         <Field>
           <Label className="text-xl font-medium text-white md:text-2xl">
             What's it about?
           </Label>
-          {/* <Description className="text-md/6 mt-2 text-white/50"> */}
-          {/*   What's it about? */}
-          {/* </Description> */}
           <Textarea
-            required
-            name="taskDescription"
+            placeholder="Job opportunity..."
+            {...register('taskDescription', {
+              required: 'Description is required'
+            })}
             className={clsx(
-              'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white',
+              'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 px-3 py-1.5 text-sm/6 text-white placeholder:text-lg',
               'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
             )}
             rows={3}
           />
+
+          <CustomError errors={errors.taskDescription} />
         </Field>
-        <section className="flex flex-col items-start gap-2 md:flex-row md:gap-8">
-          <Field className="w-full">
-            <CustomDatePicker date={date} handleDateChange={handleDateChange} />
+        <section className="flex flex-col items-start gap-8 md:flex-row md:gap-8">
+          {/* DatePicker */}
+          <Field className="flex w-full flex-col space-y-2">
+            <Label
+              htmlFor="endDate"
+              className="inline-flex items-center gap-2 text-xl font-medium text-white md:text-2xl"
+            >
+              End date
+            </Label>
+            <input
+              type="date"
+              {...register('taskEndDate', {
+                required: 'End date is required'
+              })}
+              className="rounded-md bg-white/5 p-2 text-lg font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+            />
+            <CustomError errors={errors.taskEndDate} />
           </Field>
-          <Field className="w-full">
-            <Label className="text-2xl font-medium text-white">Priority</Label>
-            <CustomPriorityPicker changePriority={handlePriorityChange} />
+          <Field className="flex w-full flex-col space-y-2">
+            <Label className="text-xl font-medium text-white md:text-2xl">
+              Priority
+            </Label>
+            {/* PriorityPicker */}
+            <select
+              {...register('taskPriority', {
+                required: 'Priority is required'
+              })}
+              className="rounded-md bg-white/5 p-2.5 text-lg font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+            >
+              <option value="default">Select one</option>
+              {priorities.map(priority => (
+                <option value={priority.level} key={priority.level}>
+                  {priority.level}
+                </option>
+              ))}
+            </select>
+            <CustomError errors={errors.taskPriority} />
           </Field>
         </section>
         <div className="mt-5 inline-flex w-full justify-center gap-4">
