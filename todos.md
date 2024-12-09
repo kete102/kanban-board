@@ -19,9 +19,10 @@
 ---
 
 ### Tareas para hoy:
-- [x] **Fix user auth**.
-- [ ] **Fix** eliminar board. Cambios en el back.
-- [ ] **Filtros de las Kanban Columns**. Ordenar tasks por priority o endDate.
-- [ ] **Fix del titulo de las kanban columns**. Error en 'InProgress'.
-- [ ] **Hacer el dnd mas smoth.**
-- [ ] **Cambiar task priority** en el modal por un select.
+- [ ] **FIX: ** eliminar task. Arreglar dnd para evitar cuando se quiere borrar.
+- [ ] **Fix: ** título de Kanban Columns, cambiar 'In-Progress' por 'In progress'.
+- [ ] **FIX: ** evitar que en mobile el calendario salga el teclado. Cambiar priority
+badges por un select o algo que ocupe menos.
+- [ ] **FIX: ** eliminar board y sus datos
+- [ ] **PERF: ** filtros para las Kanban Columns. Ordenar tasks por priority o endDate.
+- [ ] **PERF: ** checkear el dnd para hacerlo más smoth.
