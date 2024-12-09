@@ -34,13 +34,12 @@ export const loadBoardTasks = async ({
 
 export const startCreateTask = async ({
   token,
-  newTaskData,
-  boardId
+  newTask
 }: StartCreateTaskProps): Promise<Task> => {
   try {
     const { data } = await axios.post(
-      `${API_URL}/api/tasks/${boardId}`,
-      newTaskData,
+      `${API_URL}/api/tasks/${newTask.boardId}`,
+      newTask,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -31,32 +31,28 @@ export function useTasks() {
     }
   }
 
-  const createNewTask = async ({
-    taskTitle,
-    taskDescription,
-    priority,
-    status,
-    boardId,
-    endDate
-  }) => {
-    const token = await getToken()
-    const newTask = {
-      taskTitle,
-      taskDescription,
-      status,
-      priority,
-      endDate,
-      createdAt: new Date().toISOString().split('T')[0],
-      lastUpdate: Date.now()
-    }
-    console.log(newTask)
+  interface AddNewTask {
+    boardId: string
+    taskTitle: string
+    taskDescription: string
+    taskPriority: string
+    taskEndDate: string
+  }
 
+  const addNewTask = async (taskData: AddNewTask) => {
     try {
+      const token = await getToken()
+      const newTask = {
+        ...taskData,
+        taskStatus: 'todo',
+        createdAt: new Date().toISOString().split('T')[0],
+        lastUpdate: Date.now()
+      }
+
       if (token) {
         const task = await startCreateTask({
           token,
-          newTaskData: newTask,
-          boardId
+          newTask
         })
         if (task) {
           onAddTask(task)
@@ -126,7 +122,7 @@ export function useTasks() {
 
   return {
     fetchUserTasks,
-    createNewTask,
+    addNewTask,
     updateStatus,
     deleteTask
   }

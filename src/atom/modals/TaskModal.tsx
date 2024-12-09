@@ -1,53 +1,25 @@
+import { useModals } from '@/hooks/useModals'
 import useModalStore from '@/store/ModalStore'
+import { TaskInputs } from '@/types/modals/modals.types'
 import { priorities } from '@/utils/priority'
-import {
-  Field,
-  Fieldset,
-  Input,
-  Label,
-  Legend,
-  Textarea
-} from '@headlessui/react'
+import { Field, Fieldset, Input, Label, Textarea } from '@headlessui/react'
 import clsx from 'clsx'
-import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { CustomModalError } from './CustomModalError'
 
-interface Props {
-  boardId: string
-}
-
-interface Inputs {
-  taskTitle: string
-  taskDescription: string
-  taskPriority: string
-  taskEndDate: string
-}
-
-interface CustomErrorProps {
-  errors: FieldError | undefined
-}
-
-const CustomError = ({ errors }: CustomErrorProps) => {
-  return (
-    <>
-      {errors && (
-        <span className="mt-1 text-sm text-red-500">{errors.message}</span>
-      )}
-    </>
-  )
-}
-
-export const TaskModal = ({ boardId }: Props) => {
+export const TaskModal = ({ boardId }: { boardId: string }) => {
+  const { handleSubmitTask } = useModals()
   const { toggleModal } = useModalStore()
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<Inputs>()
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  } = useForm<TaskInputs>()
+  const onSubmit: SubmitHandler<TaskInputs> = data => {
     if (data.taskPriority === 'default') {
       data.taskPriority = 'low'
     }
-    console.log({ ...data, boardId })
+    handleSubmitTask({ taskData: data, boardId })
   }
 
   return (
@@ -65,7 +37,7 @@ export const TaskModal = ({ boardId }: Props) => {
               'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
             )}
           />
-          <CustomError errors={errors.taskTitle} />
+          <CustomModalError errors={errors.taskTitle} />
         </Field>
         <Field>
           <Label className="text-xl font-medium text-white md:text-2xl">
@@ -83,7 +55,7 @@ export const TaskModal = ({ boardId }: Props) => {
             rows={3}
           />
 
-          <CustomError errors={errors.taskDescription} />
+          <CustomModalError errors={errors.taskDescription} />
         </Field>
         <section className="flex flex-col items-start gap-8 md:flex-row md:gap-8">
           {/* DatePicker */}
@@ -101,7 +73,7 @@ export const TaskModal = ({ boardId }: Props) => {
               })}
               className="rounded-md bg-white/5 p-2 text-lg font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
             />
-            <CustomError errors={errors.taskEndDate} />
+            <CustomModalError errors={errors.taskEndDate} />
           </Field>
           <Field className="flex w-full flex-col space-y-2">
             <Label className="text-xl font-medium text-white md:text-2xl">
@@ -121,7 +93,7 @@ export const TaskModal = ({ boardId }: Props) => {
                 </option>
               ))}
             </select>
-            <CustomError errors={errors.taskPriority} />
+            <CustomModalError errors={errors.taskPriority} />
           </Field>
         </section>
         <div className="mt-5 inline-flex w-full justify-center gap-4">

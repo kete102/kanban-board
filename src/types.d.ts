@@ -33,12 +33,12 @@ interface User {
 
 export interface StartCreateTaskProps {
   token: string
-  newTaskData: {
+  newTask: {
     taskTitle: string
     taskDescription: string
-    status: string
-    priority: string
+    taskStatus: string
+    taskPriority: string
     createdAt: string
+    boardId: string
   }
-  boardId: string
 }
