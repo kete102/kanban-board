@@ -22,7 +22,6 @@ export const TaskItem = ({ task, id }: Props) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event?.stopPropagation()
-    console.log(task.taskId, task.boardId)
     deleteTask({ taskId: id, boardId: task.boardId })
   }
 

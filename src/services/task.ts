@@ -69,30 +69,32 @@ export const startDeleteTask = async ({
   ok: boolean
   message?: string
   error?: string
-  deletedTaskId?: string | null
+  deletedTaskId?: string
 }> => {
   try {
-    const { data } = await axios.delete(`${API_URL}/api/tasks`, {
+    console.log('Send delete request')
+    const response = await fetch(`${API_URL}/api/tasks`, {
+      method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      data: {
+      body: JSON.stringify({
         taskId,
         boardId
-      }
+      })
     })
-    if (!data) {
+    const { task } = await response.json()
+    if (!task) {
       return {
         ok: false,
-        deletedTaskId: null,
         error: 'No ha sido posible eliminar la tarea'
       }
     }
     return {
       ok: true,
       message: 'Task deleted',
-      deletedTaskId: data.deletedTaskId
+      deletedTaskId: task._id
     }
   } catch (error) {
     let errorMessage = 'Error al eliminar la tarea'

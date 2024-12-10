@@ -102,21 +102,20 @@ export function useTasks() {
     taskId: string
     boardId: string
   }) => {
-    const token = await getToken()
     try {
+      const token = await getToken()
       if (token) {
         const result = await startDeleteTask({ taskId, boardId, token })
         if (!result.ok) {
           console.error(result.error)
         }
-        const deletedTaskId = result.deletedTaskId
-        if (deletedTaskId) {
-          onDeleteTask(deletedTaskId)
+        if (result.deletedTaskId) {
+          onDeleteTask(result.deletedTaskId)
           toast.success('Task deleted')
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log('Error deleting task: ', error)
     }
   }
 
