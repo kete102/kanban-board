@@ -6,8 +6,8 @@ import {
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
-  KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors
 } from '@dnd-kit/core'
@@ -21,13 +21,17 @@ export const ColumnsContainer = () => {
   const { getTasksByColumns, findTaskById } = useTaskStore()
   const [isDragging, setIsDragging] = useState<Task | undefined>(undefined)
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 200,
-        tolerance: 50
+        delay: 250,
+        tolerance: 5
       }
     }),
-    useSensor(KeyboardSensor)
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 5
+      }
+    })
   )
   const columns = getTasksByColumns()
 
