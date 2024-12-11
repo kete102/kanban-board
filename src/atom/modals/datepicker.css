@@ -1,0 +1,16 @@
+.datepicker {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.datepicker::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(100%) sepia(10%) saturate(200%) hue-rotate(200deg)
+    brightness(90%);
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.datepicker::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.5;
+}

@@ -6,6 +6,7 @@ import { Field, Fieldset, Input, Label, Textarea } from '@headlessui/react'
 import clsx from 'clsx'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CustomModalError } from './CustomModalError'
+import './datepicker.css'
 
 export const TaskModal = ({ boardId }: { boardId: string }) => {
   const { handleSubmitTask } = useModals()
@@ -19,6 +20,7 @@ export const TaskModal = ({ boardId }: { boardId: string }) => {
     if (data.taskPriority === 'default') {
       data.taskPriority = 'low'
     }
+    console.log(data)
     handleSubmitTask({ taskData: data, boardId })
   }
 
@@ -71,7 +73,7 @@ export const TaskModal = ({ boardId }: { boardId: string }) => {
               {...register('taskEndDate', {
                 required: 'End date is required'
               })}
-              className="rounded-md bg-white/5 p-2 text-lg font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+              className="datepicker rounded-md bg-white/5 p-2 text-lg font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
             />
             <CustomModalError errors={errors.taskEndDate} />
           </Field>
@@ -79,16 +81,24 @@ export const TaskModal = ({ boardId }: { boardId: string }) => {
             <Label className="text-xl font-medium text-white md:text-2xl">
               Priority
             </Label>
-            {/* PriorityPicker */}
             <select
               {...register('taskPriority', {
                 required: 'Priority is required'
               })}
-              className="rounded-md bg-white/5 p-2.5 text-lg font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+              className="group flex cursor-default select-none items-center gap-2 rounded-md bg-white/5 px-2 py-3 font-medium text-white outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25 data-[focus]:bg-white/10"
             >
-              <option value="default">Select one</option>
+              <option
+                defaultValue="default"
+                className="bg-zinc-400 py-2 font-medium outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+              >
+                Select One
+              </option>
               {priorities.map(priority => (
-                <option value={priority.level} key={priority.level}>
+                <option
+                  key={priority.level}
+                  value={priority.level}
+                  className="bg-zinc-400 py-2 outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-white/25"
+                >
                   {priority.level}
                 </option>
               ))}
@@ -100,7 +110,6 @@ export const TaskModal = ({ boardId }: { boardId: string }) => {
           <button
             type="submit"
             className="shadow-xs cursor-pointer rounded-lg border-2 border-indigo-600 bg-indigo-300 px-6 py-2.5 text-center text-lg font-semibold text-zinc-600 transition-all duration-500 hover:bg-indigo-800 hover:text-white"
-            // className="shadow-xs cursor-pointer rounded-lg bg-indigo-500 px-6 py-2.5 text-center text-lg font-semibold text-white transition-all duration-500 hover:bg-indigo-700"
           >
             Create
           </button>
@@ -108,7 +117,6 @@ export const TaskModal = ({ boardId }: { boardId: string }) => {
           <button
             type="button"
             className="shadow-xs cursor-pointer rounded-lg border-2 border-zinc-600 bg-zinc-300 px-6 py-2.5 text-center text-lg font-semibold text-zinc-600 transition-all duration-500 hover:bg-zinc-800 hover:text-white"
-            // className="shadow-xs cursor-pointer rounded-lg bg-indigo-50 px-6 py-2.5 text-center text-lg font-semibold text-indigo-500 transition-all duration-500 hover:bg-indigo-100"
             onClick={() => toggleModal('createTask')}
           >
             Cancel
