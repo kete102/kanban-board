@@ -16,13 +16,10 @@
 - [x] **Gestion de los diferentes tipos de modales con HOC**. Los modales están construido con *HeadlessUI*.
 - [ ] **Support dark mode.** With tailwindcss dark mode.
 - [ ] **Integración con Axios** para manejo de datos❓
----
 
 ### Tareas para hoy:
-- [ ] **FIX: ** eliminar task. Arreglar dnd para evitar cuando se quiere borrar.
-- [ ] **Fix: ** título de Kanban Columns, cambiar 'In-Progress' por 'In progress'.
+- [x] **FIX: ** eliminar task. Arreglar dnd para evitar cuando se quiere borrar.
 - [ ] **FIX: ** evitar que en mobile el calendario salga el teclado. Cambiar priority
 badges por un select o algo que ocupe menos.
-- [ ] **FIX: ** eliminar board y sus datos
 - [ ] **PERF: ** filtros para las Kanban Columns. Ordenar tasks por priority o endDate.
 - [ ] **PERF: ** checkear el dnd para hacerlo más smoth.
