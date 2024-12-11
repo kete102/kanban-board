@@ -7,9 +7,7 @@ export const SignInPage = () => {
   const { isSignedIn, isLoaded, userId } = useAuth()
   useEffect(() => {
     if (isLoaded) {
-      if (!isSignedIn) {
-        console.log('no esta  signed in')
-      } else {
+      if (isSignedIn) {
         navigate(`/${userId}`)
       }
     }
