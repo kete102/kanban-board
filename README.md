@@ -21,11 +21,6 @@ This project is a Kanban Board application where users can organize their tasks 
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-- **Node.js** version 16+
-- **npm** version 8+ or **yarn** version 1.22+
-
 ### Installation
 
 1. Clone this repository:
@@ -33,6 +28,7 @@ This project is a Kanban Board application where users can organize their tasks 
    ```bash
    git clone https://github.com/your-username/kanban-board-app.git
    cd kanban-board-app
+   pnpm install
    ```
 
 ## 🛠️ Tech Stack
